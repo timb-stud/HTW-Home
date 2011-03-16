@@ -8,6 +8,9 @@ public class AckMessage<T> {
     private int id;
     private T status;
 
+    public AckMessage() {
+    }
+
     public AckMessage(int id, T status) {
         this.id = id;
         this.status = status;

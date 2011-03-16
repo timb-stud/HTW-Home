@@ -12,6 +12,9 @@ public class ActionMessage<T> {
     private ActionEnum action;
     private T status;
 
+    public ActionMessage() {
+    }
+
     public ActionMessage(int gid, ActionEnum action, T status) {
         this.gid = gid;
         this.action = action;

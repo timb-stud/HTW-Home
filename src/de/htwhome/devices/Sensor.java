@@ -22,17 +22,16 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     }
 
      public void sendMsg(ActionMessage<T> actionMsg, Type actionMsgType){
-         String json = new Gson().toJson(actionMsg, actionMsgType);
+         String json = gson.toJson(actionMsg, actionMsgType);
          System.out.println("JSON:" + json);
          //TODO send(json);
      }
 
-    public void handleMsg(String msg){
-        int id = 0;             //TODO json
-        T status = null;
+    public void handleMsg(String msg, Type msgType){
+	AckMessage<T> ackMsg = gson.fromJson(msg, msgType);
         for(int i=0; i < actorIdTab.length; i++){
-            if(actorIdTab[i] == id){
-                actorStatusTab[i] = status;
+            if(actorIdTab[i] == ackMsg.getId()){
+                actorStatusTab[i] = ackMsg.getStatus();
             }
         }
     }

@@ -1,5 +1,7 @@
 package de.htwhome.devices;
 
+import com.google.gson.Gson;
+
 /**
  *
  * @author Christian Rech, Tim Bartsch
@@ -10,6 +12,7 @@ public abstract class AbstractDevice<T> {
     private String location;
     private String type; //koennte auch als Enum realisiert werden
     private String description;
+    protected static Gson gson = new Gson();
 
     public AbstractDevice(int id, T status, String location, String type, String description) {
         this.id = id;
