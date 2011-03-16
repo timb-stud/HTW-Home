@@ -1,6 +1,5 @@
 package de.htwhome.devices;
 import com.google.gson.Gson;
-import de.htwhome.utils.ActionEnum;
 import java.lang.reflect.Type;
 
 /**
@@ -19,18 +18,16 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     public void sendMsg(AckMessage<T> ackMsg, Type ackMsgTyp){
 	String json = new Gson().toJson(ackMsg, ackMsgTyp);
 	System.out.println("JSON:" + json);
-	//TODO ssend(json)
+	//TODO send(json)
     }
 
-    public void handleMsg(String msg){
-        int gid = 0;                    //TODO json
-        ActionEnum action = null;
-        T status = null;
+    public void handleMsg(String msg, Type msgType){
+	ActionMessage<T> actionMsg = gson.fromJson(msg, msgType);
         for(int i=0; i< this.gidTab.length; i++){
-            if(this.gidTab[i] == gid){
-                switch(action){
+            if(this.gidTab[i] == actionMsg.getGid()){
+                switch(actionMsg.getAction()){
                     case changeStatus:
-                        setStatus(status);
+                        setStatus(actionMsg.getStatus());
                         break;
                     case getStatus:
                         setStatus(this.status);

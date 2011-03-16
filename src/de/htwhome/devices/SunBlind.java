@@ -10,9 +10,15 @@ import java.lang.reflect.Type;
 public class SunBlind extends Actor<Integer>{
 
     private static Type ackMsgType = new TypeToken<AckMessage<Integer>>(){}.getType();
+    private static Type actionMsgType = new TypeToken<ActionMessage<Integer>>(){}.getType();
 
     public SunBlind(int id, int status, String location, String type, String description, int[] gidTab) {
         super(id, status, location, type, description, gidTab);
+    }
+
+    @Override
+    public void handleMsg(String msg, Type msgType) {
+	super.handleMsg(msg, actionMsgType);
     }
 
     @Override

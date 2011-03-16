@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 public class Light extends Actor<Boolean> {
 
     private static Type ackMsgType = new TypeToken<AckMessage<Boolean>>(){}.getType();
+    private static Type actionMsgType = new TypeToken<ActionMessage<Boolean>>(){}.getType();
 
     public Light(int id, boolean status, String location, String type, String description, int[] gidTab) {
         super(id, status, location, type, description, gidTab);
@@ -22,9 +23,15 @@ public class Light extends Actor<Boolean> {
 	this.sendMsg(ackMsg, Light.ackMsgType);
     }
 
+    public void handleMsg(String msg) {
+	super.handleMsg(msg, actionMsgType);
+    }
+
     public static void main(String[] args) {
 	int[] gid  = {1, 2};
 	Light l = new Light(10, false, "haus", "lampe", "bam", gid);
 	l.setStatus(true);
+	l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
+	System.out.println("After:" + l.status);
     }
 }

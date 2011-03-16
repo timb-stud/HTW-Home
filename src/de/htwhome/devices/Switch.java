@@ -28,7 +28,6 @@ public class Switch extends Sensor<Boolean> {
 	super.handleMsg(msg, ackMsgType);
     }
 
-
     public static void main(String[] args) {
         int[] actorListId = {1,2};
         Boolean[] actorListStatus = {true, false};
