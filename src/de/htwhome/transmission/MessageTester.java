@@ -17,11 +17,11 @@ public class MessageTester {
 
     public MessageTester() throws IOException, ClassNotFoundException {
         // Server
-        MessageReceiver msgr = new MessageReceiver();
+       // MessageReceiver msgr = new MessageReceiver();
         // Client
-//        Message msg = new Message("ichsende", "dorthin", "diesenText");
-//        MessageSender msgsender = new MessageSender();
-//        msgsender.sendMsg(msg);
+        String msg = "ich sende";
+        MessageSender msgsender = new MessageSender();
+        msgsender.sendMsg(msg);
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException{
