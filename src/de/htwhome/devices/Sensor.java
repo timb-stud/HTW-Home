@@ -27,7 +27,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     public void handleMsg(String msg){
         int id = 0;             //TODO json
         T status = null;
-        for(int i=0; i<actorListId.length; i++){
+        for(int i=0; i < actorListId.length; i++){
             if(actorListId[i] == id){
                 actorListStatus[i] = status;
             }

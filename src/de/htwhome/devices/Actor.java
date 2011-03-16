@@ -1,4 +1,5 @@
 package de.htwhome.devices;
+import de.htwhome.utils.ActionEnum;
 
 /**
  *
@@ -22,14 +23,17 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 
     public void handleMsg(String msg){
         int gid = 0;                    //TODO json
-        String action = "";
+        ActionEnum action = null;
         T status = null;
         for(int i=0; i< this.gidTab.length; i++){
             if(this.gidTab[i] == gid){
-                if("changeStatus".equals(action)){
-                    setStatus(status);
-                }else if("getStatus".equals(action)){
-                    setStatus(this.status);
+                switch(action){
+                    case changeStatus:
+                        setStatus(status);
+                        break;
+                    case getStatus:
+                        setStatus(this.status);
+                        break;
                 }
             }
         }
