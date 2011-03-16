@@ -5,11 +5,13 @@
 
 package de.htwhome.transmission;
 
+import java.io.Serializable;
+
 /**
  *
  * @author tobiaslana
  */
-public class Message {
+public class Message implements Serializable{
     private String sender   = "";
     private String receiver = "";
     private String mesObject = "";
