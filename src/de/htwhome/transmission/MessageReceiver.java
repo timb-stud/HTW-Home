@@ -12,13 +12,19 @@ public class MessageReceiver {
 
     static final int    PORT = 1234;
     private static final int BUFFERSIZE = 256;
-
-    public MessageReceiver() throws IOException, ClassNotFoundException{
-        DatagramPacket pack = new DatagramPacket(new byte[BUFFERSIZE], BUFFERSIZE);
-	DatagramSocket sock = new DatagramSocket(PORT);
+    public DatagramPacket pack;
+    public DatagramSocket sock;
+    
+    public MessageReceiver() throws SocketException {
+        sock = new DatagramSocket(PORT);
+        
+    }
+    
+    public synchronized void Receiver() throws IOException {
         while (true) {
+            pack = new DatagramPacket(new byte[BUFFERSIZE], BUFFERSIZE);
             sock.receive(pack);
-            ServerThread st = new ServerThread(sock,pack);
+            ServerThread st = new ServerThread(sock, pack);
             st.start();
         }
     }
@@ -36,16 +42,27 @@ class ServerThread extends Thread {
         this.sock = sock;
 
     }
+
+    ServerThread(DatagramPacket pack) {
+        this.pack = pack;
+    }
+    
     @Override
     public void run() {
         try {
-            System.out.println(pack.getSocketAddress().toString());
+            System.out.println("Start ThreadID: " + this.getId());
+            Thread.sleep(5000);
             System.out.println(pack.getAddress().toString());
             System.out.println(new String(pack.getData(), 0, pack.getLength()));
-            System.out.println("Received! Now sending back... ");
-            sock.send(pack);
-        } catch (IOException ex) {
+            try {
+                sock.send(pack);
+            } catch (IOException ex) {
+                Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("ENDE ThreadID: " + this.getId());
+        } catch (InterruptedException ex) {
             Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 }
