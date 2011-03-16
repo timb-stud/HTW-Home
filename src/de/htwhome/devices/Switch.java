@@ -9,7 +9,7 @@ package de.htwhome.devices;
  *
  * @author christian
  */
-public class Switch extends Sensor implements OnOff_Interface{
+public class Switch extends Sensor<Boolean> {
 
     public Switch (int id, boolean status,String location, String type, String hint, String[] aktorList, int gID) {
         super(id, status, location, type, hint, aktorList, gID);
