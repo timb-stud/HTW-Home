@@ -13,4 +13,10 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         this.gID = gID;
     }
 
+    @Override
+    public void setStatus(T status) {
+        super.setStatus(status);
+        String msg = "" + this.id + ":"  + this.status;
+        //send(msg);
+    }
 }

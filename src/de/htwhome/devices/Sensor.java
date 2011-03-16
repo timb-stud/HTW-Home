@@ -17,4 +17,11 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         this.gID = gID;
     }
 
+    @Override
+    public void setStatus(T status) {
+        super.setStatus(status);
+        String msg = "" + this.gID + ":" + "changeStatus" + ":" + this.status;
+        //send(msg);
+    }
+
 }

@@ -5,8 +5,7 @@ package de.htwhome.devices;
  * @author Christian Rech, Tim Bartsch
  */
 public abstract class AbstractDevice<T> {
-    private int id;
-
+    protected int id;
     protected  T status;
     private String location;
     private String type; //koennte auch als Enum realisiert werden
