@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author tobiaslana & volkangoekkaya
  */
 public class MessageTester {
-
+    int i = 0;
     
 
     public MessageTester() throws IOException, ClassNotFoundException {
@@ -21,7 +21,10 @@ public class MessageTester {
         // Client
         String msg = "ich sende";
         MessageSender msgsender = new MessageSender();
-        msgsender.sendMsg(msg);
+        while(i < 5){
+            msgsender.sendMsg(i +"");
+            i++;
+        }
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException{
