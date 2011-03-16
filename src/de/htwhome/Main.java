@@ -7,7 +7,7 @@ package de.htwhome;
 
 /**
  *
- * @author tim
+ * @author timo
  */
 public class Main {
 
