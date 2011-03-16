@@ -11,8 +11,8 @@ public class Light extends Actor<Boolean> {
 
     private static Type ackMsgType = new TypeToken<AckMessage<Boolean>>(){}.getType();
 
-    public Light(int id, boolean status, String location, String type, String hint, int[] gID) {
-        super(id, status, location, type, hint, gID);
+    public Light(int id, boolean status, String location, String type, String description, int[] gidTab) {
+        super(id, status, location, type, description, gidTab);
     }
 
     @Override

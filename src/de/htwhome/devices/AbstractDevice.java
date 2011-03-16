@@ -11,7 +11,7 @@ public abstract class AbstractDevice<T> {
     private String type; //koennte auch als Enum realisiert werden
     private String description;
 
-    public AbstractDevice(int id, T status,String location, String type, String description) {
+    public AbstractDevice(int id, T status, String location, String type, String description) {
         this.id = id;
         this.status = status;
         this.location = location;

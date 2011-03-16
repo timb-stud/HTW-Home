@@ -11,9 +11,9 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 
     private int[] gidTab;
   
-    public Actor(int id, T status,String location, String type, String hint, int[] gID) {
+    public Actor(int id, T status, String location, String type, String hint, int[] gidTab) {
         super(id, status,location, type, hint);
-        this.gidTab = gID;
+        this.gidTab = gidTab;
     }
 
     public void sendMsg(AckMessage<T> ackMsg, Type ackMsgTyp){

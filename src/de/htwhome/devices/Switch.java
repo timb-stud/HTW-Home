@@ -12,8 +12,8 @@ public class Switch extends Sensor<Boolean> {
 
     private static Type actionMsgType = new TypeToken<ActionMessage<Boolean>>(){}.getType();
 
-    public Switch (int id, boolean status, String location, String type, String hint, int[] actorListId, Boolean[] actorListStatus, int gID) {
-        super(id, status, location, type, hint, actorListId, actorListStatus, gID);
+    public Switch (int id, boolean status, String location, String type, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) {
+        super(id, status, location, type, description, actorIdTab, actorStatusTab, gid);
     }
 
     @Override

@@ -11,8 +11,8 @@ public class SunBlind extends Actor<Integer>{
 
     private static Type ackMsgType = new TypeToken<AckMessage<Integer>>(){}.getType();
 
-    public SunBlind(int id, int status, String location, String type, String description, int[] gID) {
-        super(id, status, location, type, description, gID);
+    public SunBlind(int id, int status, String location, String type, String description, int[] gidTab) {
+        super(id, status, location, type, description, gidTab);
     }
 
     @Override

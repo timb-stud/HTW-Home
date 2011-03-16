@@ -12,8 +12,8 @@ public class PercentSwitch extends Sensor<Integer>{
 
     private static Type actionMsgType = new TypeToken<ActionMessage<Integer>>(){}.getType();
 
-    public PercentSwitch(int id, int status, String location, String type, String hint, int[] actorListId, Integer[] actorListStatus, int gID) {
-        super(id, status, location, type, hint, actorListId, actorListStatus, gID);
+    public PercentSwitch(int id, int status, String location, String type, String description, int[] actorListId, Integer[] actorStatusTab, int gid) {
+        super(id, status, location, type, description, actorListId, actorStatusTab, gid);
     }
 
     @Override

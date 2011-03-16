@@ -10,15 +10,15 @@ import java.lang.reflect.Type;
  */
 public abstract class Sensor<T> extends AbstractDevice<T>{
 
-    protected int[] actorListId;
-    protected T[] actorListStatus;
+    protected int[] actorIdTab;
+    protected T[] actorStatusTab;
     protected int gid;
 
-     public Sensor (int id, T status,String location, String type, String hint, int[] actorListId, T[] actorListStatus, int gID) {
-        super(id, status,location, type, hint);
-        this.actorListId = actorListId;
-        this.actorListStatus = actorListStatus;
-        this.gid = gID;
+     public Sensor (int id, T status, String location, String type, String description, int[] actorIdTab, T[] actorStatusTab, int gid) {
+        super(id, status,location, type, description);
+        this.actorIdTab = actorIdTab;
+        this.actorStatusTab = actorStatusTab;
+        this.gid = gid;
     }
 
      public void sendMsg(ActionMessage<T> actionMsg, Type actionMsgType){
@@ -30,9 +30,9 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     public void handleMsg(String msg){
         int id = 0;             //TODO json
         T status = null;
-        for(int i=0; i < actorListId.length; i++){
-            if(actorListId[i] == id){
-                actorListStatus[i] = status;
+        for(int i=0; i < actorIdTab.length; i++){
+            if(actorIdTab[i] == id){
+                actorStatusTab[i] = status;
             }
         }
     }
