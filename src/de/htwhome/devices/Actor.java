@@ -16,7 +16,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 
     @Override
     public void setStatus(T status) {
-        super.setStatus(status);
+        this.status = status;
         String msg = "" + this.id + ":"  + this.status;
         //send(msg);
     }

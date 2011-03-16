@@ -47,9 +47,7 @@ public abstract class AbstractDevice<T> {
         return status;
     }
 
-    public void setStatus(T status) {
-        this.status = status;
-    }
+    public abstract void setStatus(T status);
 
     public String getType() {
         return type;
