@@ -7,7 +7,13 @@ package de.htwhome.transmission;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 /**
  *
@@ -15,12 +21,15 @@ import java.net.Socket;
  */
 public class MessageSender {
 
-    public void sendMsg(Message msg) throws IOException{
 
-        Socket server = new Socket("255.255.255.255", 1234);
-        ObjectOutputStream output = new ObjectOutputStream(server.getOutputStream());
-        output.writeObject(msg);
-        server.close();
-        output.close();
+    public static void sendMsg(String msg) throws IOException{
+            DatagramSocket datagramSocket = new DatagramSocket();
+            byte[] buffer = msg.getBytes();
+            InetAddress receiverAddress = InetAddress.getByName("192.168.123.255");
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, receiverAddress, 1234);
+            datagramSocket.send(packet);
+            datagramSocket.receive(packet);
+            System.out.println("Sent and received: " + new String(packet.getData(), 0, packet.getLength()));
+       
+        }
     }
-}
