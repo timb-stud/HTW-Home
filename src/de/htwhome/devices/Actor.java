@@ -1,5 +1,7 @@
 package de.htwhome.devices;
+import com.google.gson.Gson;
 import de.htwhome.utils.ActionEnum;
+import java.lang.reflect.Type;
 
 /**
  *
@@ -14,11 +16,10 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         this.gidTab = gID;
     }
 
-    @Override
-    public void setStatus(T status) {
-        this.status = status;
-        String msg = "" + this.id + ":"  + this.status;
-        //send(msg);
+    public void sendMsg(AckMessage<T> ackMsg, Type ackMsgTyp){
+	String json = new Gson().toJson(ackMsg, ackMsgTyp);
+	System.out.println("JSON:" + json);
+	//TODO ssend(json)
     }
 
     public void handleMsg(String msg){
