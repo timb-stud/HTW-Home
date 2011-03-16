@@ -1,6 +1,11 @@
 package de.htwhome.devices;
 
 import com.google.gson.Gson;
+import de.htwhome.utils.Config;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.xml.bind.JAXB;
 
 /**
  *
@@ -21,6 +26,28 @@ public abstract class AbstractDevice<T> {
         this.type = type;
         this.description = description;
     }
+
+    public Config getConfig(){  //TODO Config file + config als attribut
+        Config config = JAXB.unmarshal(new File("config" + id + ".xml"), Config.class);
+        return config;
+    }
+
+    public void setConfig(Config config) {
+        FileWriter filewriter = null;
+        try {
+            filewriter = new FileWriter(("config" + id + ".xml"));
+            JAXB.marshal(config, filewriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                filewriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public String getDescription() {
         return description;
