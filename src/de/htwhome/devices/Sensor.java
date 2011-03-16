@@ -6,12 +6,14 @@ package de.htwhome.devices;
  */
 public abstract class Sensor<T> extends AbstractDevice<T>{
 
-    private String[] actorList;
+    private int[] actorListId;
+    private T[] actorListStatus;
     private int gID;
 
-     public Sensor (int id, T status,String location, String type, String hint, String[] aktorList, int gID) {
+     public Sensor (int id, T status,String location, String type, String hint, int[] actorListId, T[] actorListStatus, int gID) {
         super(id, status,location, type, hint);
-        this.actorList = aktorList;
+        this.actorListId = actorListId;
+        this.actorListStatus = actorListStatus;
         this.gID = gID;
     }
 
