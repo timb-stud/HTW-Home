@@ -1,13 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package de.htwhome.devices;
 
 /**
  *
- * @author christian
+ * @author Christian Rech, Tim Bartsch
  */
 public abstract class AbstractDevice<T> {
     private int id;
@@ -15,18 +10,14 @@ public abstract class AbstractDevice<T> {
     protected  T status;
     private String location;
     private String type; //koennte auch als Enum realisiert werden
-    private String hint;
+    private String description;
 
-    public AbstractDevice(int id, T status,String location, String type, String hint) {
+    public AbstractDevice(int id, T status,String location, String type, String description) {
         this.id = id;
         this.status = status;
         this.location = location;
         this.type = type;
-        this.hint = hint;
+        this.description = description;
     }
-
-//    public abstract  Object getStatus();
-//    public abstract  void setStatus(Object status);
-    
 
 }

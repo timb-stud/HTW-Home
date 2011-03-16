@@ -1,13 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package de.htwhome.devices;
 
 /**
  *
- * @author christian
+ * @author Christian Rech, Tim Bartsch
  */
 public abstract class Actor<T> extends AbstractDevice<T>{
 
@@ -17,6 +12,5 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         super(id, status,location, type, hint);
         this.gID = gID;
     }
-
 
 }
