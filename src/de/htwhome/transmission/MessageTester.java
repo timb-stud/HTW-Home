@@ -9,7 +9,7 @@ import java.io.IOException;
 
 /**
  *
- * @author tobiaslana
+ * @author tobiaslana & volkangoekkaya
  */
 public class MessageTester {
 
