@@ -51,15 +51,16 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         ac.setStatus(status);
         ac.setLocation(location);
         ac.setType(type);
-        ac.setDescription(description); //TODO alle Attribute
-
+        ac.setDescription(description);
+        ac.setGidTab(gidTab);
 
         Light.setConfig(ac);
     }
 
     public void load(){
-        ActorConfig sc = this.getConfig();
-        this.id = sc.getId(); //TODO alle Attribute
+        ActorConfig ac = this.getConfig();
+        load(ac);
+        this.gidTab = ac.getGidTab();
     }
 
     private boolean isReceiver(int id) {
