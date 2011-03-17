@@ -30,8 +30,10 @@ class ServerThread extends Thread {
         try {
             System.out.println("Start ThreadID: " + this.getId());
             Thread.sleep(5000);
-            System.out.println(pack.getAddress().toString());
-            System.out.println(new String(pack.getData(), 0, pack.getLength()));
+            String adress = pack.getAddress().toString();
+            String msg = new String(pack.getData(), 0, pack.getLength());
+            System.out.println(adress);
+            System.out.println(msg);
             try {
                 sock.send(pack);
             } catch (IOException ex) {
