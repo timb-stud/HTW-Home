@@ -20,6 +20,7 @@ public class Light extends Actor<Boolean> {
 
     @Override
     public void setStatus(Boolean status) {
+        System.out.println("Light -> SetStatus");
 	this.status = status;
 	AckMessage<Boolean> ackMsg = new AckMessage<Boolean>(this.id, this.status);
 	this.sendMsg(ackMsg, Light.ackMsgType);

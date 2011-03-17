@@ -33,9 +33,10 @@ class ServerThread extends Thread {
     public void run() {
         try {
             System.out.println("Start ThreadID: " + this.getId());
-            Thread.sleep(5000);
-            System.out.println(pack.getAddress().toString());
+            Thread.sleep(0);
+            //System.out.println(pack.getAddress().toString());
             String msg = new String(pack.getData(), 0, pack.getLength());
+            System.out.println("msg: " + msg);
             this.device.handleMsg(msg);
             System.out.println("ENDE ThreadID: " + this.getId());
         } catch (InterruptedException ex) {

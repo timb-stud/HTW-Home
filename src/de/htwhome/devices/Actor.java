@@ -31,7 +31,9 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     }
 
     public void handleMsg(String msg, Type msgType){
+        System.out.println("in handleMsg mit msg: " + msg);
 	ActionMessage<T> actionMsg = gson.fromJson(msg, msgType);
+        System.out.println("Actionmsg: " + actionMsg);
         for(int i=0; i< this.gidTab.length; i++){
             if(this.gidTab[i] == actionMsg.getGid()){
                 switch(actionMsg.getAction()){
