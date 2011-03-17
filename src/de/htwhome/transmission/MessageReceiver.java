@@ -18,7 +18,7 @@ public class MessageReceiver {
         
     }
     
-    public synchronized void Receiver() throws IOException {
+    public synchronized void receiver() throws IOException {
         while (true) {
             pack = new DatagramPacket(new byte[BUFFERSIZE], BUFFERSIZE);
             sock.receive(pack);
@@ -30,5 +30,4 @@ public class MessageReceiver {
     public static void main(String[] args) throws SocketException {
         MessageReceiver msgr = new MessageReceiver();
     }
-
 }

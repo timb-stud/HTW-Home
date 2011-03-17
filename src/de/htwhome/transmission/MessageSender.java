@@ -18,14 +18,14 @@ public class MessageSender {
             InetAddress receiverAddress = InetAddress.getByName("192.168.123.255");
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, receiverAddress, 1234);
             datagramSocket.send(packet);
-            datagramSocket.receive(packet);
-            System.out.println("Sent and received: " + new String(packet.getData(), 0, packet.getLength()));
+            System.out.println("Sent " + new String(packet.getData(), 0, packet.getLength()));
+//            datagramSocket.receive(packet);
+//            System.out.println("Received: " + new String(packet.getData(), 0, packet.getLength()));
         }
 
     public static void main(String[] args) throws IOException {
-        String msg = "ich sende";
-        for(int i=0; i < 5; i++){
-            MessageSender.sendMsg(i + "");
+        for(int i=0; i < 1000; i++){
+            MessageSender.sendMsg("" + i);
         }
     }
 }
