@@ -1,7 +1,7 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
-import de.htwhome.utils.Config;
+import de.htwhome.utils.ActorConfig;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 
@@ -37,9 +37,11 @@ public class Light extends Actor<Boolean> {
 	Light l = new Light(10, false, "haus", "lampe1", "Beschreibung", gid);
 	//l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
 
-//        Config c = new Config(10);
-//        l.setConfig(c);
-//        Config c2 = l.getConfig();
-//        System.out.println("Gespeicherte ID : " + c2.getId());
+
+        l.save();
+        ActorConfig sc2 = (ActorConfig) l.getConfig();
+        System.out.println("sc2 id= " + sc2.getId()
+                  + "\n" + "status= " + sc2.getStatus()
+                );
     }
 }

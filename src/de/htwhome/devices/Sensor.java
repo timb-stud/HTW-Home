@@ -1,6 +1,7 @@
 package de.htwhome.devices;
 
 import de.htwhome.transmission.MessageSender;
+import de.htwhome.utils.SensorConfig;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;

@@ -1,6 +1,7 @@
 package de.htwhome.devices;
 import com.google.gson.Gson;
 import de.htwhome.transmission.MessageSender;
+import de.htwhome.utils.ActorConfig;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
@@ -19,6 +20,24 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         super(id, status,location, type, hint);
         this.gidTab = gidTab;
     }
+
+    public void save(){
+        ActorConfig ac = new ActorConfig();
+        ac.setId(id);
+        ac.setStatus(status);
+        ac.setLocation(location);
+        ac.setType(type);
+        ac.setDescription(description); //TODO alle Attribute
+
+
+        Light.setConfig(ac);
+    }
+
+    public void load(){
+        ActorConfig sc = (ActorConfig) super.getConfig();
+        this.id = sc.getId(); //TODO alle Attribute
+    }
+
 
     public void sendMsg(AckMessage<T> ackMsg, Type ackMsgTyp){
         try {
