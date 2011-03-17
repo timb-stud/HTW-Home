@@ -2,7 +2,11 @@ package de.htwhome.devices;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.transmission.MessageSender;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,9 +26,13 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     }
 
      public void sendMsg(ActionMessage<T> actionMsg, Type actionMsgType){
-         String json = gson.toJson(actionMsg, actionMsgType);
-         System.out.println("JSON:" + json);
-         //TODO send(json);
+        try {
+            String json = gson.toJson(actionMsg, actionMsgType);
+            System.out.println("JSON:" + json); //TODO send(json) + aufraeumen;
+            MessageSender.sendMsg(json);
+        } catch (IOException ex) {
+            Logger.getLogger(Sensor.class.getName()).log(Level.SEVERE, null, ex);
+        }
      }
 
     public void handleMsg(String msg, Type msgType){
