@@ -18,17 +18,19 @@ public class MessageReceiver {
         
     }
     
-    public synchronized void Receiver() throws IOException {
+    public synchronized void receiver() throws IOException {
         while (true) {
             pack = new DatagramPacket(new byte[BUFFERSIZE], BUFFERSIZE);
             sock.receive(pack);
-            ServerThread st = new ServerThread(sock, pack);
+//            ServerThread st = new ServerThread(sock, pack);
+            ServerThread st = new ServerThread(pack);
             st.start();
         }
     }
 
-    public static void main(String[] args) throws SocketException {
+    public static void main(String[] args) throws SocketException, IOException {
         MessageReceiver msgr = new MessageReceiver();
+        msgr.receiver();
     }
 
 }
