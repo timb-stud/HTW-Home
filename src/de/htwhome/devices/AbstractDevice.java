@@ -1,11 +1,13 @@
 package de.htwhome.devices;
 
 import com.google.gson.Gson;
+import de.htwhome.transmission.MessageReceiver;
 import de.htwhome.utils.Config;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.SocketException;
 import javax.xml.bind.JAXB;
 
 /**
@@ -19,13 +21,15 @@ public abstract class AbstractDevice<T> {
     private String type; //koennte auch als Enum realisiert werden
     private String description;
     protected static Gson gson = new Gson();
+    private MessageReceiver msgReceiver;
 
-    public AbstractDevice(int id, T status, String location, String type, String description) {
+    public AbstractDevice(int id, T status, String location, String type, String description) throws SocketException {
         this.id = id;
         this.status = status;
         this.location = location;
         this.type = type;
         this.description = description;
+        msgReceiver = new MessageReceiver(this);
     }
 
     public Config getConfig(){  //TODO Config file + config als attribut
