@@ -1,10 +1,9 @@
 package de.htwhome.devices;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.MessageSender;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,7 +17,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     protected T[] actorStatusTab;
     protected int gid;
 
-     public Sensor (int id, T status, String location, String type, String description, int[] actorIdTab, T[] actorStatusTab, int gid) {
+     public Sensor (int id, T status, String location, String type, String description, int[] actorIdTab, T[] actorStatusTab, int gid) throws SocketException {
         super(id, status,location, type, description);
         this.actorIdTab = actorIdTab;
         this.actorStatusTab = actorStatusTab;

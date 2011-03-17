@@ -26,6 +26,7 @@ public class MessageReceiver extends Thread{
     
     @Override
     public synchronized void run(){
+        System.out.println("MsgReceiver: " + device);
         while (true) {
             try {
                 pack = new DatagramPacket(new byte[BUFFERSIZE], BUFFERSIZE);

@@ -30,6 +30,7 @@ public abstract class AbstractDevice<T> {
         this.type = type;
         this.description = description;
         msgReceiver = new MessageReceiver(this);
+        msgReceiver.start();
     }
 
     public Config getConfig(){  //TODO Config file + config als attribut

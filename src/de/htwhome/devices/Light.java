@@ -3,6 +3,7 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.utils.Config;
 import java.lang.reflect.Type;
+import java.net.SocketException;
 
 /**
  *
@@ -13,7 +14,7 @@ public class Light extends Actor<Boolean> {
     public static final Type ackMsgType = new TypeToken<AckMessage<Boolean>>(){}.getType();
     public static final Type actionMsgType = new TypeToken<ActionMessage<Boolean>>(){}.getType();
 
-    public Light(int id, boolean status, String location, String type, String description, int[] gidTab) {
+    public Light(int id, boolean status, String location, String type, String description, int[] gidTab) throws SocketException {
         super(id, status, location, type, description, gidTab);
     }
 
@@ -30,7 +31,7 @@ public class Light extends Actor<Boolean> {
 	super.handleMsg(msg, actionMsgType);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SocketException {
         int[] gid  = {1};
 	Light l = new Light(10, false, "haus", "lampe1", "Beschreibung", gid);
 	//l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");

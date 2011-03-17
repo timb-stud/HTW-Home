@@ -3,6 +3,7 @@ import com.google.gson.Gson;
 import de.htwhome.transmission.MessageSender;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +15,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 
     private int[] gidTab;
   
-    public Actor(int id, T status, String location, String type, String hint, int[] gidTab) {
+    public Actor(int id, T status, String location, String type, String hint, int[] gidTab) throws SocketException {
         super(id, status,location, type, hint);
         this.gidTab = gidTab;
     }

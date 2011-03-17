@@ -3,6 +3,7 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.utils.ActionEnum;
 import java.lang.reflect.Type;
+import java.net.SocketException;
 
 /**
  *
@@ -13,7 +14,7 @@ public class Switch extends Sensor<Boolean> {
     public static final Type actionMsgType = new TypeToken<ActionMessage<Boolean>>(){}.getType();
     public static final Type ackMsgType = new TypeToken<AckMessage<Boolean>>(){}.getType();
 
-    public Switch (int id, boolean status, String location, String type, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) {
+    public Switch (int id, boolean status, String location, String type, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) throws SocketException {
         super(id, status, location, type, description, actorIdTab, actorStatusTab, gid);
     }
 
@@ -30,7 +31,7 @@ public class Switch extends Sensor<Boolean> {
 	super.handleMsg(msg, ackMsgType);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SocketException {
         int[] actorListId = {10};
         Boolean[] actorListStatus = {false};
         Switch s = new Switch(33, false, "haus", "schalter", "hintt", actorListId, actorListStatus, 12);

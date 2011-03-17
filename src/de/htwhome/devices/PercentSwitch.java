@@ -3,6 +3,7 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.utils.ActionEnum;
 import java.lang.reflect.Type;
+import java.net.SocketException;
 
 /**
  *
@@ -13,7 +14,7 @@ public class PercentSwitch extends Sensor<Integer>{
     public static final Type actionMsgType = new TypeToken<ActionMessage<Integer>>(){}.getType();
     public static final Type ackMsgType = new TypeToken<AckMessage<Integer>>(){}.getType();
 
-    public PercentSwitch(int id, int status, String location, String type, String description, int[] actorListId, Integer[] actorStatusTab, int gid) {
+    public PercentSwitch(int id, int status, String location, String type, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException {
         super(id, status, location, type, description, actorListId, actorStatusTab, gid);
     }
 
