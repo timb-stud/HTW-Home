@@ -20,7 +20,6 @@ public class MessageSender {
             datagramSocket.send(packet);
             datagramSocket.receive(packet);
             System.out.println("Sent and received: " + new String(packet.getData(), 0, packet.getLength()));
-       
         }
 
     public static void main(String[] args) throws IOException {
