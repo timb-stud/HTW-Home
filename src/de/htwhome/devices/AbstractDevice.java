@@ -5,6 +5,7 @@ import de.htwhome.utils.Config;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import javax.xml.bind.JAXB;
 
 /**
@@ -47,6 +48,8 @@ public abstract class AbstractDevice<T> {
             }
         }
     }
+
+    public abstract void handleMsg(String msg, Type msgType);
 
 
     public String getDescription() {
