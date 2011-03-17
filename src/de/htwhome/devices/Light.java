@@ -19,6 +19,10 @@ public class Light extends Actor<Boolean> {
         super(id, status, location, type, description, gidTab);
     }
 
+    public Light() {
+        super.load();
+    }
+
     @Override
     public void setStatus(Boolean status) {
 	this.status = status;
@@ -37,7 +41,8 @@ public class Light extends Actor<Boolean> {
 
     public static void main(String[] args) throws SocketException {
         int[] gid  = {1};
-	Light l = new Light(10, false, "haus", "lampe1", "Beschreibung", gid);
+//	Light l = new Light(10, false, "haus", "lampe1", "Beschreibung", gid);
+        Light l = new Light();
 	//l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
 
 

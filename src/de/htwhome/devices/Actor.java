@@ -1,8 +1,12 @@
 package de.htwhome.devices;
 import de.htwhome.transmission.Message;
 import de.htwhome.utils.ActorConfig;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import javax.xml.bind.JAXB;
 
 /**
  *
@@ -11,10 +15,34 @@ import java.net.SocketException;
 public abstract class Actor<T> extends AbstractDevice<T>{
 
     private int[] gidTab;
-  
+
+    public Actor() {
+    }
+
     public Actor(int id, T status, String location, String type, String hint, int[] gidTab) throws SocketException {
         super(id, status,location, type, hint);
         this.gidTab = gidTab;
+    }
+
+   public static ActorConfig getConfig(){  //TODO Config file + config als attribut
+        ActorConfig config = JAXB.unmarshal(new File("config.xml"), ActorConfig.class);
+        return config;
+    }
+
+    public static void setConfig(ActorConfig config) {
+        FileWriter filewriter = null;
+        try {
+            filewriter = new FileWriter(("config.xml"));
+            JAXB.marshal(config, filewriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                filewriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void save(){
@@ -30,7 +58,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     }
 
     public void load(){
-        ActorConfig sc = (ActorConfig) super.getConfig();
+        ActorConfig sc = this.getConfig();
         this.id = sc.getId(); //TODO alle Attribute
     }
 

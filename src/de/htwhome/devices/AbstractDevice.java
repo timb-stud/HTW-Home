@@ -37,26 +37,7 @@ public abstract class AbstractDevice<T> {
         msgReceiver.start();
     }
 
-    public static DeviceConfig getConfig(){  //TODO Config file + config als attribut
-        DeviceConfig config = JAXB.unmarshal(new File("config.xml"), DeviceConfig.class);
-        return config;
-    }
-
-    public static void setConfig(DeviceConfig config) {
-        FileWriter filewriter = null;
-        try {
-            filewriter = new FileWriter(("config.xml"));
-            JAXB.marshal(config, filewriter);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                filewriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    public AbstractDevice() {    }
 
     public abstract void handleMsg(String msg, Type msgType);
 
