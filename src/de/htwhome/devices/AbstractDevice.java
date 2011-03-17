@@ -23,6 +23,10 @@ public abstract class AbstractDevice<T> {
     protected static Gson gson = new Gson();
     private MessageReceiver msgReceiver;
 
+    public AbstractDevice() {
+        
+    }
+
     public AbstractDevice(int id, T status, String location, String type, String description) throws SocketException {
         this.id = id;
         this.status = status;
@@ -31,6 +35,14 @@ public abstract class AbstractDevice<T> {
         this.description = description;
         msgReceiver = new MessageReceiver(this);
         msgReceiver.start();
+    }
+
+    protected  void load(DeviceConfig dc){
+        this.id = dc.getId();
+        this.status = (T) dc.getStatus();
+        this.location = dc.getLocation();
+        this.type = dc.getType();
+        this.description = dc.getDescription();
     }
 
     public static DeviceConfig getConfig(){  //TODO Config file + config als attribut

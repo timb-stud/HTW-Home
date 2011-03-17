@@ -15,7 +15,11 @@ import java.util.logging.Logger;
 public abstract class Actor<T> extends AbstractDevice<T>{
 
     private int[] gidTab;
-  
+
+    public Actor() {
+        load();
+    }
+
     public Actor(int id, T status, String location, String type, String hint, int[] gidTab) throws SocketException {
         super(id, status,location, type, hint);
         this.gidTab = gidTab;
@@ -27,15 +31,16 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         ac.setStatus(status);
         ac.setLocation(location);
         ac.setType(type);
-        ac.setDescription(description); //TODO alle Attribute
-
+        ac.setDescription(description);
+        ac.setGidTab(gidTab);
 
         Light.setConfig(ac);
     }
 
     public void load(){
-        ActorConfig sc = (ActorConfig) super.getConfig();
-        this.id = sc.getId(); //TODO alle Attribute
+        ActorConfig ac = (ActorConfig) super.getConfig();
+        load(ac);
+        this.gidTab = ac.getGidTab();
     }
 
 
