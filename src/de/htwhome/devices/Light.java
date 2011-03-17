@@ -1,9 +1,14 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
-import de.htwhome.utils.Config;
+import de.htwhome.utils.DeviceConfig;
+import de.htwhome.utils.SensorConfig;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import javax.xml.bind.JAXB;
 
 /**
  *
@@ -17,6 +22,30 @@ public class Light extends Actor<Boolean> {
     public Light(int id, boolean status, String location, String type, String description, int[] gidTab) throws SocketException {
         super(id, status, location, type, description, gidTab);
     }
+
+
+    public static SensorConfig getConfig(){  //TODO Config file + config als attribut
+        SensorConfig config = JAXB.unmarshal(new File("config.xml"), SensorConfig.class);
+        return config;
+    }
+
+    public static void setConfig(SensorConfig config) {
+        FileWriter filewriter = null;
+        try {
+            filewriter = new FileWriter(("config.xml"));
+            JAXB.marshal(config, filewriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                filewriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
     @Override
     public void setStatus(Boolean status) {
@@ -37,9 +66,11 @@ public class Light extends Actor<Boolean> {
 	Light l = new Light(10, false, "haus", "lampe1", "Beschreibung", gid);
 	//l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
 
-//        Config c = new Config(10);
-//        l.setConfig(c);
-//        Config c2 = l.getConfig();
-//        System.out.println("Gespeicherte ID : " + c2.getId());
+
+        l.save();
+        SensorConfig sc2 = l.getConfig();
+        System.out.println("sc2 id= " + sc2.getId()
+                  + "\n" + "status= " + sc2.getStatus()
+                );
     }
 }
