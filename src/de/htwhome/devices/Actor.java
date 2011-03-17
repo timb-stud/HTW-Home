@@ -25,14 +25,14 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     }
 
    public static ActorConfig getConfig(){  //TODO Config file + config als attribut
-        ActorConfig config = JAXB.unmarshal(new File("config.xml"), ActorConfig.class);
+        ActorConfig config = JAXB.unmarshal(new File("ActorConfig.xml"), ActorConfig.class);
         return config;
     }
 
     public static void setConfig(ActorConfig config) {
         FileWriter filewriter = null;
         try {
-            filewriter = new FileWriter(("config.xml"));
+            filewriter = new FileWriter(("ActorConfig.xml"));
             JAXB.marshal(config, filewriter);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,14 +47,9 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 
     public void save(){
         ActorConfig ac = new ActorConfig();
-        ac.setId(id);
-        ac.setStatus(status);
-        ac.setLocation(location);
-        ac.setType(type);
-        ac.setDescription(description);
+        save(ac);
         ac.setGidTab(gidTab);
-
-        Light.setConfig(ac);
+        setConfig(ac);
     }
 
     public void load(){

@@ -14,6 +14,10 @@ public class Switch extends Sensor<Boolean> {
 
     public static final Type msgType = new TypeToken<Message<Boolean>>(){}.getType();
 
+    public Switch() {
+        super.load();
+    }
+
     public Switch (int id, boolean status, String location, String type, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) throws SocketException {
         super(id, status, location, type, description, actorIdTab, actorStatusTab, gid);
     }

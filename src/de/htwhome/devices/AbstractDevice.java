@@ -49,6 +49,14 @@ public abstract class AbstractDevice<T> {
         this.description = dc.getDescription();
     }
 
+    protected void save (DeviceConfig dc){
+        dc.setId(id);
+        dc.setStatus(status);
+        dc.setLocation(location);
+        dc.setType(type);
+        dc.setDescription(description);
+    }
+
 
     public abstract void handleMsg(String msg, Type msgType);
 
