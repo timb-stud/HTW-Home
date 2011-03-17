@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
  *
- * @author tobiaslana
+ * @author Tobias Lana, Volkan Goekkaya
  */
 public class MessageReceiver {
 
@@ -27,6 +27,10 @@ public class MessageReceiver {
             ServerThread st = new ServerThread(sock, pack);
             st.start();
         }
+    }
+
+    public static void main(String[] args) throws SocketException {
+        MessageReceiver msgr = new MessageReceiver();
     }
     
     
