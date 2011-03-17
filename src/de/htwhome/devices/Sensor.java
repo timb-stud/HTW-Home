@@ -15,6 +15,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 
     protected int[] actorIdTab;
     protected T[] actorStatusTab;
+    protected boolean[] actorAckTab; //TODO init
     protected int gid;
 
      public Sensor (int id, T status, String location, String type, String description, int[] actorIdTab, T[] actorStatusTab, int gid) throws SocketException {
