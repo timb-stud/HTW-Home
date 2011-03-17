@@ -1,9 +1,10 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
-import de.htwhome.utils.ActionEnum;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import de.htwhome.transmission.Message;
+import de.htwhome.transmission.MessageType;
 
 /**
  *
@@ -11,8 +12,7 @@ import java.net.SocketException;
  */
 public class PercentSwitch extends Sensor<Integer>{
 
-    public static final Type actionMsgType = new TypeToken<ActionMessage<Integer>>(){}.getType();
-    public static final Type ackMsgType = new TypeToken<AckMessage<Integer>>(){}.getType();
+    public static final Type msgType = new TypeToken<Message<Integer>>(){}.getType();
 
     public PercentSwitch(int id, int status, String location, String type, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException {
         super(id, status, location, type, description, actorListId, actorStatusTab, gid);
@@ -20,14 +20,17 @@ public class PercentSwitch extends Sensor<Integer>{
 
     @Override
     public void handleMsg(String msg) {
-	super.handleMsg(msg, ackMsgType);
+	super.handleMsg(msg, PercentSwitch.msgType);
     }
 
     @Override
     public void setStatus(Integer status) {
         this.status = status;
-	ActionMessage<Integer> actionMsg = new ActionMessage<Integer>(this.gid, ActionEnum.changeStatus, this.status);
-	this.sendMsg(actionMsg, PercentSwitch.actionMsgType);
+	Message<Integer> msg = new Message<Integer>();
+	msg.setMsgType(MessageType.statusChange);
+	msg.setReceiverId(this.gid);
+	msg.setStatus(this.status);
+	this.sendMsg(msg, PercentSwitch.msgType);
     }
 
 }

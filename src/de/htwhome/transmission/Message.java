@@ -8,24 +8,18 @@ public class Message<T> {
     MessageType msgType;
     int senderId;
     int receiverId;
-    T data;
+    T status;
+    String jsonConfig;
 
     public Message() {
     }
 
-    public Message(MessageType msgType, int senderId, int receiverId, T data) {
-        this.msgType = msgType;
-        this.senderId = senderId;
-        this.receiverId = receiverId;
-        this.data = data;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
+    public Message(MessageType msgType, int senderId, int receiverId, T status, String jsonConfig) {
+	this.msgType = msgType;
+	this.senderId = senderId;
+	this.receiverId = receiverId;
+	this.status = status;
+	this.jsonConfig = jsonConfig;
     }
 
     public MessageType getMsgType() {
@@ -52,9 +46,25 @@ public class Message<T> {
         this.senderId = senderId;
     }
 
+    public String getJsonConfig() {
+	return jsonConfig;
+    }
+
+    public void setJsonConfig(String jsonConfig) {
+	this.jsonConfig = jsonConfig;
+    }
+
+    public T getStatus() {
+	return status;
+    }
+
+    public void setStatus(T status) {
+	this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Message{" + "msgType=" + msgType + "senderId=" + senderId + "receiverId=" + receiverId + "data=" + data + '}';
+	return "Message{" + "msgType=" + msgType + "senderId=" + senderId + "receiverId=" + receiverId + "status=" + status + "jsonConfig=" + jsonConfig + '}';
     }
 
 }

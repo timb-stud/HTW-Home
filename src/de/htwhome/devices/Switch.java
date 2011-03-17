@@ -1,7 +1,8 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
-import de.htwhome.utils.ActionEnum;
+import de.htwhome.transmission.Message;
+import de.htwhome.transmission.MessageType;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 
@@ -11,24 +12,26 @@ import java.net.SocketException;
  */
 public class Switch extends Sensor<Boolean> {
 
-    public static final Type actionMsgType = new TypeToken<ActionMessage<Boolean>>(){}.getType();
-    public static final Type ackMsgType = new TypeToken<AckMessage<Boolean>>(){}.getType();
+    public static final Type msgType = new TypeToken<Message<Boolean>>(){}.getType();
 
     public Switch (int id, boolean status, String location, String type, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) throws SocketException {
         super(id, status, location, type, description, actorIdTab, actorStatusTab, gid);
     }
 
     @Override
-    public void setStatus(Boolean status) {
-	this.status = status;
-	ActionMessage<Boolean> actionMsg = new ActionMessage<Boolean>(this.gid, ActionEnum.changeStatus, this.status);
-	this.sendMsg(actionMsg, Switch.actionMsgType);
-        System.out.println("Switch.status: " + this.status);
+    public void handleMsg(String msg) {
+	super.handleMsg(msg, Switch.msgType);
     }
 
     @Override
-    public void handleMsg(String msg) {
-	super.handleMsg(msg, ackMsgType);
+    public void setStatus(Boolean status) {
+	this.status = status;
+	Message<Boolean> msg = new Message<Boolean>();
+	msg.setMsgType(MessageType.statusChange);
+	msg.setReceiverId(this.gid);
+	msg.setStatus(this.status);
+	this.sendMsg(msg, Switch.msgType);
+        System.out.println("Switch.status: " + this.status);
     }
 
     public static void main(String[] args) throws SocketException {
