@@ -1,13 +1,17 @@
 package de.htwhome.devices;
 
 import com.google.gson.Gson;
+import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageReceiver;
+import de.htwhome.transmission.MessageSender;
 import de.htwhome.utils.DeviceConfig;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXB;
 
 /**
@@ -69,6 +73,16 @@ public abstract class AbstractDevice<T> {
     public abstract void handleMsg(String msg, Type msgType);
 
     public abstract void handleMsg(String msg);
+
+    public void sendMsg(Message<T> msg, Type msgTyp){
+        try {
+            String json = new Gson().toJson(msg, msgTyp);
+            System.out.println("JSON:" + json); //TODO aufraeumen
+            MessageSender.sendMsg(json);
+        } catch (IOException ex) {
+            Logger.getLogger(Actor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public String getDescription() {
         return description;

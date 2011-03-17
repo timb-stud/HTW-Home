@@ -1,6 +1,8 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.transmission.Message;
+import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
 import java.lang.reflect.Type;
 import java.net.SocketException;
@@ -11,8 +13,7 @@ import java.net.SocketException;
  */
 public class Light extends Actor<Boolean> {
 
-    public static final Type ackMsgType = new TypeToken<AckMessage<Boolean>>(){}.getType();
-    public static final Type actionMsgType = new TypeToken<ActionMessage<Boolean>>(){}.getType();
+    public static final Type msgType = new TypeToken<Message<Boolean>>(){}.getType();
 
     public Light(int id, boolean status, String location, String type, String description, int[] gidTab) throws SocketException {
         super(id, status, location, type, description, gidTab);
@@ -20,16 +21,18 @@ public class Light extends Actor<Boolean> {
 
     @Override
     public void setStatus(Boolean status) {
-        System.out.println("Light -> SetStatus");
 	this.status = status;
-	AckMessage<Boolean> ackMsg = new AckMessage<Boolean>(this.id, this.status);
-	this.sendMsg(ackMsg, Light.ackMsgType);
+	Message<Boolean> msg = new Message<Boolean>();
+	msg.setMsgType(MessageType.statusResponse);
+	msg.setSenderId(this.id);
+	msg.setStatus(this.status);
+	this.sendMsg(msg, Light.msgType);
         System.out.println("Light.status:" +  this.status);
     }
 
     @Override
     public void handleMsg(String msg) {
-	super.handleMsg(msg, actionMsgType);
+	super.handleMsg(msg, msgType);
     }
 
     public static void main(String[] args) throws SocketException {

@@ -1,6 +1,8 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.transmission.Message;
+import de.htwhome.transmission.MessageType;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 
@@ -10,8 +12,7 @@ import java.net.SocketException;
  */
 public class SunBlind extends Actor<Integer>{
 
-    public static final Type ackMsgType = new TypeToken<AckMessage<Integer>>(){}.getType();
-    public static final Type actionMsgType = new TypeToken<ActionMessage<Integer>>(){}.getType();
+    public static final Type msgType = new TypeToken<Message<Integer>>(){}.getType();
 
     public SunBlind(int id, int status, String location, String type, String description, int[] gidTab) throws SocketException {
         super(id, status, location, type, description, gidTab);
@@ -19,14 +20,17 @@ public class SunBlind extends Actor<Integer>{
 
     @Override
     public void handleMsg(String msg) {
-	super.handleMsg(msg, actionMsgType);
+	super.handleMsg(msg, SunBlind.msgType);
     }
 
     @Override
     public void setStatus(Integer status) {
 	this.status = status;
-	AckMessage<Integer> ackMsg = new AckMessage<Integer>(this.id, this.status);
-	sendMsg(ackMsg, SunBlind.ackMsgType);
+	Message<Integer> msg = new Message<Integer>();
+	msg.setMsgType(MessageType.statusResponse);
+	msg.setSenderId(this.id);
+	msg.setStatus(this.status);
+	sendMsg(msg, SunBlind.msgType);
     }
     
 }
