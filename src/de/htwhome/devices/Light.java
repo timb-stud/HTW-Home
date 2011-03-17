@@ -22,6 +22,7 @@ public class Light extends Actor<Boolean> {
 	this.status = status;
 	AckMessage<Boolean> ackMsg = new AckMessage<Boolean>(this.id, this.status);
 	this.sendMsg(ackMsg, Light.ackMsgType);
+        System.out.println("Light.status:" +  this.status);
     }
 
     @Override
@@ -30,15 +31,13 @@ public class Light extends Actor<Boolean> {
     }
 
     public static void main(String[] args) {
-        int[] gid  = {1, 2};
-	Light l = new Light(10, false, "haus", "lampe", "bam", gid);
-	l.setStatus(true);
-	l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
-	System.out.println("After:" + l.status);
+        int[] gid  = {1};
+	Light l = new Light(10, false, "haus", "lampe1", "Beschreibung", gid);
+	//l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
 
-        Config c = new Config(10);
-        l.setConfig(c);
-        Config c2 = l.getConfig();
-        System.out.println("Gespeicherte ID : " + c2.getId());
+//        Config c = new Config(10);
+//        l.setConfig(c);
+//        Config c2 = l.getConfig();
+//        System.out.println("Gespeicherte ID : " + c2.getId());
     }
 }

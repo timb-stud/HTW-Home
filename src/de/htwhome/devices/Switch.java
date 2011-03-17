@@ -22,6 +22,7 @@ public class Switch extends Sensor<Boolean> {
 	this.status = status;
 	ActionMessage<Boolean> actionMsg = new ActionMessage<Boolean>(this.gid, ActionEnum.changeStatus, this.status);
 	this.sendMsg(actionMsg, Switch.actionMsgType);
+        System.out.println("Switch.status: " + this.status);
     }
 
     @Override
@@ -30,11 +31,9 @@ public class Switch extends Sensor<Boolean> {
     }
 
     public static void main(String[] args) {
-        int[] actorListId = {1,2};
-        Boolean[] actorListStatus = {true, false};
-        Switch s = new Switch(10, true, "haus", "schalter", "hintt", actorListId, actorListStatus, 12);
-        s.setStatus(false);
-	s.handleMsg("{'id': '10', 'status': 'false'}");
-	System.out.println("After:" + s.status);
+        int[] actorListId = {10};
+        Boolean[] actorListStatus = {false};
+        Switch s = new Switch(33, false, "haus", "schalter", "hintt", actorListId, actorListStatus, 12);
+        s.setStatus(true);
     }
 }
