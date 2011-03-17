@@ -37,11 +37,6 @@ class ServerThread extends Thread {
             System.out.println(pack.getAddress().toString());
             String msg = new String(pack.getData(), 0, pack.getLength());
             this.device.handleMsg(msg);
-            try {
-                sock.send(pack);
-            } catch (IOException ex) {
-                Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
-            }
             System.out.println("ENDE ThreadID: " + this.getId());
         } catch (InterruptedException ex) {
             Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);

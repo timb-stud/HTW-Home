@@ -30,7 +30,6 @@ public class MessageReceiver extends Thread{
             try {
                 pack = new DatagramPacket(new byte[BUFFERSIZE], BUFFERSIZE);
                 sock.receive(pack);
-                //            ServerThread st = new ServerThread(sock, pack);
                 ServerThread st = new ServerThread(pack, device);
                 st.start();
             } catch (IOException ex) {
