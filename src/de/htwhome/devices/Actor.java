@@ -1,7 +1,7 @@
 package de.htwhome.devices;
 import com.google.gson.Gson;
 import de.htwhome.transmission.MessageSender;
-import de.htwhome.utils.SensorConfig;
+import de.htwhome.utils.ActorConfig;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
@@ -22,19 +22,20 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     }
 
     public void save(){
-        SensorConfig sc = new SensorConfig();
-        sc.setId(id);
-        sc.setStatus(status);
-        sc.setLocation(location);
-        sc.setType(type);
-        sc.setDescription(description);
+        ActorConfig ac = new ActorConfig();
+        ac.setId(id);
+        ac.setStatus(status);
+        ac.setLocation(location);
+        ac.setType(type);
+        ac.setDescription(description); //TODO alle Attribute
 
-        Light.setConfig(sc);
+
+        Light.setConfig(ac);
     }
 
     public void load(){
-        SensorConfig sc = Light.getConfig();
-        this.id = sc.getId(); //TODO
+        ActorConfig sc = (ActorConfig) super.getConfig();
+        this.id = sc.getId(); //TODO alle Attribute
     }
 
 
