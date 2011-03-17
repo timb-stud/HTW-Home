@@ -1,6 +1,8 @@
 package de.htwhome.transmission;
 
+import de.htwhome.devices.AbstractDevice;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.logging.Level;
@@ -14,15 +16,17 @@ import java.util.logging.Logger;
 class ServerThread extends Thread {
     DatagramPacket pack;
     DatagramSocket sock;
+    AbstractDevice device;
 
-    ServerThread(DatagramSocket sock, DatagramPacket pack) {
+    ServerThread(DatagramSocket sock, DatagramPacket pack, AbstractDevice device) {
         this.pack = pack;
         this.sock = sock;
-
+        this.device = device;
     }
 
-    ServerThread(DatagramPacket pack) {
+    ServerThread(DatagramPacket pack, AbstractDevice device) {
         this.pack = pack;
+        this.device = device;
     }
 
     @Override
@@ -31,7 +35,8 @@ class ServerThread extends Thread {
             System.out.println("Start ThreadID: " + this.getId());
             Thread.sleep(5000);
             System.out.println(pack.getAddress().toString());
-            System.out.println(new String(pack.getData(), 0, pack.getLength()));
+            String msg = new String(pack.getData(), 0, pack.getLength());
+            this.device.handleMsg(msg);
             try {
                 sock.send(pack);
             } catch (IOException ex) {

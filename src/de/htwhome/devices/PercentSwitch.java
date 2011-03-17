@@ -10,13 +10,14 @@ import java.lang.reflect.Type;
  */
 public class PercentSwitch extends Sensor<Integer>{
 
-    private static Type actionMsgType = new TypeToken<ActionMessage<Integer>>(){}.getType();
-    private static Type ackMsgType = new TypeToken<AckMessage<Integer>>(){}.getType();
+    public static final Type actionMsgType = new TypeToken<ActionMessage<Integer>>(){}.getType();
+    public static final Type ackMsgType = new TypeToken<AckMessage<Integer>>(){}.getType();
 
     public PercentSwitch(int id, int status, String location, String type, String description, int[] actorListId, Integer[] actorStatusTab, int gid) {
         super(id, status, location, type, description, actorListId, actorStatusTab, gid);
     }
 
+    @Override
     public void handleMsg(String msg) {
 	super.handleMsg(msg, ackMsgType);
     }

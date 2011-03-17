@@ -51,6 +51,7 @@ public abstract class AbstractDevice<T> {
 
     public abstract void handleMsg(String msg, Type msgType);
 
+    public abstract void handleMsg(String msg);
 
     public String getDescription() {
         return description;

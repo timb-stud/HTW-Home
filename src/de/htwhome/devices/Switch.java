@@ -10,8 +10,8 @@ import java.lang.reflect.Type;
  */
 public class Switch extends Sensor<Boolean> {
 
-    private static Type actionMsgType = new TypeToken<ActionMessage<Boolean>>(){}.getType();
-    private static Type ackMsgType = new TypeToken<AckMessage<Boolean>>(){}.getType();
+    public static final Type actionMsgType = new TypeToken<ActionMessage<Boolean>>(){}.getType();
+    public static final Type ackMsgType = new TypeToken<AckMessage<Boolean>>(){}.getType();
 
     public Switch (int id, boolean status, String location, String type, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) {
         super(id, status, location, type, description, actorIdTab, actorStatusTab, gid);
@@ -24,6 +24,7 @@ public class Switch extends Sensor<Boolean> {
 	this.sendMsg(actionMsg, Switch.actionMsgType);
     }
 
+    @Override
     public void handleMsg(String msg) {
 	super.handleMsg(msg, ackMsgType);
     }
