@@ -42,6 +42,7 @@ public class Switch extends Sensor<Boolean> {
         int[] actorListId = {10};
         Boolean[] actorListStatus = {false};
         Switch s = new Switch(33, false, "haus", "schalter", "hintt", actorListId, actorListStatus, 1);
+        s.save();
         s.setStatus(true);
     }
 }

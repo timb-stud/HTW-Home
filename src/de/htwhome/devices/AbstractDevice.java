@@ -27,9 +27,7 @@ public abstract class AbstractDevice<T> {
     protected static Gson gson = new Gson();
     private MessageReceiver msgReceiver;
 
-    public AbstractDevice() {
-        
-    }
+    public AbstractDevice() {}
 
     public AbstractDevice(int id, T status, String location, String type, String description) throws SocketException {
         this.id = id;
