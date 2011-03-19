@@ -26,6 +26,7 @@ public abstract class AbstractDevice<T> {
     protected  String description;
     protected static Gson gson = new Gson();
     private MessageReceiver msgReceiver;
+    protected static int ALLDEVICES = 999;
 
     public AbstractDevice() {}
 
@@ -63,7 +64,7 @@ public abstract class AbstractDevice<T> {
     public void sendMsg(Message<T> msg, Type msgTyp){
         try {
             String json = new Gson().toJson(msg, msgTyp);
-            System.out.println("JSON:" + json); //TODO aufraeumen
+//            System.out.println("JSON:" + json); //TODO aufraeumen
             MessageSender.sendMsg(json);
         } catch (IOException ex) {
             Logger.getLogger(Actor.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,6 +107,10 @@ public abstract class AbstractDevice<T> {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String toString() {
+	return "Device{" + "id=" + id + "status=" + status + "location=" + location + "type=" + type + "description=" + description + '}';
     }
 
 }
