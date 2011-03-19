@@ -89,7 +89,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		//TODO implement
 		break;
 	    case configRequest:
-		Message reply = new Message(MessageType.configResponse, this.id, 999, null, null);
+                Message reply = new Message(MessageType.configResponse, this.id, ALLDEVICES, null, this.toString());
                 sendMsg(reply, null);
 		break;
 	}
