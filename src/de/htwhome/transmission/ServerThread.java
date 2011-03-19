@@ -36,7 +36,7 @@ class ServerThread extends Thread {
             Thread.sleep(0);
             //System.out.println(pack.getAddress().toString());
             String msg = new String(pack.getData(), 0, pack.getLength());
-            System.out.println("msg: " + msg);
+            System.out.println("Received: " + msg);
             this.device.handleMsg(msg);
             System.out.println("ENDE ThreadID: " + this.getId());
         } catch (InterruptedException ex) {
