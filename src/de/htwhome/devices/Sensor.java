@@ -1,6 +1,7 @@
 package de.htwhome.devices;
 
 import de.htwhome.transmission.Message;
+import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
 import de.htwhome.utils.SensorConfig;
 import java.io.File;
@@ -88,7 +89,8 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		//TODO implement
 		break;
 	    case configRequest:
-		//TODO implement
+                Message reply = new Message(MessageType.configResponse, this.id, ALLDEVICES, null, this.toString());
+                sendMsg(reply, null);
 		break;
 	}
     }
