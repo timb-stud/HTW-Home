@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import java.util.ArrayList;
 import javax.xml.bind.JAXB;
 
 /**

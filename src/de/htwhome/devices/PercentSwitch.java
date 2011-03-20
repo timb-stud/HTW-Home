@@ -13,6 +13,7 @@ import de.htwhome.transmission.MessageType;
 public class PercentSwitch extends Sensor<Integer>{
 
     public static final Type msgType = new TypeToken<Message<Integer>>(){}.getType();
+    private int min, max; //TODO minimum und maximum festlegen
 
     public PercentSwitch(int id, int status, String location, String type, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException {
         super(id, status, location, type, description, actorListId, actorStatusTab, gid);
