@@ -35,6 +35,11 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         actorAckTab = new boolean[actorIdTab.length];
     }
 
+    public Sensor (int id, T status, String location, String description, int gid) throws SocketException {
+        super(id, status,location, description);
+        this.gid = gid;
+    }
+
     public static SensorConfig getConfig(){  //TODO Config file + config als attribut
         SensorConfig config = JAXB.unmarshal(new File("SensorConfig.xml"), SensorConfig.class);
         return config;
@@ -98,12 +103,16 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		//TODO implement
 		break;
 	    case statusResponse:
-		for (int i = 0; i < actorIdTab.length; i++) {
-		    if (actorIdTab[i] == msg.getSenderId()) {
-			actorStatusTab[i] = msg.getStatus();
-                        actorAckTab[i] = true;
-		    }
-		}
+                if (actorIdTab != null) {
+                    for (int i = 0; i < actorIdTab.length; i++) {
+                        if (actorIdTab[i] == msg.getSenderId()) {
+                            actorStatusTab[i] = msg.getStatus();
+                            actorAckTab[i] = true;
+                        }
+                    }
+                } else {
+                    System.out.println("statusResponse interessiert dieses Device nicht");
+                }
 		break;
 	    case configChange:
 		//TODO implement
