@@ -12,7 +12,7 @@ package de.htwhome.utils;
 public class SensorConfig<T> extends DeviceConfig<T> {
     int[] actorIDTab;
     T[] actorStatusTab;
-    boolean[] actorAckTab;
+    boolean[] actorAckTab; //TODO vllt rauswerfen?
 
     public SensorConfig() {
     }
