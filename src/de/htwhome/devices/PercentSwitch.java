@@ -38,4 +38,16 @@ public class PercentSwitch extends Sensor<Integer>{
 	this.sendMsg(msg);
     }
 
+    @Override
+    public void setStatus(String status) {
+	int i = Integer.parseInt(status);
+	this.setStatus(i);
+    }
+
+    @Override
+    public void setActorStatus(String status, int pos) {
+	int i = Integer.parseInt(status);
+	this.setActorStatus(i, pos);
+    }
+
 }

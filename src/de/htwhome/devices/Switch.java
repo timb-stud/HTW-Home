@@ -49,4 +49,16 @@ public class Switch extends Sensor<Boolean> {
         s.save();
         s.setStatus(true);
     }
+
+    @Override
+    public void setStatus(String status) {
+	boolean b = Boolean.getBoolean(status);
+	this.setStatus(b);
+    }
+
+    @Override
+    public void setActorStatus(String status, int pos) {
+	boolean b = Boolean.getBoolean(status);
+	this.setActorStatus(b, pos);
+    }
 }

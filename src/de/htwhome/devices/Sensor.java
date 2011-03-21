@@ -77,7 +77,12 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         art.start();
     }
 
-     
+    public void setActorStatus(T status, int pos){
+	actorStatusTab[pos] = status;
+    }
+
+    public abstract void setActorStatus(String status, int pos);
+
     public void save(){
         SensorConfig sc = new SensorConfig();
         save(sc);
@@ -137,7 +142,6 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 	}
     }
     public boolean checkRespones(){
-
         for (int i = 0; i < actorAckTab.length; i++) {
             if(actorAckTab[i] == false)
                 return false;
