@@ -21,49 +21,20 @@ import java.util.logging.Logger;
  * @author christian
  */
 class TimeSchedulerTask<T> extends TimerTask{
-//    public final Type msgType;
-
-    private int gid;
     private T status;
+    private T firstStatus;
+    private T secondStatus;
     private Sensor sensor;
 
-    public TimeSchedulerTask(int gid, Sensor sensor, T status) {
-        this.gid = gid;
-        this.status = status;
+    public TimeSchedulerTask(Sensor sensor, T firstStatus, T secondStatus) {
         this.sensor = sensor;
-
-//        if (this.status instanceof Boolean)
-//            msgType = new TypeToken<Message<Boolean>>(){}.getType();
-//        else if (this.status instanceof Integer)
-//            msgType = new TypeToken<Message<Integer>>(){}.getType();
-//        else if (this.status instanceof Double)
-//            msgType = new TypeToken<Message<Double>>(){}.getType();
-//        else
-//            msgType = null; //TODO msgType muss initialisiert werden. null führt zu fehler
+        this.firstStatus = firstStatus;
+        this.secondStatus = secondStatus;
     }
 
     @Override
     public void run() {
+        status = (T) sensor.newTimeSchedulerStatus(firstStatus, secondStatus);
         sensor.setStatus(status);
-        //       timer.cancel(); //Terminate the timer thread
-
-//        Message<T> msg = new Message<T>();
-//        msg.setMsgType(MessageType.statusChange);
-//        msg.setReceiverId(this.gid);
-//        msg.setStatus(status);
-//        this.sendMsg(msg, this.msgType);
     }
-
-//    //TODO handleResponse
-//
-//    private void sendMsg(Message<T> msg, Type msgTyp){
-//        try {
-//            String json = new Gson().toJson(msg, msgTyp);
-////            System.out.println("JSON:" + json); //TODO aufraeumen
-//            MessageSender.sendMsg(json);
-//        } catch (IOException ex) {
-//            Logger.getLogger(Actor.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-
 }

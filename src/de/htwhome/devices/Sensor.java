@@ -51,16 +51,16 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         timer = new Timer();
         long start = from * 1000;  //TODO Berechnung
         long intervall = till * 1000;
-        timer.schedule(new TimeSchedulerTask<T>(gid, this, newTimeSchedulerStatus(firstStatus, secondStatus)), start, intervall);
+        timer.schedule(new TimeSchedulerTask<T>(this, firstStatus, secondStatus), start, intervall);
     }
 
-    private T newTimeSchedulerStatus(T firstStatus, T secondStatus){
+    protected  T newTimeSchedulerStatus(T firstStatus, T secondStatus){
        if (timeSchedulerChangeStatus)
             status = secondStatus;
         else
             status = firstStatus;
        timeSchedulerChangeStatus = (timeSchedulerChangeStatus) ? false : true;
-        return status;
+       return status;
     }
 
     public void stopScheduler(){
@@ -88,7 +88,12 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         art.start();
     }
 
-     
+    public void setActorStatus(T status, int pos){
+	actorStatusTab[pos] = status;
+    }
+
+    public abstract void setActorStatus(String status, int pos);
+
     public void save(){
         SensorConfig sc = new SensorConfig();
         save(sc);
@@ -148,7 +153,6 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 	}
     }
     public boolean checkRespones(){
-
         for (int i = 0; i < actorAckTab.length; i++) {
             if(actorAckTab[i] == false)
                 return false;

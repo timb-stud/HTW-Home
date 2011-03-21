@@ -54,4 +54,10 @@ public class Light extends Actor<Boolean> {
 //                  + "\n" + "status= " + sc2.getStatus()
 //                );
     }
+
+    @Override
+    public void setStatus(String status) {
+	boolean b = Boolean.getBoolean(status);
+	this.setStatus(b);
+    }
 }

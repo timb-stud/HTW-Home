@@ -57,5 +57,17 @@ public class Anemometer extends Sensor<Double>{
         a.setStatus(10.0);
     }
 
+    @Override
+    public void setStatus(String status) {
+	double d = Double.valueOf(status);
+	this.setStatus(d);
+    }
+
+    @Override
+    public void setActorStatus(String status, int pos) {
+	double d = Double.valueOf(status);
+	this.setActorStatus(d, pos);
+    }
+
 
 }
