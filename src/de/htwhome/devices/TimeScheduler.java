@@ -6,6 +6,7 @@
 package de.htwhome.devices;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageSender;
 import de.htwhome.transmission.MessageType;
@@ -20,34 +21,45 @@ import java.util.logging.Logger;
  *
  * @author christian
  */
-public class TimeScheduler extends Sensor{
+public class TimeScheduler<E> extends Sensor<Boolean>{
+    public static final Type msgType = new TypeToken<Message<Boolean>>(){}.getType();
+
     private Timer timer;
 
-    public TimeScheduler(long from, long till) {
+    public TimeScheduler(E status,long from, long till) {
         timer = new Timer();
         long start = from * 1000;  //TODO Berechnung
         long duration = till * 1000;
-        timer.schedule(new TimeSchedulerTask<Boolean>(gid, true), start, duration);
+        timer.schedule(new TimeSchedulerTask<E>(gid, status), start, duration);
     }
 
     @Override
     public void handleMsg(String msg) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        super.handleMsg(msg, TimeScheduler.msgType);
     }
 
     @Override
-    public void setStatus(Object status) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void setStatus(Boolean status) {
+        this.status = status;
+	Message<Boolean> msg = new Message<Boolean>();
+	msg.setMsgType(MessageType.statusChange);
+	msg.setReceiverId(this.gid);
+	msg.setStatus(this.status);
+	this.sendMsg(msg, TimeScheduler.msgType);
+        System.out.println("TimeScheduler.status: " + this.status);
     }
 
+
      public static void main(String args[]) {
-        new TimeScheduler(2, 5);
+        new TimeScheduler<Boolean>(true,2, 5);
         System.out.format("Task scheduled.%n");
     }
 }
 
 
 class TimeSchedulerTask<T> extends TimerTask{
+    public final Type msgType;
+
     private boolean changeStatus = false;
     private int gid;
     private T status;
@@ -55,6 +67,15 @@ class TimeSchedulerTask<T> extends TimerTask{
     public TimeSchedulerTask(int gid, T status) {
         this.gid = gid;
         this.status = status;
+
+        if (this.status instanceof Boolean)
+            msgType = new TypeToken<Message<Boolean>>(){}.getType();
+        else if (this.status instanceof Integer)
+            msgType = new TypeToken<Message<Integer>>(){}.getType();
+        else if (this.status instanceof Double)
+            msgType = new TypeToken<Message<Double>>(){}.getType();
+        else
+            msgType = null;
     }
 
     @Override
@@ -62,12 +83,14 @@ class TimeSchedulerTask<T> extends TimerTask{
         changeStatus = (changeStatus) ? false : true;
         System.out.format("Status = " + status + " Statusswitcher = " + changeStatus + "%n");
 //            timer.cancel(); //Terminate the timer thread
-        Message<Boolean> msg = new Message<Boolean>();
+        Message<T> msg = new Message<T>();
         msg.setMsgType(MessageType.statusChange);
         msg.setReceiverId(this.gid);
-        msg.setStatus((Boolean) this.status);
-        this.sendMsg(msg, );
+        msg.setStatus(this.status);
+        this.sendMsg(msg, this.msgType);
     }
+
+    //TODO handleResponse
 
     private void sendMsg(Message<T> msg, Type msgTyp){
         try {
