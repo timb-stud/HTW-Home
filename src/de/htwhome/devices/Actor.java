@@ -19,8 +19,8 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 
     public Actor() {}
 
-    public Actor(int id, T status, String location, String hint, int[] gidTab) throws SocketException {
-        super(id, status,location, hint);
+    public Actor(int id, T status, String location, String description, int[] gidTab) throws SocketException {
+        super(id, status,location, description);
         this.gidTab = gidTab;
     }
 
