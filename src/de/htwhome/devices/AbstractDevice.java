@@ -50,13 +50,13 @@ public abstract class AbstractDevice<T> {
     }
 
 
-    public abstract void handleMsg(String msg, Type msgType);
-
     public abstract void handleMsg(String msg);
 
-    public void sendMsg(Message<T> msg, Type msgTyp){
+    public abstract void handleMsg(String jsonMsg, DeviceType devType, Type cfgType);
+
+    public void sendMsg(Message msg){
         try {
-            String json = new Gson().toJson(msg, msgTyp);
+            String json = new Gson().toJson(msg);
 //            System.out.println("JSON:" + json); //TODO aufraeumen
             MessageSender.sendMsg(json);
         } catch (IOException ex) {

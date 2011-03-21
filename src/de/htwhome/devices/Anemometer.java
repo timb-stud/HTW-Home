@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import java.net.SocketException;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
+import de.htwhome.utils.SensorConfig;
 
 /**
  *
@@ -13,7 +14,8 @@ import de.htwhome.transmission.MessageType;
  */
 public class Anemometer extends Sensor<Double>{
 
-    public static final Type msgType = new TypeToken<Message<Double>>(){}.getType();
+    public static final DeviceType deviceType = DeviceType.Switch;
+public static final Type cfgType = new TypeToken<SensorConfig<Double>>(){}.getType();
 
 
     public Anemometer () {
@@ -26,18 +28,19 @@ public class Anemometer extends Sensor<Double>{
 
     @Override
     public void handleMsg(String msg) {
-        super.handleMsg(msg, msgType);
+        super.handleMsg(msg, deviceType, cfgType);
     }
 
     @Override
     public void setStatus(Double status) {
         this.status = status;
-	Message<Double> msg = new Message<Double>();
+	Message msg = new Message();
         msg.setMsgType(MessageType.statusResponse);
         msg.setSenderId(this.id);
         msg.setReceiverId(this.gid);
-        msg.setStatus(this.status);
-	this.sendMsg(msg, msgType);
+        msg.setContent(String.valueOf(this.status));
+	msg.setSenderDevice(deviceType);
+	this.sendMsg(msg);
         System.out.println("Neue Windgeschwindigkeit: " + this.status); //TODO sout entfernen
     }
 

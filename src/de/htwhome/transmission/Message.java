@@ -1,25 +1,19 @@
 package de.htwhome.transmission;
 
+import de.htwhome.devices.DeviceType;
+
 /**
  *
  * @author Tim Bartsch
  */
-public class Message<T> {
+public class Message {
     MessageType msgType;
     int senderId;
     int receiverId;
-    T status;
-    String jsonConfig;
+    String content;
+    DeviceType senderDevice;
 
     public Message() {
-    }
-
-    public Message(MessageType msgType, int senderId, int receiverId, T status, String jsonConfig) {
-	this.msgType = msgType;
-	this.senderId = senderId;
-	this.receiverId = receiverId;
-	this.status = status;
-	this.jsonConfig = jsonConfig;
     }
 
     public MessageType getMsgType() {
@@ -46,25 +40,24 @@ public class Message<T> {
         this.senderId = senderId;
     }
 
-    public String getJsonConfig() {
-	return jsonConfig;
+    public String getContent() {
+	return content;
     }
 
-    public void setJsonConfig(String jsonConfig) {
-	this.jsonConfig = jsonConfig;
+    public void setContent(String content) {
+	this.content = content;
     }
 
-    public T getStatus() {
-	return status;
+    public DeviceType getSenderDevice() {
+	return senderDevice;
     }
 
-    public void setStatus(T status) {
-	this.status = status;
+    public void setSenderDevice(DeviceType senderDevice) {
+	this.senderDevice = senderDevice;
     }
 
     @Override
     public String toString() {
-	return "Message{" + "msgType=" + msgType + "senderId=" + senderId + "receiverId=" + receiverId + "status=" + status + "jsonConfig=" + jsonConfig + '}';
+	return "Message{" + "msgType=" + msgType + "senderId=" + senderId + "receiverId=" + receiverId + "content=" + content + "senderDevice=" + senderDevice + '}';
     }
-
 }
