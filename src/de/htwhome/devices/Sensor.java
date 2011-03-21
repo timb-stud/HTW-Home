@@ -45,11 +45,11 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         return config;
     }
 
-    public void startScheduler(T status,long from, long till){
+    public void startScheduler(T firstStatus, T secondStatus,long from, long till){
         timer = new Timer();
         long start = from * 1000;  //TODO Berechnung
         long intervall = till * 1000;
-        timer.schedule(new TimeSchedulerTask<T>(gid, status), start, intervall);
+        timer.schedule(new TimeSchedulerTask<T>(gid, this, firstStatus, secondStatus), start, intervall);
     }
 
     public void stopScheduler(){

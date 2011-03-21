@@ -45,5 +45,7 @@ public class Switch extends Sensor<Boolean> {
         Switch s = new Switch(33, false, "haus", "hintt", actorListId, actorListStatus, 1);
         s.save();
         s.setStatus(true);
+        
+        s.startScheduler(Boolean.TRUE, Boolean.FALSE, 2, 4);
     }
 }
