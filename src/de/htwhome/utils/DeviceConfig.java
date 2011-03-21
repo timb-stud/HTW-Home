@@ -1,15 +1,27 @@
 package de.htwhome.utils;
 
+import de.htwhome.devices.DeviceType;
+
 /**
  *
- * @author christian
+ * @author Christian Rech, Tim Bartsch
  */
 public class DeviceConfig<T> {
     private int id;
     private T status;
     private String location;
+    private DeviceType deviceType;
+    private String description;
 
     public DeviceConfig() {
+    }
+
+    public DeviceType getDeviceType() {
+	return deviceType;
+    }
+
+    public void setDeviceType(DeviceType deviceType) {
+	this.deviceType = deviceType;
     }
 
     public String getDescription() {
@@ -43,14 +55,4 @@ public class DeviceConfig<T> {
     public void setStatus(T status) {
         this.status = status;
     }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-    private String type;
-    private String description;
 }
