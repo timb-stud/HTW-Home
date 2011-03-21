@@ -21,27 +21,25 @@ import java.util.logging.Logger;
  * @author christian
  */
 class TimeSchedulerTask<T> extends TimerTask{
-    public final Type msgType;
+//    public final Type msgType;
 
     private int gid;
     private T status;
-    private final Sensor sensor;
-
-
+    private Sensor sensor;
 
     public TimeSchedulerTask(int gid, Sensor sensor, T status) {
         this.gid = gid;
         this.status = status;
         this.sensor = sensor;
 
-        if (this.status instanceof Boolean)
-            msgType = new TypeToken<Message<Boolean>>(){}.getType();
-        else if (this.status instanceof Integer)
-            msgType = new TypeToken<Message<Integer>>(){}.getType();
-        else if (this.status instanceof Double)
-            msgType = new TypeToken<Message<Double>>(){}.getType();
-        else
-            msgType = null; //TODO msgType muss initialisiert werden. null führt zu fehler
+//        if (this.status instanceof Boolean)
+//            msgType = new TypeToken<Message<Boolean>>(){}.getType();
+//        else if (this.status instanceof Integer)
+//            msgType = new TypeToken<Message<Integer>>(){}.getType();
+//        else if (this.status instanceof Double)
+//            msgType = new TypeToken<Message<Double>>(){}.getType();
+//        else
+//            msgType = null; //TODO msgType muss initialisiert werden. null führt zu fehler
     }
 
     @Override
