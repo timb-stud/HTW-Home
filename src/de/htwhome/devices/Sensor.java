@@ -1,7 +1,9 @@
 package de.htwhome.devices;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
+import de.htwhome.transmission.MessageSender;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.SensorConfig;
 import java.io.File;
@@ -9,6 +11,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXB;
 
 /**
@@ -16,6 +22,8 @@ import javax.xml.bind.JAXB;
  * @author Christian Rech, Tim Bartsch
  */
 public abstract class Sensor<T> extends AbstractDevice<T>{
+
+    private Timer timer;
 
     protected int[] actorIdTab;
     protected T[] actorStatusTab;
@@ -32,9 +40,20 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         this.gid = gid;
     }
 
-       public static SensorConfig getConfig(){  //TODO Config file + config als attribut
+    public static SensorConfig getConfig(){  //TODO Config file + config als attribut
         SensorConfig config = JAXB.unmarshal(new File("SensorConfig.xml"), SensorConfig.class);
         return config;
+    }
+
+    public void startScheduler(T status,long from, long till){
+        timer = new Timer();
+        long start = from * 1000;  //TODO Berechnung
+        long intervall = till * 1000;
+        timer.schedule(new TimeSchedulerTask<T>(gid, status), start, intervall);
+    }
+
+    public void stopScheduler(){
+        timer.cancel(); //Terminate the timer thread
     }
 
     public static void setConfig(SensorConfig config) {
@@ -94,5 +113,4 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		break;
 	}
     }
-
 }

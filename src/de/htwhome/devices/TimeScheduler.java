@@ -35,12 +35,12 @@ public class TimeScheduler<E> extends Sensor<Boolean>{
         super(id, status, location, description, actorIdTab, actorStatusTab, gid);
     }
 
-    public void startScheduler(E status,long from, long till){
-        timer = new Timer();
-        long start = from * 1000;  //TODO Berechnung
-        long duration = till * 1000;
-        timer.schedule(new TimeSchedulerTask<E>(gid, status), start, duration);
-    }
+//    public void startScheduler(E status,long from, long till){
+//        timer = new Timer();
+//        long start = from * 1000;  //TODO Berechnung
+//        long intervall = till * 1000;
+//        timer.schedule(new TimeSchedulerTask<E>(gid, status), start, intervall);
+//    }
 
     public void stopScheduler(){
         timer.cancel(); //Terminate the timer thread
@@ -68,7 +68,7 @@ public class TimeScheduler<E> extends Sensor<Boolean>{
         class TimeSchedulerTask<T> extends TimerTask{
             public final Type msgType;
 
-            private boolean changeStatus = false;
+//            private boolean changeStatus = false;
             private int gid;
             private T status;
 
@@ -89,9 +89,9 @@ public class TimeScheduler<E> extends Sensor<Boolean>{
 
             @Override
             public void run() {
-                changeStatus = (changeStatus) ? false : true;
-                System.out.format("Status = " + status + " Statusswitcher = " + changeStatus + "%n");
-        //            timer.cancel(); //Terminate the timer thread
+//                changeStatus = (changeStatus) ? false : true;
+//                System.out.format("Status = " + status + " Statusswitcher = " + changeStatus + "%n");
+                timer.cancel(); //Terminate the timer thread
                 Message<T> msg = new Message<T>();
                 msg.setMsgType(MessageType.statusChange);
                 msg.setReceiverId(this.gid);
