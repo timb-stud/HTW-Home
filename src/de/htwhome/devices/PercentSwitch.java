@@ -13,10 +13,11 @@ import de.htwhome.transmission.MessageType;
 public class PercentSwitch extends Sensor<Integer>{
 
     public static final Type msgType = new TypeToken<Message<Integer>>(){}.getType();
+    public static final DeviceType deviceType = DeviceType.PercentSwitch;
     private int min, max; //TODO minimum und maximum festlegen
 
-    public PercentSwitch(int id, int status, String location, String type, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException {
-        super(id, status, location, type, description, actorListId, actorStatusTab, gid);
+    public PercentSwitch(int id, int status, String location, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException {
+        super(id, status, location, description, actorListId, actorStatusTab, gid);
     }
 
     @Override

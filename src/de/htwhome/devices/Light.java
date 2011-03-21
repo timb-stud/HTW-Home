@@ -14,9 +14,10 @@ import java.net.SocketException;
 public class Light extends Actor<Boolean> {
 
     public static final Type msgType = new TypeToken<Message<Boolean>>(){}.getType();
+    public static final DeviceType deviceType = DeviceType.Light;
 
-    public Light(int id, boolean status, String location, String type, String description, int[] gidTab) throws SocketException {
-        super(id, status, location, type, description, gidTab);
+    public Light(int id, boolean status, String location, String description, int[] gidTab) throws SocketException {
+        super(id, status, location, description, gidTab);
     }
 
     public Light() {
