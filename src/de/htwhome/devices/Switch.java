@@ -42,17 +42,7 @@ public class Switch extends Sensor<Boolean> {
 	this.sendMsg(msg);
         System.out.println("Switch.status: " + this.status);
     }
-
-    public static void main(String[] args) throws SocketException {
-        int[] actorListId = {10, 11};
-        Boolean[] actorListStatus = new Boolean[actorListId.length];
-        Switch s = new Switch(33, true, "haus", "hintt", actorListId, actorListStatus, 1);
-        s.save();
-        s.setStatus(true);
-        
-        s.startScheduler(Boolean.TRUE, Boolean.FALSE, 2, 4);
-    }
-
+    
     @Override
     public void setStatus(String status) {
 	boolean b = Boolean.getBoolean(status);
@@ -64,4 +54,16 @@ public class Switch extends Sensor<Boolean> {
 	boolean b = Boolean.getBoolean(status);
 	this.setActorStatus(b, pos);
     }
+
+    public static void main(String[] args) throws SocketException {
+        int[] actorListId = {10, 11};
+        Boolean[] actorListStatus = new Boolean[actorListId.length];
+        Switch s = new Switch(33, true, "haus", "hintt", actorListId, actorListStatus, 1);
+        s.save();
+        s.setStatus(true);
+        
+//        s.startScheduler(Boolean.TRUE, Boolean.FALSE, 2, 4);
+    }
+
+    
 }
