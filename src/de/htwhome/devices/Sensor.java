@@ -122,7 +122,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
                 if (actorIdTab != null) {
                     for (int i = 0; i < actorIdTab.length; i++) {
                         if (actorIdTab[i] == msg.getSenderId()) {
-                            actorStatusTab[i] = (T)msg.getContent();
+			    this.setActorStatus(msg.getContent(), i);
                             actorAckTab[i] = true;
                         }
                     }
