@@ -2,7 +2,9 @@ package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
+import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
+import de.htwhome.utils.SensorConfig;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -33,7 +35,13 @@ public class Panel extends AbstractDevice<Boolean>{
 
     @Override
     public void setStatus(Boolean status) {
-	throw new UnsupportedOperationException("Not supported yet.");
+        this.status = status;
+    }
+
+    @Override
+    public void setStatus(String status) {
+	boolean b = Boolean.parseBoolean(status);
+	this.setStatus(b);
     }
 
     @Override
@@ -58,7 +66,11 @@ public class Panel extends AbstractDevice<Boolean>{
 
     public void getAllConfigs() {
 	//TODO implement
-//        Message msg = new Message(MessageType.configRequest, this.id, ALLDEVICES, null, null);
+        Message msg = new Message();
+        msg.setMsgType(MessageType.configRequest);
+        msg.setSenderId(this.id);
+        msg.setReceiverId(ALLDEVICES);
+        sendMsg(msg);
 //        sendMsg(msg, msgType); //TODO msgTyp ueberpruefen
     }
 
@@ -77,6 +89,23 @@ public class Panel extends AbstractDevice<Boolean>{
      * und schreibt die Devices in die DeviceList des Panels
      */
     private void updateDevicelist(String jsonCfg, DeviceType devType) {
+        switch (devType) {
+            case Anemometer:
+                SensorConfig<Double> sc = gson.fromJson(jsonCfg, Anemometer.cfgType);
+                System.out.println("ID " + sc.getId() + " hat sich gemeldet. >> " + sc.getDescription());
+                sc.setDeviceType(deviceType);
+                break;
+            case Light:
+                break;
+            case Panel:
+                break;
+            case PercentSwitch:
+                break;
+            case Sunblind:
+                break;
+            case Switch:
+                break;
+        }
 	//TODO implement
 //        Message<T> msg = gson.fromJson(jsonMsg, msgType);
 //        //Message content = gson.fromJson(msg.getJsonConfig(), msgType);
@@ -91,9 +120,5 @@ public class Panel extends AbstractDevice<Boolean>{
         p.getAllConfigs();
     }
 
-    @Override
-    public void setStatus(String status) {
-	boolean b = Boolean.parseBoolean(status);
-	this.setStatus(b);
-    }
+
 }
