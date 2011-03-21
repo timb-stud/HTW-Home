@@ -3,7 +3,7 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
-import de.htwhome.utils.ActorConfig;
+import de.htwhome.utils.SensorConfig;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 
@@ -14,7 +14,7 @@ import java.net.SocketException;
 public class Switch extends Sensor<Boolean> {
 
     public static final DeviceType deviceType = DeviceType.Switch;
-    public static final Type cfgType = new TypeToken<ActorConfig<Boolean>>(){}.getType();
+    public static final Type cfgType = new TypeToken<SensorConfig<Boolean>>(){}.getType();
 
     public Switch() {
         super.load();
@@ -31,8 +31,9 @@ public class Switch extends Sensor<Boolean> {
 
     @Override
     public void setStatus(Boolean status) {
-	this.status = status;
 	Message msg = new Message();
+        if (checkRespones())
+            this.status = status;
 	msg.setMsgType(MessageType.statusChange);
 	msg.setReceiverId(this.gid);
 	msg.setContent(String.valueOf(this.status));

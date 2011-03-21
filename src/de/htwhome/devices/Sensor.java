@@ -8,13 +8,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import java.util.Timer;
 import javax.xml.bind.JAXB;
 
 /**
  *
- * @author Christian Rech, Tim Bartsch
+* @author Christian Rech, Tim Bartsch
  */
 public abstract class Sensor<T> extends AbstractDevice<T>{
+
+    private Timer timer;
 
     protected int[] actorIdTab;
     protected T[] actorStatusTab;
@@ -29,11 +32,28 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         this.actorIdTab = actorIdTab;
         this.actorStatusTab = actorStatusTab;
         this.gid = gid;
+        actorAckTab = new boolean[actorIdTab.length];
     }
 
-       public static SensorConfig getConfig(){  //TODO Config file + config als attribut
+    public Sensor (int id, T status, String location, String description, int gid) throws SocketException {
+        super(id, status,location, description);
+        this.gid = gid;
+    }
+
+    public static SensorConfig getConfig(){  //TODO Config file + config als attribut
         SensorConfig config = JAXB.unmarshal(new File("SensorConfig.xml"), SensorConfig.class);
         return config;
+    }
+
+    public void startScheduler(T status,long from, long till){
+        timer = new Timer();
+        long start = from * 1000;  //TODO Berechnung
+        long intervall = till * 1000;
+        timer.schedule(new TimeSchedulerTask<T>(gid, status), start, intervall);
+    }
+
+    public void stopScheduler(){
+        timer.cancel(); //Terminate the timer thread
     }
 
     public static void setConfig(SensorConfig config) {
@@ -51,7 +71,12 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
             }
         }
     }
-     
+    @Override
+    public void setStatus(T status) {
+        actorRespThread art = new actorRespThread(this);
+        art.start();
+    }
+
      
     public void save(){
         SensorConfig sc = new SensorConfig();
@@ -78,11 +103,16 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		//TODO implement
 		break;
 	    case statusResponse:
-		for (int i = 0; i < actorIdTab.length; i++) {
-		    if (actorIdTab[i] == msg.getSenderId()) {
-			actorStatusTab[i] = (T)msg.getContent();
-		    }
-		}
+                if (actorIdTab != null) {
+                    for (int i = 0; i < actorIdTab.length; i++) {
+                        if (actorIdTab[i] == msg.getSenderId()) {
+                            actorStatusTab[i] = (T)msg.getContent();
+                            actorAckTab[i] = true;
+                        }
+                    }
+                } else {
+                    System.out.println("statusResponse interessiert dieses Device nicht");
+                }
 		break;
 	    case configChange:
 		//TODO implement
@@ -105,6 +135,14 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
                 sendMsg(reply);
                 break;
 	}
+    }
+    public boolean checkRespones(){
+
+        for (int i = 0; i < actorAckTab.length; i++) {
+            if(actorAckTab[i] == false)
+                return false;
+        }
+        return true;
     }
 
 }
