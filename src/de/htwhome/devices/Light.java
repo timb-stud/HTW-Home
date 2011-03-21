@@ -3,7 +3,6 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
-import de.htwhome.utils.ActorConfig;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 

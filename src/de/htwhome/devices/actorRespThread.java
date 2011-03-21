@@ -5,6 +5,9 @@
 
 package de.htwhome.devices;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Volkan Gökkaya
@@ -18,7 +21,13 @@ public class actorRespThread extends Thread{
 
     @Override
     public void run() {
-        while(sensor.checkRespones() == false);
+        while(sensor.checkRespones() == false){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(actorRespThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         System.out.println("Jetzt geht LED am Schalter an... (Sensor.switchLedON(...))");
     }
 
