@@ -3,6 +3,7 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
+import de.htwhome.utils.ActorConfig;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 
@@ -12,8 +13,8 @@ import java.net.SocketException;
  */
 public class Light extends Actor<Boolean> {
 
-    public static final Type msgType = new TypeToken<Message<Boolean>>(){}.getType();
     public static final DeviceType deviceType = DeviceType.Light;
+    public static final Type cfgType = new TypeToken<ActorConfig<Boolean>>(){}.getType();
 
     public Light(int id, boolean status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status, location, description, gidTab);
@@ -26,17 +27,18 @@ public class Light extends Actor<Boolean> {
     @Override
     public void setStatus(Boolean status) {
 	this.status = status;
-	Message<Boolean> msg = new Message<Boolean>();
+	Message msg = new Message();
 	msg.setMsgType(MessageType.statusResponse);
 	msg.setSenderId(this.id);
-	msg.setStatus(this.status);
-	this.sendMsg(msg, Light.msgType);
+	msg.setContent(String.valueOf(this.status));
+	msg.setSenderDevice(deviceType);
+	this.sendMsg(msg);
         System.out.println("Light.status:" +  this.status);
     }
 
     @Override
     public void handleMsg(String msg) {
-	super.handleMsg(msg, msgType);
+	super.handleMsg(msg, deviceType, cfgType);
     }
 
     public static void main(String[] args) throws SocketException {
