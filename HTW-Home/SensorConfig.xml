@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sensorConfig>
+    <description>hintt</description>
+    <id>33</id>
+    <location>haus</location>
+    <status xsi:type="xs:boolean" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">true</status>
+    <actorAckTab>false</actorAckTab>
+    <actorAckTab>false</actorAckTab>
+    <actorIDTab>10</actorIDTab>
+    <actorIDTab>11</actorIDTab>
+    <actorStatusTab xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+    <actorStatusTab xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+    <gid>0</gid>
+</sensorConfig>
