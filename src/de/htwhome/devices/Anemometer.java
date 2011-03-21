@@ -38,6 +38,13 @@ public class Anemometer extends Sensor<Double>{
         this.status = status;
         if (this.status < MINLEVELWARNING || this.status > MAXLEVELWARNING) {
             System.out.println("Sende Warnung !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            Message warning = new Message();
+            warning.setMsgType(MessageType.weatherAlarm);
+            warning.setSenderId(this.id);
+            warning.setReceiverId(this.gid);
+            warning.setContent(String.valueOf(this.status));
+            warning.setSenderDevice(deviceType);
+            this.sendMsg(warning);
         }
 	Message msg = new Message();
         msg.setMsgType(MessageType.statusResponse);
