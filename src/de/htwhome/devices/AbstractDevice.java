@@ -91,6 +91,8 @@ public abstract class AbstractDevice<T> {
     public T getStatus() {
         return status;
     }
+    
+    public abstract void setStatus(String status);
 
     public abstract void setStatus(T status);
 

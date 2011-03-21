@@ -74,7 +74,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 	switch (msg.getMsgType()) {
 	    case statusChange:
 		if(isReceiver(msg.getReceiverId())){
-		    setStatus((T)msg.getContent());
+		    setStatus(msg.getContent());
 		}
 		break;
 	    case statusRequest:
