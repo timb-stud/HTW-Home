@@ -30,7 +30,8 @@ public class Switch extends Sensor<Boolean> {
 
     @Override
     public void setStatus(Boolean status) {
-	this.status = status;
+        if (checkRespones())
+            this.status = status;
 	Message<Boolean> msg = new Message<Boolean>();
 	msg.setMsgType(MessageType.statusChange);
 	msg.setReceiverId(this.gid);

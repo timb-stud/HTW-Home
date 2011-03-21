@@ -23,7 +23,6 @@ public abstract class AbstractDevice<T> {
     protected static Gson gson = new Gson();
     private MessageReceiver msgReceiver;
     protected static int ALLDEVICES = 999;
-    protected int[] responseArray;
     
     public AbstractDevice() {}
 

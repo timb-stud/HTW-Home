@@ -1,6 +1,5 @@
 package de.htwhome.devices;
 
-import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.SensorConfig;
@@ -30,6 +29,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         this.actorIdTab = actorIdTab;
         this.actorStatusTab = actorStatusTab;
         this.gid = gid;
+        actorAckTab = new boolean[actorIdTab.length];
     }
 
        public static SensorConfig getConfig(){  //TODO Config file + config als attribut
@@ -52,7 +52,12 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
             }
         }
     }
-     
+    @Override
+    public void setStatus(T status) {
+        actorRespThread art = new actorRespThread(this);
+        art.start();
+    }
+
      
     public void save(){
         SensorConfig sc = new SensorConfig();
@@ -82,6 +87,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		for (int i = 0; i < actorIdTab.length; i++) {
 		    if (actorIdTab[i] == msg.getSenderId()) {
 			actorStatusTab[i] = msg.getStatus();
+                        actorAckTab[i] = true;
 		    }
 		}
 		break;
@@ -93,6 +99,15 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
                 sendMsg(reply, null);
 		break;
 	}
+    }
+
+    public boolean checkRespones(){
+
+        for (int i = 0; i < actorAckTab.length; i++) {
+            if(actorAckTab[i] == false)
+                return false;
+        }
+        return true;
     }
 
 }
