@@ -1,9 +1,6 @@
 package de.htwhome.devices;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
-import de.htwhome.transmission.MessageSender;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.SensorConfig;
 import java.io.File;
@@ -12,9 +9,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.bind.JAXB;
 
 /**
@@ -37,6 +31,12 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         super(id, status,location, description);
         this.actorIdTab = actorIdTab;
         this.actorStatusTab = actorStatusTab;
+        this.gid = gid;
+        actorAckTab = new boolean[actorIdTab.length];
+    }
+
+    public Sensor (int id, T status, String location, String description, int gid) throws SocketException {
+        super(id, status,location, description);
         this.gid = gid;
     }
 
@@ -71,7 +71,12 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
             }
         }
     }
-     
+    @Override
+    public void setStatus(T status) {
+        actorRespThread art = new actorRespThread(this);
+        art.start();
+    }
+
      
     public void save(){
         SensorConfig sc = new SensorConfig();
@@ -98,11 +103,16 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		//TODO implement
 		break;
 	    case statusResponse:
-		for (int i = 0; i < actorIdTab.length; i++) {
-		    if (actorIdTab[i] == msg.getSenderId()) {
-			actorStatusTab[i] = msg.getStatus();
-		    }
-		}
+                if (actorIdTab != null) {
+                    for (int i = 0; i < actorIdTab.length; i++) {
+                        if (actorIdTab[i] == msg.getSenderId()) {
+                            actorStatusTab[i] = msg.getStatus();
+                            actorAckTab[i] = true;
+                        }
+                    }
+                } else {
+                    System.out.println("statusResponse interessiert dieses Device nicht");
+                }
 		break;
 	    case configChange:
 		//TODO implement
@@ -113,4 +123,13 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		break;
 	}
     }
+    public boolean checkRespones(){
+
+        for (int i = 0; i < actorAckTab.length; i++) {
+            if(actorAckTab[i] == false)
+                return false;
+        }
+        return true;
+    }
+
 }
