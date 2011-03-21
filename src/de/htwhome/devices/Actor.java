@@ -68,13 +68,13 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     }
 
     @Override
-    public void handleMsg(String jsonMsg, Type msgType){
-	Message<T> msg = gson.fromJson(jsonMsg, msgType);
+    public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
+	Message msg = gson.fromJson(jsonMsg, Message.class);
 
 	switch (msg.getMsgType()) {
 	    case statusChange:
 		if(isReceiver(id)){
-		    setStatus(msg.getStatus());
+		    setStatus((T)msg.getContent());
 		}
 		break;
 	    case statusRequest:
@@ -86,8 +86,20 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		//TODO implement
 		break;
 	    case configRequest:
-                Message reply = new Message(MessageType.configResponse, this.id, ALLDEVICES, null, this.toString());
-                sendMsg(reply, null);
+                Message reply = new Message();
+		reply.setMsgType(MessageType.configChange);
+		reply.setSenderId(this.id);
+		reply.setReceiverId(ALLDEVICES);
+		reply.setSenderDevice(devType);
+		ActorConfig<T> ac = new ActorConfig<T>();
+		ac.setDescription(this.description);
+		ac.setGidTab(this.gidTab);
+		ac.setId(this.id);
+		ac.setLocation(this.location);
+		ac.setStatus(this.status);
+		String content = gson.toJson(ac, cfgType);
+		reply.setContent(content);
+                sendMsg(reply);
                 break;
 	}
     }

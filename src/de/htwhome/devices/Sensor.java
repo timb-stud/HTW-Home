@@ -1,6 +1,5 @@
 package de.htwhome.devices;
 
-import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.SensorConfig;
@@ -64,7 +63,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     }
 
     public void load(){
-        SensorConfig sc = this.getConfig();
+        SensorConfig sc = Sensor.getConfig();
         load(sc);
         this.actorIdTab = sc.getActorIDTab();
         this.actorStatusTab = (T[]) sc.getActorStatusTab();
@@ -72,8 +71,8 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     }
 
     @Override
-    public void handleMsg(String jsonMsg, Type msgType){
-	Message<T> msg = gson.fromJson(jsonMsg, msgType);
+    public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
+	Message msg = gson.fromJson(jsonMsg, Message.class);
 	switch (msg.getMsgType()) {
 	    case statusRequest:
 		//TODO implement
@@ -81,7 +80,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 	    case statusResponse:
 		for (int i = 0; i < actorIdTab.length; i++) {
 		    if (actorIdTab[i] == msg.getSenderId()) {
-			actorStatusTab[i] = msg.getStatus();
+			actorStatusTab[i] = (T)msg.getContent();
 		    }
 		}
 		break;
@@ -89,9 +88,22 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		//TODO implement
 		break;
 	    case configRequest:
-                Message reply = new Message(MessageType.configResponse, this.id, ALLDEVICES, null, this.toString());
-                sendMsg(reply, null);
-		break;
+                Message reply = new Message();
+		reply.setMsgType(MessageType.configChange);
+		reply.setSenderId(this.id);
+		reply.setReceiverId(ALLDEVICES);
+		reply.setSenderDevice(devType);
+		SensorConfig<T> ac = new SensorConfig<T>();
+		ac.setDescription(this.description);
+		ac.setId(this.id);
+		ac.setLocation(this.location);
+		ac.setStatus(this.status);
+		ac.setActorIDTab(actorIdTab);
+		ac.setActorStatusTab(actorStatusTab);
+		String content = gson.toJson(ac, cfgType);
+		reply.setContent(content);
+                sendMsg(reply);
+                break;
 	}
     }
 

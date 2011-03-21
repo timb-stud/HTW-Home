@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import java.net.SocketException;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
+import de.htwhome.utils.ActorConfig;
 
 /**
  *
@@ -12,7 +13,7 @@ import de.htwhome.transmission.MessageType;
  */
 public class PercentSwitch extends Sensor<Integer>{
 
-    public static final Type msgType = new TypeToken<Message<Integer>>(){}.getType();
+    public static final Type cfgType = new TypeToken<ActorConfig<Integer>>(){}.getType();
     public static final DeviceType deviceType = DeviceType.PercentSwitch;
     private int min, max; //TODO minimum und maximum festlegen
 
@@ -22,17 +23,19 @@ public class PercentSwitch extends Sensor<Integer>{
 
     @Override
     public void handleMsg(String msg) {
-	super.handleMsg(msg, PercentSwitch.msgType);
+	super.handleMsg(msg, deviceType, cfgType);
     }
 
     @Override
     public void setStatus(Integer status) {
         this.status = status;
-	Message<Integer> msg = new Message<Integer>();
+	Message msg = new Message();
 	msg.setMsgType(MessageType.statusChange);
 	msg.setReceiverId(this.gid);
-	msg.setStatus(this.status);
-	this.sendMsg(msg, PercentSwitch.msgType);
+	msg.setSenderId(this.id);
+	msg.setSenderDevice(deviceType);
+	msg.setContent(String.valueOf(this.status));
+	this.sendMsg(msg);
     }
 
 }
