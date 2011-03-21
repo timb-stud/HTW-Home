@@ -23,18 +23,15 @@ import java.util.logging.Logger;
 class TimeSchedulerTask<T> extends TimerTask{
     public final Type msgType;
 
-    private boolean changeStatus = false;
     private int gid;
     private T status;
-    private T firstStatus;
-    private T secondStatus;
     private final Sensor sensor;
 
 
 
-    public TimeSchedulerTask(int gid, Sensor sensor, T firstStatus, T secondStatus) {
+    public TimeSchedulerTask(int gid, Sensor sensor, T status) {
         this.gid = gid;
-        this.status = firstStatus;
+        this.status = status;
         this.sensor = sensor;
 
         if (this.status instanceof Boolean)
@@ -49,11 +46,6 @@ class TimeSchedulerTask<T> extends TimerTask{
 
     @Override
     public void run() {
-        if (changeStatus)
-            status = secondStatus;
-        else
-            status = firstStatus;
-        changeStatus = (changeStatus) ? false : true;
         sensor.setStatus(status);
         //       timer.cancel(); //Terminate the timer thread
 
