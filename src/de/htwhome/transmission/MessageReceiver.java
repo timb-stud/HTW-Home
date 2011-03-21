@@ -41,7 +41,7 @@ public class MessageReceiver extends Thread{
 
     public static void main(String[] args) throws SocketException, IOException {
         int[] gidTab = {1,2};
-        Light l = new Light(2, true, "", "", "", gidTab);
+        Light l = new Light(2, true, "", "", gidTab);
         MessageReceiver msgr = new MessageReceiver(l);
         msgr.start();
     }

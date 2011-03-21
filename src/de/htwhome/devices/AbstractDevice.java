@@ -19,7 +19,6 @@ public abstract class AbstractDevice<T> {
     protected int id;
     protected  T status;
     protected  String location;
-    protected  String type; //koennte auch als Enum realisiert werden
     protected  String description;
     protected static Gson gson = new Gson();
     private MessageReceiver msgReceiver;
@@ -28,11 +27,10 @@ public abstract class AbstractDevice<T> {
     
     public AbstractDevice() {}
 
-    public AbstractDevice(int id, T status, String location, String type, String description) throws SocketException {
+    public AbstractDevice(int id, T status, String location, String description) throws SocketException {
         this.id = id;
         this.status = status;
         this.location = location;
-        this.type = type;
         this.description = description;
         msgReceiver = new MessageReceiver(this);
         msgReceiver.start();
@@ -42,7 +40,6 @@ public abstract class AbstractDevice<T> {
         this.id = dc.getId();
         this.status = (T) dc.getStatus();
         this.location = dc.getLocation();
-        this.type = dc.getType();
         this.description = dc.getDescription();
     }
 
@@ -50,7 +47,6 @@ public abstract class AbstractDevice<T> {
         dc.setId(id);
         dc.setStatus(status);
         dc.setLocation(location);
-        dc.setType(type);
         dc.setDescription(description);
     }
 
@@ -99,16 +95,9 @@ public abstract class AbstractDevice<T> {
 
     public abstract void setStatus(T status);
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
+    @Override
     public String toString() {
-	return "Device{" + "id=" + id + "status=" + status + "location=" + location + "type=" + type + "description=" + description + '}';
+	return "AbstractDevice{" + "id=" + id + "status=" + status + "location=" + location + "description=" + description + "msgReceiver=" + msgReceiver + '}';
     }
 
 }

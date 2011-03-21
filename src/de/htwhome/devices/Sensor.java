@@ -2,7 +2,6 @@ package de.htwhome.devices;
 
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
-import de.htwhome.utils.ActorConfig;
 import de.htwhome.utils.SensorConfig;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,8 +24,8 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     public Sensor() {
     }
 
-     public Sensor (int id, T status, String location, String type, String description, int[] actorIdTab, T[] actorStatusTab, int gid) throws SocketException {
-        super(id, status,location, type, description);
+     public Sensor (int id, T status, String location, String description, int[] actorIdTab, T[] actorStatusTab, int gid) throws SocketException {
+        super(id, status,location, description);
         this.actorIdTab = actorIdTab;
         this.actorStatusTab = actorStatusTab;
         this.gid = gid;
