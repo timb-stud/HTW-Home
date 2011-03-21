@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
@@ -18,11 +13,12 @@ import java.net.SocketException;
 public class Panel<T> extends AbstractDevice<T>{
 
     public static final Type msgType = new TypeToken<Message<Boolean>>(){}.getType();
+    public static final DeviceType deviceType = DeviceType.Panel;
 
     public Panel() {}
 
-    public Panel(int id, T status, String location, String type, String hint, int[] gidTab) throws SocketException{
-        super(id, status,location, type, hint);
+    public Panel(int id, T status, String location, String hint, int[] gidTab) throws SocketException{
+        super(id, status,location, hint);
     }
 
     @Override
@@ -79,7 +75,7 @@ public class Panel<T> extends AbstractDevice<T>{
 
     public static void main(String[] args) throws SocketException {
         int[] gid  = {1};
-        Panel p = new Panel(123, false, "Wohnzimmer", "Panel", "Megapanel", gid);
+        Panel p = new Panel(123, false, "Wohnzimmer", "Megapanel", gid);
         p.getAllConfigs();
     }
 

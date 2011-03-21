@@ -13,13 +13,14 @@ import java.net.SocketException;
 public class Switch extends Sensor<Boolean> {
 
     public static final Type msgType = new TypeToken<Message<Boolean>>(){}.getType();
+    public static final DeviceType deviceType = DeviceType.Switch;
 
     public Switch() {
         super.load();
     }
 
-    public Switch (int id, boolean status, String location, String type, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) throws SocketException {
-        super(id, status, location, type, description, actorIdTab, actorStatusTab, gid);
+    public Switch (int id, boolean status, String location, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) throws SocketException {
+        super(id, status, location, description, actorIdTab, actorStatusTab, gid);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class Switch extends Sensor<Boolean> {
     public static void main(String[] args) throws SocketException {
         int[] actorListId = {10};
         Boolean[] actorListStatus = {false};
-        Switch s = new Switch(33, false, "haus", "schalter", "hintt", actorListId, actorListStatus, 1);
+        Switch s = new Switch(33, false, "haus", "hintt", actorListId, actorListStatus, 1);
         s.save();
         s.setStatus(true);
     }
