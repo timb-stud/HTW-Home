@@ -5,14 +5,11 @@ import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageReceiver;
 import de.htwhome.transmission.MessageSender;
 import de.htwhome.utils.DeviceConfig;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.bind.JAXB;
 
 /**
  *
@@ -27,7 +24,8 @@ public abstract class AbstractDevice<T> {
     protected static Gson gson = new Gson();
     private MessageReceiver msgReceiver;
     protected static int ALLDEVICES = 999;
-
+    protected int[] responseArray;
+    
     public AbstractDevice() {}
 
     public AbstractDevice(int id, T status, String location, String type, String description) throws SocketException {
