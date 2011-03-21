@@ -42,7 +42,7 @@ public class Light extends Actor<Boolean> {
 
     public static void main(String[] args) throws SocketException {
         int[] gid  = {1};
-	Light l = new Light(10, false, "haus", "lampe1", "Beschreibung", gid);
+	Light l = new Light(10, false, "haus", "Beschreibung", gid);
 //        Light l = new Light();
 //	l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
 
