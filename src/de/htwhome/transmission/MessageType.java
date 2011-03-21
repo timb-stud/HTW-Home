@@ -7,5 +7,6 @@ package de.htwhome.transmission;
 public enum MessageType {
 
     statusChange, statusRequest, statusResponse,
-    configChange, configRequest, configResponse;
+    configChange, configRequest, configResponse,
+    weatherAlarm, fireAlarm;
 }
