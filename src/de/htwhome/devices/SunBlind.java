@@ -36,5 +36,11 @@ public class SunBlind extends Actor<Integer>{
 	msg.setContent(String.valueOf(this.status));
 	sendMsg(msg);
     }
+
+    @Override
+    public void setStatus(String status) {
+	int i = Integer.getInteger(status);
+	this.setStatus(i);
+    }
     
 }

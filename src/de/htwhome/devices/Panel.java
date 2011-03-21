@@ -91,5 +91,9 @@ public class Panel extends AbstractDevice<Boolean>{
         p.getAllConfigs();
     }
 
-
+    @Override
+    public void setStatus(String status) {
+	boolean b = Boolean.parseBoolean(status);
+	this.setStatus(b);
+    }
 }

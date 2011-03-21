@@ -15,7 +15,7 @@ import de.htwhome.utils.SensorConfig;
 public class Anemometer extends Sensor<Double>{
 
     public static final DeviceType deviceType = DeviceType.Switch;
-public static final Type cfgType = new TypeToken<SensorConfig<Double>>(){}.getType();
+    public static final Type cfgType = new TypeToken<SensorConfig<Double>>(){}.getType();
 
 
     public Anemometer () {
@@ -48,6 +48,18 @@ public static final Type cfgType = new TypeToken<SensorConfig<Double>>(){}.getTy
         Anemometer a = new Anemometer(125, 5.5, "Garten", "Windmesser", ALLDEVICES);
 //        a.startScheduler(a.getStatus(), 0, 5);
         a.setStatus(1.0);
+    }
+
+    @Override
+    public void setStatus(String status) {
+	double d = Double.valueOf(status);
+	this.setStatus(d);
+    }
+
+    @Override
+    public void setActorStatus(String status, int pos) {
+	double d = Double.valueOf(status);
+	this.setActorStatus(d, pos);
     }
 
 

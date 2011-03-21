@@ -52,4 +52,16 @@ public class Switch extends Sensor<Boolean> {
         
 //        s.startScheduler(Boolean.TRUE, Boolean.FALSE, 2, 4);
     }
+
+    @Override
+    public void setStatus(String status) {
+	boolean b = Boolean.getBoolean(status);
+	this.setStatus(b);
+    }
+
+    @Override
+    public void setActorStatus(String status, int pos) {
+	boolean b = Boolean.getBoolean(status);
+	this.setActorStatus(b, pos);
+    }
 }
