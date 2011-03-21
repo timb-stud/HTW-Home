@@ -15,7 +15,9 @@ import de.htwhome.utils.SensorConfig;
 public class Anemometer extends Sensor<Double>{
 
     public static final DeviceType deviceType = DeviceType.Switch;
-public static final Type cfgType = new TypeToken<SensorConfig<Double>>(){}.getType();
+    public static final Type cfgType = new TypeToken<SensorConfig<Double>>(){}.getType();
+    private static final Double MAXLEVELWARNING = 9.0; //TODO Wert muss aus Konfig gelesen werden
+    private static final Double MINLEVELWARNING = 1.0; //TODO Wert muss aus Konfig gelesen werden
 
 
     public Anemometer () {
@@ -34,6 +36,9 @@ public static final Type cfgType = new TypeToken<SensorConfig<Double>>(){}.getTy
     @Override
     public void setStatus(Double status) {
         this.status = status;
+        if (this.status < MINLEVELWARNING || this.status > MAXLEVELWARNING) {
+            System.out.println("Sende Warnung !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
 	Message msg = new Message();
         msg.setMsgType(MessageType.statusResponse);
         msg.setSenderId(this.id);
@@ -47,7 +52,9 @@ public static final Type cfgType = new TypeToken<SensorConfig<Double>>(){}.getTy
     public static void main(String[] args) throws SocketException {
         Anemometer a = new Anemometer(125, 5.5, "Garten", "Windmesser", ALLDEVICES);
 //        a.startScheduler(a.getStatus(), 0, 5);
-        a.setStatus(1.0);
+        a.setStatus(6.0);
+        a.setStatus(9.0);
+        a.setStatus(10.0);
     }
 
 
