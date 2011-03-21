@@ -19,8 +19,8 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 
     public Actor() {}
 
-    public Actor(int id, T status, String location, String type, String hint, int[] gidTab) throws SocketException {
-        super(id, status,location, type, hint);
+    public Actor(int id, T status, String location, String description, int[] gidTab) throws SocketException {
+        super(id, status,location, description);
         this.gidTab = gidTab;
     }
 
@@ -45,14 +45,14 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         }
     }
 
-    public void save(){
+    public void save() {
         ActorConfig ac = new ActorConfig();
         save(ac);
         ac.setGidTab(gidTab);
         setConfig(ac);
     }
 
-    public void load(){
+    public void load() {
         ActorConfig ac = this.getConfig();
         load(ac);
         this.gidTab = ac.getGidTab();

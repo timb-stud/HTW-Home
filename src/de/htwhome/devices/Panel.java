@@ -15,13 +15,15 @@ public class Panel<T> extends AbstractDevice<T>{
 
     public static final Type msgType = new TypeToken<Message<Boolean>>(){}.getType();
     private ArrayList<AbstractDevice> deviceList;
+    public static final DeviceType deviceType = DeviceType.Panel;
 
 
     public Panel() {}
 
     public Panel(int id, T status, String location, String type, String description) throws SocketException{
-        super(id, status,location, type, description);
+        super(id, status, location, description);
         this.deviceList = new ArrayList<AbstractDevice>();
+
     }
 
     @Override

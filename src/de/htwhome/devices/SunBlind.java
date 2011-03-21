@@ -13,9 +13,11 @@ import java.net.SocketException;
 public class SunBlind extends Actor<Integer>{
 
     public static final Type msgType = new TypeToken<Message<Integer>>(){}.getType();
+    public static final DeviceType deviceType = DeviceType.Sunblind;
+    private int min, max; //TODO minimum und maximum festlegen
 
-    public SunBlind(int id, int status, String location, String type, String description, int[] gidTab) throws SocketException {
-        super(id, status, location, type, description, gidTab);
+    public SunBlind(int id, int status, String location, String description, int[] gidTab) throws SocketException {
+        super(id, status, location, description, gidTab);
     }
 
     @Override
