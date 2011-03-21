@@ -70,12 +70,15 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     @Override
     public void handleMsg(String jsonMsg, Type msgType){
 	Message<T> msg = gson.fromJson(jsonMsg, msgType);
-
+        System.out.println("Verarbeite Nachricht vom Typ: " + msg.getMsgType());
 	switch (msg.getMsgType()) {
 	    case statusChange:
-		if(isReceiver(id)){
+		if(isReceiver(msg.getReceiverId())){
+                    System.out.println("betrifft mich");
 		    setStatus(msg.getStatus());
-		}
+		} else {
+                    System.out.println("bestrifft mich nicht");
+                }
 		break;
 	    case statusRequest:
 		if(isReceiver(id)){
