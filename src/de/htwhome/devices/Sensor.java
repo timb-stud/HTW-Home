@@ -23,6 +23,8 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     protected T[] actorStatusTab;
     protected boolean[] actorAckTab; //TODO init
     protected int gid;
+    private boolean timeSchedulerChangeStatus = false;
+
 
     public Sensor() {
     }
@@ -45,11 +47,20 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         return config;
     }
 
-    public void startScheduler(T status,long from, long till){
+    public void startScheduler(T firstStatus, T secondStatus,long from, long till){
         timer = new Timer();
         long start = from * 1000;  //TODO Berechnung
         long intervall = till * 1000;
-        timer.schedule(new TimeSchedulerTask<T>(gid, status), start, intervall);
+        timer.schedule(new TimeSchedulerTask<T>(gid, this, newTimeSchedulerStatus(firstStatus, secondStatus)), start, intervall);
+    }
+
+    private T newTimeSchedulerStatus(T firstStatus, T secondStatus){
+       if (timeSchedulerChangeStatus)
+            status = secondStatus;
+        else
+            status = firstStatus;
+       timeSchedulerChangeStatus = (timeSchedulerChangeStatus) ? false : true;
+        return status;
     }
 
     public void stopScheduler(){
@@ -145,4 +156,11 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         return true;
     }
 
+    public boolean getTimeSchedulerChangeStatus() {
+        return timeSchedulerChangeStatus;
+    }
+
+    public void setTimeSchedulerChangeStatus(boolean TimeSchedulerChangeStatus) {
+        this.timeSchedulerChangeStatus = TimeSchedulerChangeStatus;
+    }
 }

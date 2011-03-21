@@ -21,49 +21,49 @@ import java.util.logging.Logger;
  * @author christian
  */
 class TimeSchedulerTask<T> extends TimerTask{
-    public final Type msgType;
+//    public final Type msgType;
 
-//   private boolean changeStatus = false;
     private int gid;
     private T status;
+    private Sensor sensor;
 
-
-    public TimeSchedulerTask(int gid, T status) {
+    public TimeSchedulerTask(int gid, Sensor sensor, T status) {
         this.gid = gid;
         this.status = status;
+        this.sensor = sensor;
 
-        if (this.status instanceof Boolean)
-            msgType = new TypeToken<Message<Boolean>>(){}.getType();
-        else if (this.status instanceof Integer)
-            msgType = new TypeToken<Message<Integer>>(){}.getType();
-        else if (this.status instanceof Double)
-            msgType = new TypeToken<Message<Double>>(){}.getType();
-        else
-            msgType = null; //TODO msgType muss initialisiert werden. null führt zu fehler
+//        if (this.status instanceof Boolean)
+//            msgType = new TypeToken<Message<Boolean>>(){}.getType();
+//        else if (this.status instanceof Integer)
+//            msgType = new TypeToken<Message<Integer>>(){}.getType();
+//        else if (this.status instanceof Double)
+//            msgType = new TypeToken<Message<Double>>(){}.getType();
+//        else
+//            msgType = null; //TODO msgType muss initialisiert werden. null führt zu fehler
     }
 
     @Override
     public void run() {
-//       changeStatus = (changeStatus) ? false : true;
-//       System.out.format("Status = " + status + " Statusswitcher = " + changeStatus + "%n");
-//       timer.cancel(); //Terminate the timer thread
-        Message<T> msg = new Message<T>();
-        msg.setMsgType(MessageType.statusChange);
-        msg.setReceiverId(this.gid);
-        msg.setStatus(this.status);
-        this.sendMsg(msg, this.msgType);
+        sensor.setStatus(status);
+        //       timer.cancel(); //Terminate the timer thread
+
+//        Message<T> msg = new Message<T>();
+//        msg.setMsgType(MessageType.statusChange);
+//        msg.setReceiverId(this.gid);
+//        msg.setStatus(status);
+//        this.sendMsg(msg, this.msgType);
     }
 
-    //TODO handleResponse
-
-    private void sendMsg(Message<T> msg, Type msgTyp){
-        try {
-            String json = new Gson().toJson(msg, msgTyp);
-//            System.out.println("JSON:" + json); //TODO aufraeumen
-            MessageSender.sendMsg(json);
-        } catch (IOException ex) {
-            Logger.getLogger(Actor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    //TODO handleResponse
+//
+//    private void sendMsg(Message<T> msg, Type msgTyp){
+//        try {
+//            String json = new Gson().toJson(msg, msgTyp);
+////            System.out.println("JSON:" + json); //TODO aufraeumen
+//            MessageSender.sendMsg(json);
+//        } catch (IOException ex) {
+//            Logger.getLogger(Actor.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
 }
