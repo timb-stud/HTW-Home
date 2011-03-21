@@ -50,6 +50,6 @@ public class Switch extends Sensor<Boolean> {
         s.save();
         s.setStatus(true);
         
-        s.startScheduler(Boolean.TRUE, Boolean.FALSE, 2, 4);
+//        s.startScheduler(Boolean.TRUE, Boolean.FALSE, 2, 4);
     }
 }
