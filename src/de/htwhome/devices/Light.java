@@ -42,15 +42,15 @@ public class Light extends Actor<Boolean> {
 
     public static void main(String[] args) throws SocketException {
         int[] gid  = {1};
-//	Light l = new Light(10, false, "haus", "lampe1", "Beschreibung", gid);
-        Light l = new Light();
-	//l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
+	Light l = new Light(10, false, "haus", "lampe1", "Beschreibung", gid);
+//        Light l = new Light();
+//	l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
 
 
-        l.save();
-        ActorConfig sc2 = (ActorConfig) l.getConfig();
-        System.out.println("sc2 id= " + sc2.getId()
-                  + "\n" + "status= " + sc2.getStatus()
-                );
+//        l.save();
+//        ActorConfig sc2 = (ActorConfig) l.getConfig();
+//        System.out.println("sc2 id= " + sc2.getId()
+//                  + "\n" + "status= " + sc2.getStatus()
+//                );
     }
 }
