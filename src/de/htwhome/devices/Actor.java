@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
-import java.util.ArrayList;
 import javax.xml.bind.JAXB;
 
 /**
@@ -46,14 +45,14 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         }
     }
 
-    public void save(){
+    public void save() {
         ActorConfig ac = new ActorConfig();
         save(ac);
         ac.setGidTab(gidTab);
         setConfig(ac);
     }
 
-    public void load(){
+    public void load() {
         ActorConfig ac = this.getConfig();
         load(ac);
         this.gidTab = ac.getGidTab();
