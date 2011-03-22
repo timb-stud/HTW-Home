@@ -57,7 +57,7 @@ public abstract class AbstractDevice<T> {
     public void sendMsg(Message msg){
         try {
             String json = new Gson().toJson(msg);
-            System.out.println("JSON:" + json); //TODO aufraeumen
+            // System.out.println("JSON:" + json); //TODO aufraeumen
             MessageSender.sendMsg(json);
         } catch (IOException ex) {
             Logger.getLogger(Actor.class.getName()).log(Level.SEVERE, null, ex);

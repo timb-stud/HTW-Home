@@ -23,7 +23,7 @@ public class Panel extends AbstractDevice<Boolean>{
     private ArrayList<AbstractDevice> deviceList;
     public static final DeviceType deviceType = DeviceType.Panel;
     public static final Type cfgType = new TypeToken<ActorConfig<Boolean>>(){}.getType();
-
+    
 
     public Panel() {}
 
