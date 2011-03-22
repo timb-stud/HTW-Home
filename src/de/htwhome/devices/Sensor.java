@@ -2,6 +2,7 @@ package de.htwhome.devices;
 
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
+import de.htwhome.utils.LittleHelpers;
 import de.htwhome.utils.SensorConfig;
 import java.io.File;
 import java.io.FileWriter;
@@ -55,22 +56,26 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         timer.schedule(new TimeSchedulerTask<T>(this, firstStatus, secondStatus), start, intervall);
     }
 
+    public void startRandomScheduler(long from, long till){
+        timer = new Timer();
+        long start = from * 1000;  //TODO Berechnung
+        long intervall = till * 1000;
+        timer.schedule(new TimeSchedulerTask<T>(this), start, intervall);
+    }
+
     protected  T newTimeSchedulerStatus(T firstStatus, T secondStatus){
        if (timeSchedulerChangeStatus)
-//            status = secondStatus;
-              status = (T) randomMeasurement();
+            status = secondStatus;
         else
-//            status = firstStatus;
-            status = (T) randomMeasurement();
+            status = firstStatus;
        timeSchedulerChangeStatus = (timeSchedulerChangeStatus) ? false : true;
        return status;
     }
 
-    private static Double randomMeasurement() {
-        Double measure = Math.random() * 10;
-        return measure;
+    protected  T newTimeSchedulerStatus(){
+       return (T) LittleHelpers.randomMeasurement();
     }
-
+    
     public void stopScheduler(){
         timer.cancel(); //Terminate the timer thread
     }
