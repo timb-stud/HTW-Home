@@ -36,6 +36,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         this.actorStatusTab = actorStatusTab;
         this.gid = gid;
         actorAckTab = new boolean[actorIdTab.length];
+        save();
     }
 
     public Sensor (int id, T status, String location, String description, int gid) throws SocketException {
