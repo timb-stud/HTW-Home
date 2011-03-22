@@ -24,7 +24,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         this.gidTab = gidTab;
     }
 
-   public static ActorConfig getConfig(){  //TODO Config file + config als attribut
+   public static ActorConfig getConfig(){ 
         ActorConfig config = JAXB.unmarshal(new File("ActorConfig.xml"), ActorConfig.class);
         return config;
     }

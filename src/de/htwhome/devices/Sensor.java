@@ -43,12 +43,6 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         this.gid = gid;
     }
 
-    public static SensorConfig getConfig(){  //TODO Config file + config als attribut
-        SensorConfig config = JAXB.unmarshal(new File("SensorConfig.xml"), SensorConfig.class);
-        return config;
-    }
-
-
     public void startScheduler(T firstStatus, T secondStatus,long from, long till){
         timer = new Timer();
         long start = from * 1000;  //TODO Berechnung
@@ -78,6 +72,11 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         timer.cancel(); //Terminate the timer thread
     }
 
+    public static SensorConfig getConfig(){ 
+        SensorConfig config = JAXB.unmarshal(new File("SensorConfig.xml"), SensorConfig.class);
+        return config;
+    }
+
     public static void setConfig(SensorConfig config) {
         FileWriter filewriter = null;
         try {
@@ -93,6 +92,8 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
             }
         }
     }
+
+    
     @Override
     public void setStatus(T status) {
         actorRespThread art = new actorRespThread(this);
