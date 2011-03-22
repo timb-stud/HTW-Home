@@ -55,6 +55,18 @@ public class Anemometer extends Sensor<Double>{
 	this.sendMsg(msg);
         System.out.println("Neue Windgeschwindigkeit: " + this.status); //TODO sout entfernen
     }
+    
+    @Override
+    public void setStatus(String status) {
+        double d = Double.valueOf(status);
+        this.setStatus(d);
+    }
+
+    @Override
+    public void setActorStatus(String status, int pos) {
+        double d = Double.valueOf(status);
+        this.setActorStatus(d, pos);
+    }
 
     public static void main(String[] args) throws SocketException {
         Anemometer a = new Anemometer(125, 5.5, "Garten", "Windmesser", ALLDEVICES);
@@ -63,18 +75,4 @@ public class Anemometer extends Sensor<Double>{
         a.setStatus(9.0);
         a.setStatus(10.0);
     }
-
-    @Override
-    public void setStatus(String status) {
-	double d = Double.valueOf(status);
-	this.setStatus(d);
-    }
-
-    @Override
-    public void setActorStatus(String status, int pos) {
-	double d = Double.valueOf(status);
-	this.setActorStatus(d, pos);
-    }
-
-
 }
