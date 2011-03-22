@@ -4,15 +4,12 @@ import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
+import de.htwhome.utils.HTWhomeConfig;
 import de.htwhome.utils.PanelConfig;
 import de.htwhome.utils.SensorConfig;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 import java.util.ArrayList;
-import javax.xml.bind.JAXB;
 
 /**
  *
@@ -34,38 +31,38 @@ public class Panel extends AbstractDevice<Boolean>{
     }
 
     public void save() {
-        PanelConfig pc = new PanelConfig();
+        HTWhomeConfig pc = new HTWhomeConfig();
         super.save(pc);
         pc.setDeviceList(deviceList);
-        setConfig(pc);
+        setConfig(pc, "Panel");
     }
 
     public void load(){
-        PanelConfig pc = this.getConfig();
+        HTWhomeConfig pc = this.getConfig("Panel");
         load(pc);
         this.deviceList = pc.getDeviceList();
     }
 
-   public static PanelConfig getConfig(){
-        PanelConfig config = JAXB.unmarshal(new File("PanelConfig.xml"), PanelConfig.class);
-        return config;
-    }
-
-    public static void setConfig(PanelConfig config) {
-        FileWriter filewriter = null;
-        try {
-            filewriter = new FileWriter(("PanelConfig.xml"));
-            JAXB.marshal(config, filewriter);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                filewriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//   public static PanelConfig getConfig(){
+//        PanelConfig config = JAXB.unmarshal(new File("PanelConfig.xml"), PanelConfig.class);
+//        return config;
+//    }
+//
+//    public static void setConfig(PanelConfig config) {
+//        FileWriter filewriter = null;
+//        try {
+//            filewriter = new FileWriter(("PanelConfig.xml"));
+//            JAXB.marshal(config, filewriter);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                filewriter.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     @Override
     public void handleMsg(String jsonMsg) {

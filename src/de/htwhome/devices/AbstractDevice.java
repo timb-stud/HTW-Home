@@ -5,11 +5,16 @@ import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageReceiver;
 import de.htwhome.transmission.MessageSender;
 import de.htwhome.utils.DeviceConfig;
+import de.htwhome.utils.HTWhomeConfig;
+import de.htwhome.utils.PanelConfig;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.bind.JAXB;
 
 /**
  *
@@ -35,20 +40,41 @@ public abstract class AbstractDevice<T> {
         msgReceiver.start();
     }
 
-    protected  void load(DeviceConfig dc){
+    protected  void load(HTWhomeConfig dc){
         this.id = dc.getId();
         this.status = (T) dc.getStatus();
         this.location = dc.getLocation();
         this.description = dc.getDescription();
     }
 
-    protected void save (DeviceConfig dc){
+    protected void save (HTWhomeConfig dc){
         dc.setId(id);
         dc.setStatus(status);
         dc.setLocation(location);
         dc.setDescription(description);
     }
 
+
+       public static HTWhomeConfig getConfig(String filename){
+        HTWhomeConfig config = JAXB.unmarshal(new File(filename + ".xml"), HTWhomeConfig.class);
+        return config;
+    }
+
+    public static void setConfig(HTWhomeConfig config, String filename) {
+        FileWriter filewriter = null;
+        try {
+            filewriter = new FileWriter((filename + ".xml"));
+            JAXB.marshal(config, filewriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                filewriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public abstract void handleMsg(String msg);
 

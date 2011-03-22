@@ -2,6 +2,7 @@ package de.htwhome.devices;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
+import de.htwhome.utils.HTWhomeConfig;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,36 +26,36 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         save();
     }
 
-   public static ActorConfig getConfig(){ 
-        ActorConfig config = JAXB.unmarshal(new File("ActorConfig.xml"), ActorConfig.class);
-        return config;
-    }
-
-    public static void setConfig(ActorConfig config) {
-        FileWriter filewriter = null;
-        try {
-            filewriter = new FileWriter("ActorConfig.xml");
-            JAXB.marshal(config, filewriter);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                filewriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//   public static ActorConfig getConfig(){
+//        ActorConfig config = JAXB.unmarshal(new File("ActorConfig.xml"), ActorConfig.class);
+//        return config;
+//    }
+//
+//    public static void setConfig(ActorConfig config) {
+//        FileWriter filewriter = null;
+//        try {
+//            filewriter = new FileWriter("ActorConfig.xml");
+//            JAXB.marshal(config, filewriter);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                filewriter.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     public void save() {
-        ActorConfig ac = new ActorConfig();
+        HTWhomeConfig ac = new HTWhomeConfig();
         save(ac);
         ac.setGidTab(gidTab);
-        setConfig(ac);
+        setConfig(ac, "Actor");
     }
 
     public void load() {
-        ActorConfig ac = this.getConfig();
+        HTWhomeConfig ac = this.getConfig("Actor");
         load(ac);
         this.gidTab = ac.getGidTab();
     }
@@ -71,6 +72,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     @Override
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
 	Message msg = gson.fromJson(jsonMsg, Message.class);
+        HTWhomeConfig<T> ac;
         System.out.println("Verarbeite Nachricht vom Typ: " + msg.getMsgType());
 	switch (msg.getMsgType()) {
 	    case statusChange:
@@ -85,9 +87,9 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		break;
 	    case configChange:  //TODO testen
                 if(isReceiver(msg.getReceiverId())){
-                    ActorConfig<T> ac = gson.fromJson(msg.getContent(), cfgType);
-                    setConfig(ac);
-		    getConfig(); //TODO Quittierung?
+                    ac = gson.fromJson(msg.getContent(), cfgType);
+                    setConfig(ac, "Actor");
+		    getConfig("Actor"); //TODO Quittierung?
 		}
 		break;
 	    case configRequest:
@@ -97,7 +99,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		reply.setReceiverId(ALLDEVICES);
 		reply.setSenderDevice(devType);
                 save();
-                ActorConfig<T> ac =  getConfig();
+                ac =  getConfig("Actor");
 		String content = gson.toJson(ac, cfgType);
 		reply.setContent(content);
                 sendMsg(reply);

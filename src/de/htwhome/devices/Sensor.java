@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
+import de.htwhome.utils.HTWhomeConfig;
 import de.htwhome.utils.LittleHelpers;
 import de.htwhome.utils.SensorConfig;
 import java.io.File;
@@ -46,14 +47,6 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         this.gid = gid;
     }
 
-    public static SensorConfig getConfig(){  //TODO Config file + config als attribut
-        SensorConfig config = JAXB.unmarshal(new File("SensorConfig.xml"), SensorConfig.class);
-        // System.out.println(config);
-        return config;
-    }
-
-
-
     public void startScheduler(T firstStatus, T secondStatus,long from, long till){
         timer = new Timer();
         long now = System.currentTimeMillis();
@@ -84,23 +77,27 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         timer.cancel(); //Terminate the timer thread
     }
 
-
-
-    public static void setConfig(SensorConfig config) {
-        FileWriter filewriter = null;
-        try {
-            filewriter = new FileWriter(("SensorConfig.xml"));
-            JAXB.marshal(config, filewriter);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                filewriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//  public static SensorConfig getConfig(){  //TODO Config file + config als attribut
+//        SensorConfig config = JAXB.unmarshal(new File("SensorConfig.xml"), SensorConfig.class);
+//        // System.out.println(config);
+//        return config;
+//    }
+//
+//    public static void setConfig(SensorConfig config) {
+//        FileWriter filewriter = null;
+//        try {
+//            filewriter = new FileWriter(("SensorConfig.xml"));
+//            JAXB.marshal(config, filewriter);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                filewriter.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
     
     public void startResponseThread() {
         actorRespThread art = new actorRespThread(this);
@@ -114,16 +111,16 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     public abstract void setActorStatus(String status, int pos);
 
     public void save(){
-        SensorConfig sc = new SensorConfig();
+        HTWhomeConfig sc = new HTWhomeConfig();
         save(sc);
         sc.setActorIDTab(actorIdTab);
         sc.setActorStatusTab(actorStatusTab);
         sc.setActorAckTab(actorAckTab);
-       setConfig(sc);
+       setConfig(sc, "Sensor");
     }
 
     public void load(){
-        SensorConfig sc = Sensor.getConfig();
+        HTWhomeConfig sc = Sensor.getConfig("Sensor");
         load(sc);
         this.actorIdTab = sc.getActorIDTab();
         this.actorStatusTab = (T[]) sc.getActorStatusTab();
@@ -134,7 +131,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
 	Message msg = gson.fromJson(jsonMsg, Message.class);
         Message reply;
-        SensorConfig<T> sc;
+        HTWhomeConfig<T> sc;
 	switch (msg.getMsgType()) {
 	    case statusRequest: //denke ist fertig. TL
                 reply = new Message();
@@ -158,8 +155,8 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 	    case configChange:
 		if (msg.getReceiverId() == this.id) {
 		    sc = gson.fromJson(msg.getContent(), cfgType);
-		    setConfig(sc);
-		    getConfig();
+		    setConfig(sc, "Sensor");
+		    getConfig("Sensor");
 		}
 		break;
 	    case configRequest: //TODO implement
@@ -177,7 +174,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 //		sc.setActorIDTab(actorIdTab);
 //		sc.setActorStatusTab(actorStatusTab);
 //                save();
-                sc = getConfig();
+                sc = getConfig("Sensor");
 		String content = gson.toJson(sc, cfgType);
                 reply.setContent(content);
                 sendMsg(reply);
