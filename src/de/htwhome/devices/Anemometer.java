@@ -6,6 +6,7 @@ import java.net.SocketException;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.SensorConfig;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -55,7 +56,7 @@ public class Anemometer extends Sensor<Double>{
 	this.sendMsg(msg);
         System.out.println("Neue Windgeschwindigkeit: " + this.status); //TODO sout entfernen
     }
-    
+
     @Override
     public void setStatus(String status) {
         double d = Double.valueOf(status);
@@ -68,11 +69,14 @@ public class Anemometer extends Sensor<Double>{
         this.setActorStatus(d, pos);
     }
 
+    private static Double randomMeasurement() {
+        Double measure = Math.random() * 10;
+        return measure;
+    }
+
     public static void main(String[] args) throws SocketException {
         Anemometer a = new Anemometer(125, 5.5, "Garten", "Windmesser", ALLDEVICES);
-//        a.startScheduler(a.getStatus(), 0, 5);
-        a.setStatus(6.0);
-        a.setStatus(9.0);
-        a.setStatus(10.0);
+        a.startRandomScheduler(5);
+//        a.setStatus(randomMeasurement());
     }
 }

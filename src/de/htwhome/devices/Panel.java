@@ -96,14 +96,19 @@ public class Panel extends AbstractDevice<Boolean>{
                 sc.setDeviceType(deviceType);
                 break;
             case Light:
+                System.out.println("Light meldet sich");
                 break;
             case Panel:
+                System.out.println("Panel meldet sich");
                 break;
             case PercentSwitch:
+                System.out.println("PercentSwitch meldet sich");
                 break;
             case Sunblind:
+                System.out.println("Sunblind meldet sich");
                 break;
             case Switch:
+                System.out.println("Switch meldet sich");
                 break;
         }
 	//TODO implement
