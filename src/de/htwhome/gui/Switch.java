@@ -11,8 +11,6 @@
 
 package de.htwhome.gui;
 
-import javax.swing.JButton;
-
 /**
  *
  * @author christian
