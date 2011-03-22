@@ -153,8 +153,6 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
                             actorAckTab[i] = true;
                         }
                     }
-                } else {
-                    System.out.println("statusResponse interessiert dieses Device nicht");
                 }
 		break;
 	    case configChange:
@@ -164,7 +162,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		    getConfig();
 		}
 		break;
-	    case configRequest:
+	    case configRequest: //TODO implement
                 reply = new Message();
 		reply.setMsgType(MessageType.configResponse);
 		reply.setSenderId(this.id);
@@ -180,10 +178,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 //		sc.setActorStatusTab(actorStatusTab);
 //                save();
                 sc = getConfig();
-//		String content = gson.toJson(sc, cfgType);
-                String s = gson.toJson(sc, cfgType);
-                System.out.println("config.toString: " + s);
-		String content = "Hallo Welt";
+		String content = gson.toJson(sc, cfgType);
                 reply.setContent(content);
                 sendMsg(reply);
                 break;
