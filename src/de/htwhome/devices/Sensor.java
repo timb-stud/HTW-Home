@@ -1,14 +1,16 @@
 package de.htwhome.devices;
 
+import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
+import de.htwhome.utils.ActorConfig;
+import de.htwhome.utils.DeviceConfig;
 import de.htwhome.utils.SensorConfig;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
-import java.util.Random;
 import java.util.Timer;
 import javax.xml.bind.JAXB;
 
@@ -90,8 +92,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
             }
         }
     }
-    @Override
-    public void setStatus(T status) {
+    public void startResponseThread() {
         actorRespThread art = new actorRespThread(this);
         art.start();
     }
@@ -160,8 +161,12 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		reply.setReceiverId(ALLDEVICES);
 		reply.setSenderDevice(devType);
                 save();
-                sc = getConfig();
-		String content = gson.toJson(sc, cfgType);
+//                sc = getConfig();
+//		sc.setActorAckTab(this.actorAckTab);
+		ActorConfig<Boolean> bs = new ActorConfig<Boolean>();
+		bs.setId(id);
+		Type ct = new TypeToken<ActorConfig<Boolean>>(){}.getType();
+		String content = gson.toJson(bs, ct);
 		reply.setContent(content);
                 sendMsg(reply);
                 break;

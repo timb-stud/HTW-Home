@@ -31,7 +31,7 @@ public class Switch extends Sensor<Boolean> {
 
     @Override
     public void setStatus(Boolean status) {
-        super.setStatus(status);
+        startResponseThread();
 	Message msg = new Message();
         if (checkRespones())
             this.status = status;
@@ -61,6 +61,7 @@ public class Switch extends Sensor<Boolean> {
         Switch s = new Switch(33, true, "haus", "hintt", actorListId, actorListStatus, 1);
         s.save();
         s.setStatus(true);
+	s.handleMsg("{'msgType':'configRequest','senderId':123,'receiverId':999}");
         
 //        s.startScheduler(Boolean.TRUE, Boolean.FALSE, 2, 4);
     }
