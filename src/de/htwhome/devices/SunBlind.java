@@ -33,6 +33,11 @@ public class SunBlind extends Actor<Integer>{
     }
 
     @Override
+    public void handleFireAlarm() {
+        setStatus(MIN);
+    }
+
+    @Override
     public void setStatus(Integer status) {
 	this.status = status;
 	Message msg = new Message();
