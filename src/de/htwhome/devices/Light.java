@@ -54,7 +54,7 @@ public class Light extends Actor<Boolean> {
 //	l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
 
 
-//        l.save();
+        l.save();
 //        ActorConfig sc2 = (ActorConfig) l.getConfig();
 //        System.out.println("sc2 id= " + sc2.getId()
 //                  + "\n" + "status= " + sc2.getStatus()
