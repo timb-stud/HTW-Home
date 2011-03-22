@@ -29,9 +29,10 @@ class TimeSchedulerTask<T> extends TimerTask{
 
     @Override
     public void run() {
-        if (firstStatus != null)
+        if (firstStatus != null){
             status = (T) sensor.newTimeSchedulerStatus(firstStatus, secondStatus);
-        else
+            sensor.stopScheduler(); //TODO info: wird nun noch einem durchlauf beendet
+        } else
             status = (T) sensor.newTimeSchedulerStatus();
         sensor.setStatus(status);
     }

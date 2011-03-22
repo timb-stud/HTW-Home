@@ -46,12 +46,13 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 
     public void startScheduler(T firstStatus, T secondStatus,long from, long till){
         timer = new Timer();
-        long start = from * 1000;  //TODO Berechnung
+        long now = System.currentTimeMillis();
+        long start = (from + now)* 1000;  //TODO Berechnung
         long intervall = till * 1000;
         timer.schedule(new TimeSchedulerTask<T>(this, firstStatus, secondStatus), start, intervall);
     }
 
-    public void startRandomScheduler(int intervall){
+    public void startRandomScheduler(long intervall){
         timer = new Timer();
         timer.schedule(new TimeSchedulerTask<T>(this), 0, intervall);
     }
