@@ -24,7 +24,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         this.gidTab = gidTab;
     }
 
-   public static ActorConfig getConfig(){  //TODO Config file + config als attribut
+   public static ActorConfig getConfig(){ 
         ActorConfig config = JAXB.unmarshal(new File("ActorConfig.xml"), ActorConfig.class);
         return config;
     }
@@ -82,8 +82,12 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		    setStatus(this.status);
 		}
 		break;
-	    case configChange:
-		//TODO implement
+	    case configChange:  //TODO testen
+                if(isReceiver(msg.getReceiverId())){
+                    ActorConfig<T> ac = new ActorConfig<T>();
+                    //TODO implement
+                    setConfig(ac);
+		}
 		break;
 	    case configRequest:
                 Message reply = new Message();
@@ -91,16 +95,29 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		reply.setSenderId(this.id);
 		reply.setReceiverId(ALLDEVICES);
 		reply.setSenderDevice(devType);
-		ActorConfig<T> ac = new ActorConfig<T>();
-		ac.setDescription(this.description);
-		ac.setGidTab(this.gidTab);
-		ac.setId(this.id);
-		ac.setLocation(this.location);
-		ac.setStatus(this.status);
+//		ActorConfig<T> ac = new ActorConfig<T>();
+////		ac.setDescription(this.description);
+////		ac.setId(this.id);
+////		ac.setLocation(this.location);
+////		ac.setStatus(this.status);
+//                save(ac);
+//		ac.setGidTab(this.gidTab);
+                save();
+                ActorConfig<T> ac =  getConfig();
 		String content = gson.toJson(ac, cfgType);
 		reply.setContent(content);
                 sendMsg(reply);
                 break;
+            case weatherAlarm:
+                handleWeatherAlarm();
+            case fireAlarm:
+                handleFireAlarm();
+                break;
 	}
     }
+
+    public void handleFireAlarm() {}
+
+    public void handleWeatherAlarm() {}
+    
 }

@@ -4,10 +4,15 @@ import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
+import de.htwhome.utils.PanelConfig;
 import de.htwhome.utils.SensorConfig;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 import java.util.ArrayList;
+import javax.xml.bind.JAXB;
 
 /**
  *
@@ -18,7 +23,7 @@ public class Panel extends AbstractDevice<Boolean>{
     private ArrayList<AbstractDevice> deviceList;
     public static final DeviceType deviceType = DeviceType.Panel;
     public static final Type cfgType = new TypeToken<ActorConfig<Boolean>>(){}.getType();
-
+    
 
     public Panel() {}
 
@@ -26,6 +31,40 @@ public class Panel extends AbstractDevice<Boolean>{
         super(id, status, location, description);
         this.deviceList = new ArrayList<AbstractDevice>();
 
+    }
+
+    public void save() {
+        PanelConfig pc = new PanelConfig();
+        super.save(pc);
+        pc.setDeviceList(deviceList);
+        setConfig(pc);
+    }
+
+    public void load(){
+        PanelConfig pc = this.getConfig();
+        load(pc);
+        this.deviceList = pc.getDeviceList();
+    }
+
+   public static PanelConfig getConfig(){
+        PanelConfig config = JAXB.unmarshal(new File("PanelConfig.xml"), PanelConfig.class);
+        return config;
+    }
+
+    public static void setConfig(PanelConfig config) {
+        FileWriter filewriter = null;
+        try {
+            filewriter = new FileWriter(("PanelConfig.xml"));
+            JAXB.marshal(config, filewriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                filewriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -96,14 +135,19 @@ public class Panel extends AbstractDevice<Boolean>{
                 sc.setDeviceType(deviceType);
                 break;
             case Light:
+                System.out.println("Light meldet sich");
                 break;
             case Panel:
+                System.out.println("Panel meldet sich");
                 break;
             case PercentSwitch:
+                System.out.println("PercentSwitch meldet sich");
                 break;
             case Sunblind:
+                System.out.println("Sunblind meldet sich");
                 break;
             case Switch:
+                System.out.println("Switch meldet sich");
                 break;
         }
 	//TODO implement

@@ -44,8 +44,8 @@ public class Light extends Actor<Boolean> {
 
     @Override
     public void setStatus(String status) {
-        boolean b = Boolean.getBoolean(status);
-        this.setStatus(b);
+	boolean b = Boolean.valueOf(status);
+	this.setStatus(b);
     }
 
     @Override
@@ -68,14 +68,20 @@ public class Light extends Actor<Boolean> {
         }
     }
 
+    @Override
+    public void handleFireAlarm() {
+        setStatus(true);
+    }
+
     public static void main(String[] args) throws SocketException {
-        int[] gid = {1};
-        Light l = new Light(11, false, "haus", "Beschreibung", gid);
+        int[] gid  = {1};
+	Light l = new Light(11, false, "haus", "Beschreibung", gid);
+	l.handleMsg("{'msgType':'statusChange','senderId':0,'receiverId':1,'content':'true','senderDevice':'Switch'}");
 //        Light l = new Light();
 //	l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
 
 
-//        l.save();
+        l.save();
 //        ActorConfig sc2 = (ActorConfig) l.getConfig();
 //        System.out.println("sc2 id= " + sc2.getId()
 //                  + "\n" + "status= " + sc2.getStatus()

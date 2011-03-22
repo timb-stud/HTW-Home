@@ -6,6 +6,7 @@ import java.net.SocketException;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.SensorConfig;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -17,7 +18,6 @@ public class Anemometer extends Sensor<Double>{
     public static final DeviceType deviceType = DeviceType.Switch;
     public static final Type cfgType = new TypeToken<SensorConfig<Double>>(){}.getType();
     private static final Double MAXLEVELWARNING = 9.0; //TODO Wert muss aus Konfig gelesen werden
-    private static final Double MINLEVELWARNING = 1.0; //TODO Wert muss aus Konfig gelesen werden
 
 
     public Anemometer () {
@@ -36,7 +36,7 @@ public class Anemometer extends Sensor<Double>{
     @Override
     public void setStatus(Double status) {
         this.status = status;
-        if (this.status < MINLEVELWARNING || this.status > MAXLEVELWARNING) {
+        if (this.status > MAXLEVELWARNING) {
             System.out.println("Sende Warnung !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             Message warning = new Message();
             warning.setMsgType(MessageType.weatherAlarm);
@@ -55,7 +55,7 @@ public class Anemometer extends Sensor<Double>{
 	this.sendMsg(msg);
         System.out.println("Neue Windgeschwindigkeit: " + this.status); //TODO sout entfernen
     }
-    
+
     @Override
     public void setStatus(String status) {
         double d = Double.valueOf(status);
@@ -68,11 +68,14 @@ public class Anemometer extends Sensor<Double>{
         this.setActorStatus(d, pos);
     }
 
+    private static Double randomMeasurement() {
+        Double measure = Math.random() * 10;
+        return measure;
+    }
+
     public static void main(String[] args) throws SocketException {
         Anemometer a = new Anemometer(125, 5.5, "Garten", "Windmesser", ALLDEVICES);
-//        a.startScheduler(a.getStatus(), 0, 5);
-        a.setStatus(6.0);
-        a.setStatus(9.0);
-        a.setStatus(10.0);
+        a.startRandomScheduler(5000);
+//        a.setStatus(randomMeasurement());
     }
 }
