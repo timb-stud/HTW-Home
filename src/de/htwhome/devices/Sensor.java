@@ -65,7 +65,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     protected  T newTimeSchedulerStatus(T firstStatus, T secondStatus){
        if (timeSchedulerChangeStatus)
             status = secondStatus;
-        else
+        else 
             status = firstStatus;
        timeSchedulerChangeStatus = (timeSchedulerChangeStatus) ? false : true;
        return status;
