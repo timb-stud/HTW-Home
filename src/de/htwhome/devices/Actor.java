@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
-import java.util.ArrayList;
 import javax.xml.bind.JAXB;
 
 /**
@@ -20,8 +19,8 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 
     public Actor() {}
 
-    public Actor(int id, T status, String location, String type, String hint, int[] gidTab) throws SocketException {
-        super(id, status,location, type, hint);
+    public Actor(int id, T status, String location, String description, int[] gidTab) throws SocketException {
+        super(id, status,location, description);
         this.gidTab = gidTab;
     }
 
@@ -46,14 +45,14 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         }
     }
 
-    public void save(){
+    public void save() {
         ActorConfig ac = new ActorConfig();
         save(ac);
         ac.setGidTab(gidTab);
         setConfig(ac);
     }
 
-    public void load(){
+    public void load() {
         ActorConfig ac = this.getConfig();
         load(ac);
         this.gidTab = ac.getGidTab();
@@ -69,17 +68,17 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     }
 
     @Override
-    public void handleMsg(String jsonMsg, Type msgType){
-	Message<T> msg = gson.fromJson(jsonMsg, msgType);
-
+    public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
+	Message msg = gson.fromJson(jsonMsg, Message.class);
+        System.out.println("Verarbeite Nachricht vom Typ: " + msg.getMsgType());
 	switch (msg.getMsgType()) {
 	    case statusChange:
-		if(isReceiver(id)){
-		    setStatus(msg.getStatus());
+		if(isReceiver(msg.getReceiverId())){
+		    setStatus(msg.getContent());
 		}
 		break;
 	    case statusRequest:
-		if(isReceiver(id)){
+		if(isReceiver(msg.getReceiverId())){
 		    setStatus(this.status);
 		}
 		break;
@@ -87,8 +86,20 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		//TODO implement
 		break;
 	    case configRequest:
-                Message reply = new Message(MessageType.configResponse, this.id, ALLDEVICES, null, this.toString());
-                sendMsg(reply, null);
+                Message reply = new Message();
+		reply.setMsgType(MessageType.configChange);
+		reply.setSenderId(this.id);
+		reply.setReceiverId(ALLDEVICES);
+		reply.setSenderDevice(devType);
+		ActorConfig<T> ac = new ActorConfig<T>();
+		ac.setDescription(this.description);
+		ac.setGidTab(this.gidTab);
+		ac.setId(this.id);
+		ac.setLocation(this.location);
+		ac.setStatus(this.status);
+		String content = gson.toJson(ac, cfgType);
+		reply.setContent(content);
+                sendMsg(reply);
                 break;
 	}
     }

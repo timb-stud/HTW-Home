@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import java.net.SocketException;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
+import de.htwhome.utils.SensorConfig;
 
 /**
  *
@@ -12,26 +13,41 @@ import de.htwhome.transmission.MessageType;
  */
 public class PercentSwitch extends Sensor<Integer>{
 
-    public static final Type msgType = new TypeToken<Message<Integer>>(){}.getType();
+    public static final Type cfgType = new TypeToken<SensorConfig<Integer>>(){}.getType();
+    public static final DeviceType deviceType = DeviceType.PercentSwitch;
     private int min, max; //TODO minimum und maximum festlegen
 
-    public PercentSwitch(int id, int status, String location, String type, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException {
-        super(id, status, location, type, description, actorListId, actorStatusTab, gid);
+    public PercentSwitch(int id, int status, String location, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException {
+        super(id, status, location, description, actorListId, actorStatusTab, gid);
     }
 
     @Override
     public void handleMsg(String msg) {
-	super.handleMsg(msg, PercentSwitch.msgType);
+	super.handleMsg(msg, deviceType, cfgType);
     }
 
     @Override
     public void setStatus(Integer status) {
         this.status = status;
-	Message<Integer> msg = new Message<Integer>();
+	Message msg = new Message();
 	msg.setMsgType(MessageType.statusChange);
 	msg.setReceiverId(this.gid);
-	msg.setStatus(this.status);
-	this.sendMsg(msg, PercentSwitch.msgType);
+	msg.setSenderId(this.id);
+	msg.setSenderDevice(deviceType);
+	msg.setContent(String.valueOf(this.status));
+	this.sendMsg(msg);
+    }
+
+    @Override
+    public void setStatus(String status) {
+	int i = Integer.parseInt(status);
+	this.setStatus(i);
+    }
+
+    @Override
+    public void setActorStatus(String status, int pos) {
+	int i = Integer.parseInt(status);
+	this.setActorStatus(i, pos);
     }
 
 }
