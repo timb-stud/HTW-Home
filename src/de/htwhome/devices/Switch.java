@@ -56,7 +56,7 @@ public class Switch extends Sensor<Boolean> {
     }
 
     public static void main(String[] args) throws SocketException {
-        int[] actorListId = {10, 11};
+        int[] actorListId = {10};
         Boolean[] actorListStatus = new Boolean[actorListId.length];
         Switch s = new Switch(33, true, "haus", "hintt", actorListId, actorListStatus, 1);
         s.save();
