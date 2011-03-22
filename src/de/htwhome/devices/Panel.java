@@ -23,6 +23,8 @@ public class Panel extends AbstractDevice<Boolean>{
     private ArrayList<AbstractDevice> deviceList;
     public static final DeviceType deviceType = DeviceType.Panel;
     public static final Type cfgType = new TypeToken<ActorConfig<Boolean>>(){}.getType();
+    public static Boolean FIREALARM = false;
+    public static Boolean WEATHERALARM = false;
     
 
     public Panel() {}
@@ -100,6 +102,14 @@ public class Panel extends AbstractDevice<Boolean>{
             case configResponse:
                 updateDevicelist(msg.getContent(), msg.getSenderDevice());
                 break;
+            case fireAlarm:
+                FIREALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
+                panelPopUp("FEUER");
+                break;
+            case weatherAlarm:
+                WEATHERALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
+                panelPopUp("UNWETTER");
+                break;
 	}
     }
 
@@ -128,6 +138,7 @@ public class Panel extends AbstractDevice<Boolean>{
      * und schreibt die Devices in die DeviceList des Panels
      */
     private void updateDevicelist(String jsonCfg, DeviceType devType) {
+        //TODO implement case functions
         switch (devType) {
             case Anemometer:
                 SensorConfig<Double> sc = gson.fromJson(jsonCfg, Anemometer.cfgType);
@@ -159,10 +170,17 @@ public class Panel extends AbstractDevice<Boolean>{
 //        System.out.println(msg2);
     }
 
+    private void panelPopUp(String FIREALARM) {
+        //TODO PopUp auf Panel bringen
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
     public static void main(String[] args) throws SocketException {
         Panel p = new Panel(123, false, "Wohnzimmer", "Panel", "Megapanel");
         p.getAllConfigs();
     }
+
+
 
 
 }
