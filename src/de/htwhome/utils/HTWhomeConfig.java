@@ -14,7 +14,7 @@ import java.io.IOException;
  *
  * @author christian
  */
-public class HTWhomeConfig {
+public class HTWhomeConfig { //TODO wenn nicht gebraucht loeschen
 
     private String filename;
 

@@ -22,9 +22,10 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     public Actor(int id, T status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status,location, description);
         this.gidTab = gidTab;
+        save();
     }
 
-   public static ActorConfig getConfig(){  //TODO Config file + config als attribut
+   public static ActorConfig getConfig(){ 
         ActorConfig config = JAXB.unmarshal(new File("ActorConfig.xml"), ActorConfig.class);
         return config;
     }
@@ -101,6 +102,16 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		reply.setContent(content);
                 sendMsg(reply);
                 break;
+            case weatherAlarm:
+                handleWeatherAlarm();
+            case fireAlarm:
+                handleFireAlarm();
+                break;
 	}
     }
+
+    public void handleFireAlarm() {}
+
+    public void handleWeatherAlarm() {}
+    
 }

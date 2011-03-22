@@ -4,7 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
-import de.htwhome.utils.DeviceConfig;
+import de.htwhome.utils.LittleHelpers;
 import de.htwhome.utils.SensorConfig;
 import java.io.File;
 import java.io.FileWriter;
@@ -38,6 +38,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         this.actorStatusTab = actorStatusTab;
         this.gid = gid;
         actorAckTab = new boolean[actorIdTab.length];
+        save();
     }
 
     public Sensor (int id, T status, String location, String description, int gid) throws SocketException {
@@ -47,35 +48,43 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 
     public static SensorConfig getConfig(){  //TODO Config file + config als attribut
         SensorConfig config = JAXB.unmarshal(new File("SensorConfig.xml"), SensorConfig.class);
+        // System.out.println(config);
         return config;
     }
 
+
+
     public void startScheduler(T firstStatus, T secondStatus,long from, long till){
         timer = new Timer();
-        long start = from * 1000;  //TODO Berechnung
+        long now = System.currentTimeMillis();
+        long start = (from + now)* 1000;  //TODO Berechnung
         long intervall = till * 1000;
         timer.schedule(new TimeSchedulerTask<T>(this, firstStatus, secondStatus), start, intervall);
     }
 
+    public void startRandomScheduler(long intervall){
+        timer = new Timer();
+        timer.schedule(new TimeSchedulerTask<T>(this), 0, intervall);
+    }
+
     protected  T newTimeSchedulerStatus(T firstStatus, T secondStatus){
        if (timeSchedulerChangeStatus)
-//            status = secondStatus;
-              status = (T) randomMeasurement();
-        else
-//            status = firstStatus;
-            status = (T) randomMeasurement();
+            status = secondStatus;
+        else 
+            status = firstStatus;
        timeSchedulerChangeStatus = (timeSchedulerChangeStatus) ? false : true;
        return status;
     }
 
-    private static Double randomMeasurement() {
-        Double measure = Math.random() * 10;
-        return measure;
+    protected  T newTimeSchedulerStatus(){
+       return (T) LittleHelpers.randomMeasurement();
     }
-
+    
     public void stopScheduler(){
         timer.cancel(); //Terminate the timer thread
     }
+
+
 
     public static void setConfig(SensorConfig config) {
         FileWriter filewriter = null;
@@ -92,6 +101,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
             }
         }
     }
+    
     public void startResponseThread() {
         actorRespThread art = new actorRespThread(this);
         art.start();
@@ -126,13 +136,13 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         Message reply;
         SensorConfig<T> sc;
 	switch (msg.getMsgType()) {
-	    case statusRequest: //TODO testen
+	    case statusRequest: //denke ist fertig. TL
                 reply = new Message();
-                reply.setMsgType(MessageType.statusRequest);
+                reply.setMsgType(MessageType.statusResponse);
 		reply.setSenderId(this.id);
 		reply.setReceiverId(ALLDEVICES);
 		reply.setSenderDevice(devType);
-                reply.setContent(String.valueOf(status));
+                reply.setContent(String.valueOf(this.status));
                 sendMsg(reply);
 		break;
 	    case statusResponse:
@@ -156,18 +166,25 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		break;
 	    case configRequest:
                 reply = new Message();
-		reply.setMsgType(MessageType.configChange);
+		reply.setMsgType(MessageType.configResponse);
 		reply.setSenderId(this.id);
 		reply.setReceiverId(ALLDEVICES);
 		reply.setSenderDevice(devType);
-                save();
-//                sc = getConfig();
-//		sc.setActorAckTab(this.actorAckTab);
-		ActorConfig<Boolean> bs = new ActorConfig<Boolean>();
-		bs.setId(id);
-		Type ct = new TypeToken<ActorConfig<Boolean>>(){}.getType();
-		String content = gson.toJson(bs, ct);
-		reply.setContent(content);
+//		SensorConfig<T> sc = new SensorConfig<T>();
+////                sc.setDescription(this.description);
+////                sc.setId(this.id);
+////                sc.setLocation(this.location);
+////                sc.setStatus(this.status);
+//              save(sc);
+//		sc.setActorIDTab(actorIdTab);
+//		sc.setActorStatusTab(actorStatusTab);
+//                save();
+                sc = getConfig();
+//		String content = gson.toJson(sc, cfgType);
+                String s = gson.toJson(sc, cfgType);
+                System.out.println("config.toString: " + s);
+		String content = "Hallo Welt";
+                reply.setContent(content);
                 sendMsg(reply);
                 break;
 	}

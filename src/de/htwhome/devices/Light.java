@@ -47,6 +47,11 @@ public class Light extends Actor<Boolean> {
 	super.handleMsg(msg, deviceType, cfgType);
     }
 
+    @Override
+    public void handleFireAlarm() {
+        setStatus(true);
+    }
+
     public static void main(String[] args) throws SocketException {
         int[] gid  = {1};
 	Light l = new Light(11, false, "haus", "Beschreibung", gid);
