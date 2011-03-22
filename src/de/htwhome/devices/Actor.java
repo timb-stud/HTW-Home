@@ -32,7 +32,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     public static void setConfig(ActorConfig config) {
         FileWriter filewriter = null;
         try {
-            filewriter = new FileWriter(("ActorConfig.xml"));
+            filewriter = new FileWriter("ActorConfig.xml");
             JAXB.marshal(config, filewriter);
         } catch (IOException e) {
             e.printStackTrace();
@@ -84,9 +84,9 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		break;
 	    case configChange:  //TODO testen
                 if(isReceiver(msg.getReceiverId())){
-                    ActorConfig<T> ac = new ActorConfig<T>();
-                    //TODO implement
+                    ActorConfig<T> ac = gson.fromJson(msg.getContent(), cfgType);
                     setConfig(ac);
+		    getConfig(); //TODO Quittierung?
 		}
 		break;
 	    case configRequest:
@@ -95,13 +95,6 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		reply.setSenderId(this.id);
 		reply.setReceiverId(ALLDEVICES);
 		reply.setSenderDevice(devType);
-//		ActorConfig<T> ac = new ActorConfig<T>();
-////		ac.setDescription(this.description);
-////		ac.setId(this.id);
-////		ac.setLocation(this.location);
-////		ac.setStatus(this.status);
-//                save(ac);
-//		ac.setGidTab(this.gidTab);
                 save();
                 ActorConfig<T> ac =  getConfig();
 		String content = gson.toJson(ac, cfgType);

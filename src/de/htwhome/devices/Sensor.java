@@ -139,9 +139,11 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
                 }
 		break;
 	    case configChange:
-                sc = new SensorConfig<T>();
-		//TODO implement
-                setConfig(sc);
+		if (msg.getReceiverId() == this.id) {
+		    sc = gson.fromJson(msg.getContent(), cfgType);
+		    setConfig(sc);
+		    getConfig();
+		}
 		break;
 	    case configRequest:
                 reply = new Message();
@@ -149,14 +151,6 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		reply.setSenderId(this.id);
 		reply.setReceiverId(ALLDEVICES);
 		reply.setSenderDevice(devType);
-//		SensorConfig<T> sc = new SensorConfig<T>();
-////                sc.setDescription(this.description);
-////                sc.setId(this.id);
-////                sc.setLocation(this.location);
-////                sc.setStatus(this.status);
-//              save(sc);
-//		sc.setActorIDTab(actorIdTab);
-//		sc.setActorStatusTab(actorStatusTab);
                 save();
                 sc = getConfig();
 		String content = gson.toJson(sc, cfgType);
