@@ -59,14 +59,14 @@ public class Anemometer extends Sensor<Double>{
 
     @Override
     public void setStatus(String status) {
-	double d = Double.valueOf(status);
-	this.setStatus(d);
+        double d = Double.valueOf(status);
+        this.setStatus(d);
     }
 
     @Override
     public void setActorStatus(String status, int pos) {
-	double d = Double.valueOf(status);
-	this.setActorStatus(d, pos);
+        double d = Double.valueOf(status);
+        this.setActorStatus(d, pos);
     }
 
     private static Double randomMeasurement() {
@@ -78,16 +78,6 @@ public class Anemometer extends Sensor<Double>{
         Anemometer a = new Anemometer(125, 5.5, "Garten", "Windmesser", ALLDEVICES);
         a.startScheduler(randomMeasurement(), randomMeasurement(), 1, 5);
 //        a.setStatus(randomMeasurement());
-//        a.setStatus(randomMeasurement());
-//        a.setStatus(randomMeasurement());
-//        a.setStatus(randomMeasurement());
-//        a.setStatus(randomMeasurement());
-//        a.setStatus(randomMeasurement());
-//        a.setStatus(randomMeasurement());
-//        a.setStatus(randomMeasurement());
+
     }
-
-
-
-
 }
