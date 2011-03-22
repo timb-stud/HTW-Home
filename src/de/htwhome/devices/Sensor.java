@@ -45,6 +45,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 
     public static SensorConfig getConfig(){  //TODO Config file + config als attribut
         SensorConfig config = JAXB.unmarshal(new File("SensorConfig.xml"), SensorConfig.class);
+        System.out.println(config);
         return config;
     }
 
@@ -128,13 +129,13 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         Message reply;
         SensorConfig<T> sc;
 	switch (msg.getMsgType()) {
-	    case statusRequest: //TODO testen
+	    case statusRequest: //denke ist fertig. TL
                 reply = new Message();
-                reply.setMsgType(MessageType.statusRequest);
+                reply.setMsgType(MessageType.statusResponse);
 		reply.setSenderId(this.id);
 		reply.setReceiverId(ALLDEVICES);
 		reply.setSenderDevice(devType);
-                reply.setContent(String.valueOf(status));
+                reply.setContent(String.valueOf(this.status));
                 sendMsg(reply);
 		break;
 	    case statusResponse:
@@ -156,7 +157,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 		break;
 	    case configRequest:
                 reply = new Message();
-		reply.setMsgType(MessageType.configChange);
+		reply.setMsgType(MessageType.configResponse);
 		reply.setSenderId(this.id);
 		reply.setReceiverId(ALLDEVICES);
 		reply.setSenderDevice(devType);
@@ -168,10 +169,13 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 //              save(sc);
 //		sc.setActorIDTab(actorIdTab);
 //		sc.setActorStatusTab(actorStatusTab);
-                save();
+//                save();
                 sc = getConfig();
-		String content = gson.toJson(sc, cfgType);
-		reply.setContent(content);
+//		String content = gson.toJson(sc, cfgType);
+                String s = gson.toJson(sc, cfgType);
+                System.out.println("config.toString: " + s);
+		String content = "Hallo Welt";
+                reply.setContent(content);
                 sendMsg(reply);
                 break;
 	}
