@@ -58,8 +58,8 @@ public class Shutter extends Actor<Integer>{
     }
 
     public static void main(String[] args) throws SocketException {
-        int[] gidTab = {0}; //TODO aus Konfig
-        SunBlind sb = new SunBlind(126, 0, "Wohnzimmer", "Rolladen", gidTab); //TODO aus Konfig
+        int[] gidTab = {22000, 22100, 22101}; //TODO aus Konfig
+        SunBlind sb = new SunBlind(12301, 0, "Wohnzimmer", "Rolladen vorne", gidTab); //TODO aus Konfig
     }
 
 }

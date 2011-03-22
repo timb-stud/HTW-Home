@@ -55,8 +55,8 @@ public class SunBlind extends Actor<Integer>{
     }
 
     public static void main(String[] args) throws SocketException {
-        int[] gidTab = {0};
-        SunBlind sb = new SunBlind(126, 50, "Garten", "Markise", gidTab); //TODO aus Konfig
+        int[] gidTab = {23000, 23001};
+        SunBlind sb = new SunBlind(12201, 50, "Wohnzimmer aussen", "Markise", gidTab); //TODO aus Konfig
         //a.startScheduler(randomMeasurement(), randomMeasurement(), 1, 5);
     }
     

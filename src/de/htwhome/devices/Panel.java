@@ -176,7 +176,7 @@ public class Panel extends AbstractDevice<Boolean>{
     }
 
     public static void main(String[] args) throws SocketException {
-        Panel p = new Panel(123, false, "Wohnzimmer", "Panel", "Megapanel");
+        Panel p = new Panel(13001, false, "Wohnzimmer", "Panel", "Megapanel");
         p.getAllConfigs();
     }
 

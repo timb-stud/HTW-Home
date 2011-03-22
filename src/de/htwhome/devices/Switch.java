@@ -56,12 +56,12 @@ public class Switch extends Sensor<Boolean> {
     }
 
     public static void main(String[] args) throws SocketException {
-        int[] actorListId = {10};
+        int[] actorListId = {12101};
         Boolean[] actorListStatus = new Boolean[actorListId.length];
-        Switch s = new Switch(33, true, "haus", "hintt", actorListId, actorListStatus, 1);
+        Switch s = new Switch(11101, true, "Wohnzimmer", "Lichtschalter Fenster", actorListId, actorListStatus, 21100);
         s.save();
         s.setStatus(true);
-	s.handleMsg("{'msgType':'configRequest','senderId':123,'receiverId':999}");
+	s.handleMsg("{'msgType':'configRequest','senderId':11101,'receiverId':"+s.gid+"}");
         
 //        s.startScheduler(Boolean.TRUE, Boolean.FALSE, 2, 4);
     }

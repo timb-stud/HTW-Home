@@ -22,7 +22,7 @@ public abstract class AbstractDevice<T> {
     protected  String description;
     protected static Gson gson = new Gson();
     private MessageReceiver msgReceiver;
-    protected static int ALLDEVICES = 999;
+    protected static int ALLDEVICES = 20000;
     
     public AbstractDevice() {}
 
