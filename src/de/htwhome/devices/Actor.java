@@ -108,6 +108,16 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		reply.setContent(content);
                 sendMsg(reply);
                 break;
+            case weatherAlarm:
+                handleWeatherAlarm();
+            case fireAlarm:
+                handleFireAlarm();
+                break;
 	}
     }
+
+    public void handleFireAlarm() {}
+
+    public void handleWeatherAlarm() {}
+    
 }

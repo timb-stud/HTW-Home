@@ -15,7 +15,8 @@ public class SunBlind extends Actor<Integer>{
 
     public static final Type cfgType = new TypeToken<ActorConfig<Integer>>(){}.getType();
     public static final DeviceType deviceType = DeviceType.Sunblind;
-    private int min, max; //TODO minimum und maximum festlegen
+    private int MIN = 0;    //TODO minimum und maximum festlegen
+    private int MAX = 100;  //TODO minimum und maximum festlegen
 
     public SunBlind(int id, int status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status, location, description, gidTab);
@@ -24,6 +25,11 @@ public class SunBlind extends Actor<Integer>{
     @Override
     public void handleMsg(String msg) {
 	super.handleMsg(msg, deviceType, cfgType);
+    }
+
+    @Override
+    public void handleWeatherAlarm() {
+        setStatus(MIN);
     }
 
     @Override
@@ -41,6 +47,12 @@ public class SunBlind extends Actor<Integer>{
     public void setStatus(String status) {
 	int i = Integer.valueOf(status);
 	this.setStatus(i);
+    }
+
+    public static void main(String[] args) throws SocketException {
+        int[] gidTab = {0};
+        SunBlind sb = new SunBlind(126, 50, "Garten", "Markise", gidTab); //TODO aus Konfig
+        //a.startScheduler(randomMeasurement(), randomMeasurement(), 1, 5);
     }
     
 }

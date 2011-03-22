@@ -75,9 +75,7 @@ public class Anemometer extends Sensor<Double>{
     }
 
     public static void main(String[] args) throws SocketException {
-        Anemometer a = new Anemometer(125, 5.5, "Garten", "Windmesser", ALLDEVICES);
+        Anemometer a = new Anemometer(125, 5.5, "Garten", "Windmesser", ALLDEVICES); //TODO aus Konfig
         a.startScheduler(randomMeasurement(), randomMeasurement(), 1, 5);
-//        a.setStatus(randomMeasurement());
-
     }
 }

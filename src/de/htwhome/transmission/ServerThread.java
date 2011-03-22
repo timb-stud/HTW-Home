@@ -32,12 +32,12 @@ class ServerThread extends Thread {
     @Override
     public void run() {
         try {
-            System.out.println("Start ThreadID: " + this.getId());
+            // System.out.println("Start ThreadID: " + this.getId());
             Thread.sleep(0);
             String msg = new String(pack.getData(), 0, pack.getLength());
             System.out.println("Received: " + msg);
             this.device.handleMsg(msg);
-            System.out.println("ENDE ThreadID: " + this.getId());
+            // System.out.println("ENDE ThreadID: " + this.getId());
         } catch (InterruptedException ex) {
             Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
