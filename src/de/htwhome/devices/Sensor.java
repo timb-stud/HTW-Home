@@ -36,6 +36,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         this.actorStatusTab = actorStatusTab;
         this.gid = gid;
         actorAckTab = new boolean[actorIdTab.length];
+        save();
     }
 
     public Sensor (int id, T status, String location, String description, int gid) throws SocketException {
@@ -45,9 +46,10 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 
     public static SensorConfig getConfig(){  //TODO Config file + config als attribut
         SensorConfig config = JAXB.unmarshal(new File("SensorConfig.xml"), SensorConfig.class);
-        System.out.println(config);
+        // System.out.println(config);
         return config;
     }
+
 
 
     public void startScheduler(T firstStatus, T secondStatus,long from, long till){
@@ -79,6 +81,8 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         timer.cancel(); //Terminate the timer thread
     }
 
+
+
     public static void setConfig(SensorConfig config) {
         FileWriter filewriter = null;
         try {
@@ -94,6 +98,8 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
             }
         }
     }
+
+    
     @Override
     public void setStatus(T status) {
         actorRespThread art = new actorRespThread(this);
