@@ -19,9 +19,10 @@ import java.util.logging.Logger;
  *
  * @author Volkan Gökkaya
  */
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     private Light light;
+
     /** Creates new form MainFrame */
     public MainFrame() {
         initComponents();
@@ -100,9 +101,9 @@ public class MainFrame extends javax.swing.JFrame {
     private void Light1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Light1MouseClicked
         int[] gid = {1};
         try {
-            light = new Light(11, false, "haus", "Beschreibung", gid);
-            
+            light = new Light(10, false, "haus", "Beschreibung", gid);
             textField.setText(Boolean.toString(light.getStatus()));
+            light.setStatus(true);
         } catch (SocketException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -126,6 +127,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField textField;
     // End of variables declaration//GEN-END:variables
 
+    public void changeEventReceived(StatusChangeEvent evt) {
+        textField.setText(textField.getText() + " ; " + evt.getStatus());
+    }
 }
-
-
