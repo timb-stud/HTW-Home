@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import java.util.Random;
 import java.util.Timer;
 import javax.xml.bind.JAXB;
 
@@ -56,11 +57,18 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
 
     protected  T newTimeSchedulerStatus(T firstStatus, T secondStatus){
        if (timeSchedulerChangeStatus)
-            status = secondStatus;
+//            status = secondStatus;
+              status = (T) randomMeasurement();
         else
-            status = firstStatus;
+//            status = firstStatus;
+            status = (T) randomMeasurement();
        timeSchedulerChangeStatus = (timeSchedulerChangeStatus) ? false : true;
        return status;
+    }
+
+    private static Double randomMeasurement() {
+        Double measure = Math.random() * 10;
+        return measure;
     }
 
     public void stopScheduler(){
