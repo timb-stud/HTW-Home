@@ -39,7 +39,7 @@ public class SunBlind extends Actor<Integer>{
 
     @Override
     public void setStatus(String status) {
-	int i = Integer.getInteger(status);
+	int i = Integer.valueOf(status);
 	this.setStatus(i);
     }
     
