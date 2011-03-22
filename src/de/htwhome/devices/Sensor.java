@@ -122,9 +122,17 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     @Override
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
 	Message msg = gson.fromJson(jsonMsg, Message.class);
+        Message reply;
+        SensorConfig<T> sc;
 	switch (msg.getMsgType()) {
-	    case statusRequest:
-		//TODO implement
+	    case statusRequest: //TODO testen
+                reply = new Message();
+                reply.setMsgType(MessageType.statusRequest);
+		reply.setSenderId(this.id);
+		reply.setReceiverId(ALLDEVICES);
+		reply.setSenderDevice(devType);
+                reply.setContent(String.valueOf(status));
+                sendMsg(reply);
 		break;
 	    case statusResponse:
                 if (actorIdTab != null) {
@@ -139,21 +147,26 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
                 }
 		break;
 	    case configChange:
+                sc = new SensorConfig<T>();
 		//TODO implement
+                setConfig(sc);
 		break;
 	    case configRequest:
-                Message reply = new Message();
+                reply = new Message();
 		reply.setMsgType(MessageType.configChange);
 		reply.setSenderId(this.id);
 		reply.setReceiverId(ALLDEVICES);
 		reply.setSenderDevice(devType);
-		SensorConfig<T> sc = new SensorConfig<T>();
-		sc.setDescription(this.description);
-		sc.setId(this.id);
-		sc.setLocation(this.location);
-		sc.setStatus(this.status);
-		sc.setActorIDTab(actorIdTab);
-		sc.setActorStatusTab(actorStatusTab);
+//		SensorConfig<T> sc = new SensorConfig<T>();
+////                sc.setDescription(this.description);
+////                sc.setId(this.id);
+////                sc.setLocation(this.location);
+////                sc.setStatus(this.status);
+//              save(sc);
+//		sc.setActorIDTab(actorIdTab);
+//		sc.setActorStatusTab(actorStatusTab);
+                save();
+                sc = getConfig();
 		String content = gson.toJson(sc, cfgType);
 		reply.setContent(content);
                 sendMsg(reply);
