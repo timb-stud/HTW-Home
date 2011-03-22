@@ -14,9 +14,6 @@ import de.htwhome.devices.Light;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -104,6 +101,7 @@ public class MainFrame extends javax.swing.JFrame {
         int[] gid = {1};
         try {
             light = new Light(11, false, "haus", "Beschreibung", gid);
+            
             textField.setText(Boolean.toString(light.getStatus()));
         } catch (SocketException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,14 +125,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton Light3;
     private javax.swing.JTextField textField;
     // End of variables declaration//GEN-END:variables
-public class MyChangeAction implements ChangeListener {
 
-    public void stateChanged(ChangeEvent ce) {
-        
-        String str = Boolean.toString(light.getStatus());
-        label.setText(str);
-    }
-}
 }
 
 
