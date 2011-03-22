@@ -2,13 +2,13 @@ package de.htwhome.devices;
 
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
+import de.htwhome.utils.LittleHelpers;
 import de.htwhome.utils.SensorConfig;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
-import java.util.Random;
 import java.util.Timer;
 import javax.xml.bind.JAXB;
 
@@ -48,6 +48,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         return config;
     }
 
+
     public void startScheduler(T firstStatus, T secondStatus,long from, long till){
         timer = new Timer();
         long start = from * 1000;  //TODO Berechnung
@@ -55,22 +56,24 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         timer.schedule(new TimeSchedulerTask<T>(this, firstStatus, secondStatus), start, intervall);
     }
 
+    public void startRandomScheduler(int intervall){
+        timer = new Timer();
+        timer.schedule(new TimeSchedulerTask<T>(this), 0, intervall);
+    }
+
     protected  T newTimeSchedulerStatus(T firstStatus, T secondStatus){
        if (timeSchedulerChangeStatus)
-//            status = secondStatus;
-              status = (T) randomMeasurement();
-        else
-//            status = firstStatus;
-            status = (T) randomMeasurement();
+            status = secondStatus;
+        else 
+            status = firstStatus;
        timeSchedulerChangeStatus = (timeSchedulerChangeStatus) ? false : true;
        return status;
     }
 
-    private static Double randomMeasurement() {
-        Double measure = Math.random() * 10;
-        return measure;
+    protected  T newTimeSchedulerStatus(){
+       return (T) LittleHelpers.randomMeasurement();
     }
-
+    
     public void stopScheduler(){
         timer.cancel(); //Terminate the timer thread
     }

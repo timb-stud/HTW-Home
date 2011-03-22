@@ -23,9 +23,16 @@ class TimeSchedulerTask<T> extends TimerTask{
         this.secondStatus = secondStatus;
     }
 
+    public TimeSchedulerTask(Sensor sensor){
+        this.sensor = sensor;
+    }
+
     @Override
     public void run() {
-        status = (T) sensor.newTimeSchedulerStatus(firstStatus, secondStatus);
+        if (firstStatus != null)
+            status = (T) sensor.newTimeSchedulerStatus(firstStatus, secondStatus);
+        else
+            status = (T) sensor.newTimeSchedulerStatus();
         sensor.setStatus(status);
     }
 }
