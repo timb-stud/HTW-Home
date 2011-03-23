@@ -55,7 +55,7 @@ public class Light extends Actor<Boolean> {
     public static void main(String[] args) throws SocketException {
         int[] gid  = {20000, 21000, 21100, 21101};
 	Light l = new Light(12101, false, "haus", "Beschreibung", gid);
-	l.handleMsg("{'msgType':'statusChange','senderId':" + l.id +",'receiverId':20000,'content':'true','senderDevice':'Switch'}");
+//	l.handleMsg("{'msgType':'statusChange','senderId':" + l.id +",'receiverId':20000,'content':'true','senderDevice':'Switch'}");
 
 //        Light l = new Light();
 //	l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");

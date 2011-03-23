@@ -35,6 +35,7 @@ public class Switch extends Sensor<Boolean> {
 	Message msg = new Message();
         if (checkRespones())
             this.status = status;
+        msg.setSenderId(this.id);
 	msg.setMsgType(MessageType.statusChange);
 	msg.setReceiverId(this.gid);
 	msg.setContent(String.valueOf(this.status));
@@ -59,9 +60,10 @@ public class Switch extends Sensor<Boolean> {
         int[] actorListId = {12101};
         Boolean[] actorListStatus = new Boolean[actorListId.length];
         Switch s = new Switch(11101, true, "Wohnzimmer", "Lichtschalter Fenster", actorListId, actorListStatus, 21100);
+        System.out.println("ID: " + s.id);
         s.save();
         s.setStatus(true);
-	s.handleMsg("{'msgType':'configRequest','senderId':11101,'receiverId':"+s.gid+"}");
+	//s.handleMsg("{'msgType':'configRequest','senderId':11101,'receiverId':"+s.gid+"}");
         
 //        s.startScheduler(Boolean.TRUE, Boolean.FALSE, 2, 4);
     }
