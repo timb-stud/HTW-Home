@@ -91,7 +91,7 @@ public class Panel extends AbstractDevice<Boolean>{
         System.out.println("Verarbeite Nachricht vom Typ: " + msg.getMsgType());
 	switch (msg.getMsgType()) {
 	    case statusResponse:
-		//TODO implement or remove
+		//TODO updateDevicelist
 		break;
 	    case configChange:
 		//TODO implement
@@ -170,9 +170,14 @@ public class Panel extends AbstractDevice<Boolean>{
 //        System.out.println(msg2);
     }
 
-    private void panelPopUp(String FIREALARM) {
+    public void panelPopUp(String FIREALARM) {
         //TODO PopUp auf Panel bringen
         System.out.println(FIREALARM);
+    }
+
+    public void resetAlarms() {
+        WEATHERALARM = false;
+        FIREALARM = false;
     }
 
     public static void main(String[] args) throws SocketException {
