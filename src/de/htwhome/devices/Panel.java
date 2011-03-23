@@ -88,10 +88,10 @@ public class Panel extends AbstractDevice<Boolean>{
     @Override
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
 	Message msg = gson.fromJson(jsonMsg, Message.class);
-        System.out.println("Verarbeite Nachricht vom Typ: " + msg.getMsgType());
 	switch (msg.getMsgType()) {
 	    case statusResponse:
-		//TODO updateDevicelist
+		handleStatusResponse(msg);
+                updateDevicelist(msg.getContent(), msg.getSenderDevice());
 		break;
 	    case configChange:
 		//TODO implement
@@ -137,7 +137,7 @@ public class Panel extends AbstractDevice<Boolean>{
      * @author TL
      * @param String jsonMsg
      * 
-     * Funktion wertet die Nachrichten des Typs configResponse aus
+     * Methode wertet die Nachrichten des Typs configResponse aus
      * und schreibt die Devices in die DeviceList des Panels
      */
     private void updateDevicelist(String jsonCfg, DeviceType devType) {
@@ -172,24 +172,50 @@ public class Panel extends AbstractDevice<Boolean>{
 //        String msg2 = gson.fromJson(msg.getJsonConfig(), msgType);
 //        System.out.println(msg2);
     }
-    
+
+    /*
+     * Panel muss auf verschiedene StatusChanges unterschiedlich reagieren.
+     * Dies uebernimmt diese Methode
+     * @author TL
+     */
     private void handleStatusChange(Message msg) {
-        System.out.println("handleStatusChange");
         switch (msg.getSenderId()) {
             case 11101:
-                System.out.println("Jemand an der Klingel: " + msg.getContent());
+                if (msg.getContent().equals("true")) {
+                    panelPopUp("Jemand an der Tür");
+                } else {
+                    panelPopUp("Verpasster Besucher");
+                }
                 break;
-            case 12101:
+        }
+    }
+
+    /*
+     * Panel muss auf verschiedene StatusResponse unterschiedlich reagieren.
+     * Dies uebernimmt diese Methode
+     * @author TL
+     */
+    private void handleStatusResponse(Message msg) {
+        switch (msg.getSenderId()) {
+            case 12101: //Webcam
                 System.out.println("Neues Webcambild: " + msg.getContent());
                 break;
         }
     }
 
-    public void panelPopUp(String FIREALARM) {
+    /*
+     * Mit Hilfe dieser Methode soll ein Popup auf dem Panel erscheinen
+     * @author TL
+     */
+    public void panelPopUp(String meldung) {
         //TODO PopUp auf Panel bringen
-        System.out.println(FIREALARM);
+        //TODO implement
+        System.out.println(meldung);
     }
 
+    /*
+     * @author TL
+     */
     public void resetAlarms() {
         WEATHERALARM = false;
         FIREALARM = false;
@@ -199,10 +225,5 @@ public class Panel extends AbstractDevice<Boolean>{
         Panel p = new Panel(13001, false, "Wohnzimmer", "Panel", "Megapanel");
         p.getAllConfigs();
     }
-
-
-
-
-
 
 }
