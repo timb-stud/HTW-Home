@@ -25,6 +25,9 @@ public class Panel extends AbstractDevice<Boolean>{
     public static final Type cfgType = new TypeToken<ActorConfig<Boolean>>(){}.getType();
     public static Boolean FIREALARM = false;
     public static Boolean WEATHERALARM = false;
+    public static final Boolean OPEN = true;
+    public static final Boolean CLOSE = false;
+
     
 
     public Panel() {}
@@ -179,8 +182,8 @@ public class Panel extends AbstractDevice<Boolean>{
      * @author TL
      */
     private void handleStatusChange(Message msg) {
-        switch (msg.getSenderId()) {
-            case 11101:
+        switch (msg.getReceiverId()) {
+            case 29001: //Klingel
                 if (msg.getContent().equals("true")) {
                     panelPopUp("Jemand an der Tür");
                 } else {
@@ -221,9 +224,20 @@ public class Panel extends AbstractDevice<Boolean>{
         FIREALARM = false;
     }
 
+    public void openDoor() {
+        Message msg = new Message();
+        msg.setMsgType(MessageType.statusChange);
+        msg.setSenderId(this.id);
+        msg.setReceiverId(12501);
+        msg.setSenderDevice(deviceType);
+	msg.setContent(String.valueOf(OPEN));
+        sendMsg(msg);
+    }
+
     public static void main(String[] args) throws SocketException {
         Panel p = new Panel(13001, false, "Wohnzimmer", "Panel", "Megapanel");
-        p.getAllConfigs();
+        //p.getAllConfigs();
+        p.openDoor();
     }
 
 }
