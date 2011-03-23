@@ -110,6 +110,9 @@ public class Panel extends AbstractDevice<Boolean>{
                 WEATHERALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
                 panelPopUp("UNWETTER");
                 break;
+            case statusChange:
+                handleStatusChange(msg);
+                break;
 	}
     }
 
@@ -169,6 +172,18 @@ public class Panel extends AbstractDevice<Boolean>{
 //        String msg2 = gson.fromJson(msg.getJsonConfig(), msgType);
 //        System.out.println(msg2);
     }
+    
+    private void handleStatusChange(Message msg) {
+        System.out.println("handleStatusChange");
+        switch (msg.getSenderId()) {
+            case 11101:
+                System.out.println("Jemand an der Klingel: " + msg.getContent());
+                break;
+            case 12101:
+                System.out.println("Neues Webcambild: " + msg.getContent());
+                break;
+        }
+    }
 
     public void panelPopUp(String FIREALARM) {
         //TODO PopUp auf Panel bringen
@@ -184,6 +199,8 @@ public class Panel extends AbstractDevice<Boolean>{
         Panel p = new Panel(13001, false, "Wohnzimmer", "Panel", "Megapanel");
         p.getAllConfigs();
     }
+
+
 
 
 

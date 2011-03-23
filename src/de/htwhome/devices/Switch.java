@@ -31,6 +31,7 @@ public class Switch extends Sensor<Boolean> {
 
     @Override
     public void setStatus(Boolean status) {
+        this.status = status;
         startResponseThread();
 	Message msg = new Message();
         if (checkRespones())
@@ -57,15 +58,15 @@ public class Switch extends Sensor<Boolean> {
     }
 
     public static void main(String[] args) throws SocketException {
-        int[] actorListId = {12101};
+//        int[] actorListId = {12101};
+//        Boolean[] actorListStatus = new Boolean[actorListId.length];
+//        Switch s = new Switch(11101, false, "Wohnzimmer", "Lichtschalter Fenster", actorListId, actorListStatus, 21100);
+
+        int[] actorListId = {12110, 13001};
         Boolean[] actorListStatus = new Boolean[actorListId.length];
-        Switch s = new Switch(11101, true, "Wohnzimmer", "Lichtschalter Fenster", actorListId, actorListStatus, 21100);
-        System.out.println("ID: " + s.id);
+        Switch s = new Switch(11101, false, "Haustür", "Klingel", actorListId, actorListStatus, 29001);
         s.save();
         s.setStatus(true);
-	//s.handleMsg("{'msgType':'configRequest','senderId':11101,'receiverId':"+s.gid+"}");
-        
-//        s.startScheduler(Boolean.TRUE, Boolean.FALSE, 2, 4);
     }
 
     
