@@ -103,6 +103,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
                 break;
             case weatherAlarm:
                 handleWeatherAlarm();
+                break;
             case fireAlarm:
                 handleFireAlarm();
                 break;

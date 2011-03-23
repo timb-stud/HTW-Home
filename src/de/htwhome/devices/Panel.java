@@ -172,7 +172,7 @@ public class Panel extends AbstractDevice<Boolean>{
 
     private void panelPopUp(String FIREALARM) {
         //TODO PopUp auf Panel bringen
-        throw new UnsupportedOperationException("Not yet implemented");
+        System.out.println(FIREALARM);
     }
 
     public static void main(String[] args) throws SocketException {
