@@ -1,6 +1,7 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.timer.TimeScheduler;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 import de.htwhome.transmission.Message;
@@ -67,8 +68,16 @@ public class Anemometer extends Sensor<Double>{
         this.setActorStatus(d, pos);
     }
 
+    private void startNotifier(int intervall){ //ToDO geht nicht
+        TimeScheduler<Double> ts = new TimeScheduler<Double>(this);
+        ts.startIntervallRandom(intervall);
+    }
+
     public static void main(String[] args) throws SocketException {
         Anemometer a = new Anemometer(11301, 0.0, "Garten", "Windmesser", ALLDEVICES);
-        a.startRandomScheduler(5000);
+//        TimeScheduler<Double> ts = new TimeScheduler<Double>(a);
+//        ts.startIntervallRandom(1000);
+        a.startNotifier(1000);
+        System.out.println("ende");
     }
 }

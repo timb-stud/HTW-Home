@@ -14,13 +14,10 @@ import java.util.Timer;
  */
 public abstract class Sensor<T> extends AbstractDevice<T>{
 
-    private Timer timer;
-
     protected int[] actorIdTab;
     protected T[] actorStatusTab;
     protected boolean[] actorAckTab; //TODO init
     protected int gid;
-    private boolean timeSchedulerChangeStatus = false;
 
 
     public Sensor() {
@@ -40,57 +37,6 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
         this.gid = gid;
     }
 
-    public void startScheduler(T firstStatus, T secondStatus,long from, long till){
-        timer = new Timer();
-        long now = System.currentTimeMillis();
-        long start = (from + now)* 1000;  //TODO Berechnung
-        long intervall = till * 1000;
-        timer.schedule(new TimeSchedulerTask<T>(this, firstStatus, secondStatus), start, intervall);
-    }
-
-    public void startRandomScheduler(long intervall){
-        timer = new Timer();
-        timer.schedule(new TimeSchedulerTask<T>(this), 0, intervall);
-    }
-
-    protected  T newTimeSchedulerStatus(T firstStatus, T secondStatus){
-       if (timeSchedulerChangeStatus)
-            status = secondStatus;
-        else 
-            status = firstStatus;
-       timeSchedulerChangeStatus = (timeSchedulerChangeStatus) ? false : true;
-       return status;
-    }
-
-    protected  T newTimeSchedulerStatus(){
-       return (T) LittleHelpers.randomMeasurement();
-    }
-    
-    public void stopScheduler(){
-        timer.cancel(); //Terminate the timer thread
-    }
-
-//  public static SensorConfig getConfig(){  //TODO Config file + config als attribut
-//        SensorConfig config = JAXB.unmarshal(new File("SensorConfig.xml"), SensorConfig.class);
-//        // System.out.println(config);
-//        return config;
-//    }
-//
-//    public static void setConfig(SensorConfig config) {
-//        FileWriter filewriter = null;
-//        try {
-//            filewriter = new FileWriter(("SensorConfig.xml"));
-//            JAXB.marshal(config, filewriter);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                filewriter.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
     
     public void startResponseThread() {
         actorRespThread art = new actorRespThread(this);
@@ -180,13 +126,5 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
                 return false;
         }
         return true;
-    }
-
-    public boolean getTimeSchedulerChangeStatus() {
-        return timeSchedulerChangeStatus;
-    }
-
-    public void setTimeSchedulerChangeStatus(boolean TimeSchedulerChangeStatus) {
-        this.timeSchedulerChangeStatus = TimeSchedulerChangeStatus;
     }
 }
