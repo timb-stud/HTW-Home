@@ -3,7 +3,7 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
-import de.htwhome.utils.ActorConfig;
+import de.htwhome.utils.Config;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 
@@ -13,7 +13,7 @@ import java.net.SocketException;
  */
 public class SunBlind extends Actor<Integer>{
 
-    public static final Type cfgType = new TypeToken<ActorConfig<Integer>>(){}.getType();
+    public static final Type cfgType = new TypeToken<Config<Integer>>(){}.getType();
     public static final DeviceType deviceType = DeviceType.Sunblind;
     private int MIN = 0;    //TODO minimum und maximum festlegen
     private int MAX = 100;  //TODO minimum und maximum festlegen

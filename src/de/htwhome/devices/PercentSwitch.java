@@ -5,7 +5,7 @@ import java.lang.reflect.Type;
 import java.net.SocketException;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
-import de.htwhome.utils.SensorConfig;
+import de.htwhome.utils.Config;
 
 /**
  *
@@ -13,7 +13,7 @@ import de.htwhome.utils.SensorConfig;
  */
 public class PercentSwitch extends Sensor<Integer>{
 
-    public static final Type cfgType = new TypeToken<SensorConfig<Integer>>(){}.getType();
+    public static final Type cfgType = new TypeToken<Config<Integer>>(){}.getType();
     public static final DeviceType deviceType = DeviceType.PercentSwitch;
     private int min, max; //TODO minimum und maximum festlegen
 

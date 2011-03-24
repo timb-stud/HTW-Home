@@ -5,7 +5,7 @@ import java.lang.reflect.Type;
 import java.net.SocketException;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
-import de.htwhome.utils.SensorConfig;
+import de.htwhome.utils.Config;
 
 /**
  *
@@ -15,7 +15,7 @@ import de.htwhome.utils.SensorConfig;
 public class Anemometer extends Sensor<Double>{
 
     public static final DeviceType deviceType = DeviceType.Anemometer;
-    public static final Type cfgType = new TypeToken<SensorConfig<Double>>(){}.getType();
+    public static final Type cfgType = new TypeToken<Config<Double>>(){}.getType();
     private static final Double MAXLEVELWARNING = 9.0; //TODO Wert muss aus Konfig gelesen werden
 
 

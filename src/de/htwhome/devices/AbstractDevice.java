@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageReceiver;
 import de.htwhome.transmission.MessageSender;
-import de.htwhome.utils.DeviceConfig;
-import de.htwhome.utils.HTWhomeConfig;
-import de.htwhome.utils.PanelConfig;
+import de.htwhome.utils.Config;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,14 +38,14 @@ public abstract class AbstractDevice<T> {
         msgReceiver.start();
     }
 
-    protected  void load(HTWhomeConfig dc){
+    protected  void load(Config dc){
         this.id = dc.getId();
         this.status = (T) dc.getStatus();
         this.location = dc.getLocation();
         this.description = dc.getDescription();
     }
 
-    protected void save (HTWhomeConfig dc){
+    protected void save (Config dc){
         dc.setId(id);
         dc.setStatus(status);
         dc.setLocation(location);
@@ -55,12 +53,12 @@ public abstract class AbstractDevice<T> {
     }
 
 
-       public static HTWhomeConfig getConfig(String filename){
-        HTWhomeConfig config = JAXB.unmarshal(new File(filename + ".xml"), HTWhomeConfig.class);
+    public static Config getConfig(String filename){
+        Config config = JAXB.unmarshal(new File(filename + ".xml"), Config.class);
         return config;
     }
 
-    public static void setConfig(HTWhomeConfig config, String filename) {
+    public static void setConfig(Config config, String filename) {
         FileWriter filewriter = null;
         try {
             filewriter = new FileWriter((filename + ".xml"));

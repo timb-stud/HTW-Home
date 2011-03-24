@@ -4,7 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
-import de.htwhome.utils.HTWhomeConfig;
+import de.htwhome.utils.Config;
 import de.htwhome.utils.LittleHelpers;
 import de.htwhome.utils.SensorConfig;
 import java.io.File;
@@ -111,7 +111,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     public abstract void setActorStatus(String status, int pos);
 
     public void save(){
-        HTWhomeConfig sc = new HTWhomeConfig();
+        Config sc = new Config();
         save(sc);
         sc.setActorIDTab(actorIdTab);
         sc.setActorStatusTab(actorStatusTab);
@@ -120,7 +120,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     }
 
     public void load(){
-        HTWhomeConfig sc = Sensor.getConfig("Sensor");
+        Config sc = Sensor.getConfig("Sensor");
         load(sc);
         this.actorIdTab = sc.getActorIDTab();
         this.actorStatusTab = (T[]) sc.getActorStatusTab();
@@ -131,7 +131,7 @@ public abstract class Sensor<T> extends AbstractDevice<T>{
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
 	Message msg = gson.fromJson(jsonMsg, Message.class);
         Message reply;
-        HTWhomeConfig<T> sc;
+        Config<T> sc;
 	switch (msg.getMsgType()) {
 	    case statusRequest: //denke ist fertig. TL
                 reply = new Message();

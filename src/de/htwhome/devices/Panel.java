@@ -3,10 +3,7 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
-import de.htwhome.utils.ActorConfig;
-import de.htwhome.utils.HTWhomeConfig;
-import de.htwhome.utils.PanelConfig;
-import de.htwhome.utils.SensorConfig;
+import de.htwhome.utils.Config;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ public class Panel extends AbstractDevice<Boolean>{
 
     private ArrayList<AbstractDevice> deviceList;
     public static final DeviceType deviceType = DeviceType.Panel;
-    public static final Type cfgType = new TypeToken<ActorConfig<Boolean>>(){}.getType();
+    public static final Type cfgType = new TypeToken<Config<Boolean>>(){}.getType();
     
 
     public Panel() {}
@@ -31,38 +28,17 @@ public class Panel extends AbstractDevice<Boolean>{
     }
 
     public void save() {
-        HTWhomeConfig pc = new HTWhomeConfig();
+        Config pc = new Config();
         super.save(pc);
         pc.setDeviceList(deviceList);
         setConfig(pc, "Panel");
     }
 
     public void load(){
-        HTWhomeConfig pc = this.getConfig("Panel");
+        Config pc = this.getConfig("Panel");
         load(pc);
         this.deviceList = pc.getDeviceList();
     }
-
-//   public static PanelConfig getConfig(){
-//        PanelConfig config = JAXB.unmarshal(new File("PanelConfig.xml"), PanelConfig.class);
-//        return config;
-//    }
-//
-//    public static void setConfig(PanelConfig config) {
-//        FileWriter filewriter = null;
-//        try {
-//            filewriter = new FileWriter(("PanelConfig.xml"));
-//            JAXB.marshal(config, filewriter);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                filewriter.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 
     @Override
     public void handleMsg(String jsonMsg) {
@@ -127,7 +103,7 @@ public class Panel extends AbstractDevice<Boolean>{
     private void updateDevicelist(String jsonCfg, DeviceType devType) {
         switch (devType) {
             case Anemometer:
-                SensorConfig<Double> sc = gson.fromJson(jsonCfg, Anemometer.cfgType);
+                Config<Double> sc = gson.fromJson(jsonCfg, Anemometer.cfgType);
                 System.out.println("ID " + sc.getId() + " hat sich gemeldet. >> " + sc.getDescription());
                 sc.setDeviceType(deviceType);
                 break;

@@ -1,8 +1,7 @@
 package de.htwhome.devices;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
-import de.htwhome.utils.ActorConfig;
-import de.htwhome.utils.HTWhomeConfig;
+import de.htwhome.utils.Config;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,36 +25,15 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         save();
     }
 
-//   public static ActorConfig getConfig(){
-//        ActorConfig config = JAXB.unmarshal(new File("ActorConfig.xml"), ActorConfig.class);
-//        return config;
-//    }
-//
-//    public static void setConfig(ActorConfig config) {
-//        FileWriter filewriter = null;
-//        try {
-//            filewriter = new FileWriter("ActorConfig.xml");
-//            JAXB.marshal(config, filewriter);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                filewriter.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
     public void save() {
-        HTWhomeConfig ac = new HTWhomeConfig();
+        Config ac = new Config();
         save(ac);
         ac.setGidTab(gidTab);
         setConfig(ac, "Actor");
     }
 
     public void load() {
-        HTWhomeConfig ac = this.getConfig("Actor");
+        Config ac = this.getConfig("Actor");
         load(ac);
         this.gidTab = ac.getGidTab();
     }
@@ -72,7 +50,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     @Override
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
 	Message msg = gson.fromJson(jsonMsg, Message.class);
-        HTWhomeConfig<T> ac;
+        Config<T> ac;
         System.out.println("Verarbeite Nachricht vom Typ: " + msg.getMsgType());
 	switch (msg.getMsgType()) {
 	    case statusChange:

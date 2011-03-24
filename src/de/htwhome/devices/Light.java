@@ -3,7 +3,7 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
-import de.htwhome.utils.ActorConfig;
+import de.htwhome.utils.Config;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 
@@ -14,7 +14,7 @@ import java.net.SocketException;
 public class Light extends Actor<Boolean> {
 
     public static final DeviceType deviceType = DeviceType.Light;
-    public static final Type cfgType = new TypeToken<ActorConfig<Boolean>>(){}.getType();
+    public static final Type cfgType = new TypeToken<Config<Boolean>>(){}.getType();
 
     public Light(int id, boolean status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status, location, description, gidTab);
