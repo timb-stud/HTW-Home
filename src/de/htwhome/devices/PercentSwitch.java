@@ -15,7 +15,8 @@ public class PercentSwitch extends AckSensor<Integer>{
 
     public static final Type cfgType = new TypeToken<Config<Integer>>(){}.getType();
     public static final DeviceType deviceType = DeviceType.PercentSwitch;
-    private int min, max; //TODO minimum und maximum festlegen
+    private static final int MINSTATUS = 0; //TODO min und max benutzen
+    private static final int MAXSTATUS = 100;
 
     public PercentSwitch(int id, int status, String location, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException {
         super(id, status, location, description, actorListId, actorStatusTab, gid);
