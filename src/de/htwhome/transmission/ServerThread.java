@@ -3,8 +3,6 @@ package de.htwhome.transmission;
 import de.htwhome.devices.AbstractDevice;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -29,16 +27,8 @@ class ServerThread extends Thread {
 
     @Override
     public void run() {
-        try {
-            // System.out.println("Start ThreadID: " + this.getId());
-            Thread.sleep(0);
-            String msg = new String(pack.getData(), 0, pack.getLength());
-            System.out.println("Received: " + msg);
-            this.device.handleMsg(msg);
-            // System.out.println("ENDE ThreadID: " + this.getId());
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+	String msg = new String(pack.getData(), 0, pack.getLength());
+	System.out.println("Received: " + msg);
+	this.device.handleMsg(msg);
     }
 }
