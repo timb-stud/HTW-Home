@@ -1,8 +1,6 @@
 package de.htwhome.transmission;
 
 import de.htwhome.devices.AbstractDevice;
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.logging.Level;

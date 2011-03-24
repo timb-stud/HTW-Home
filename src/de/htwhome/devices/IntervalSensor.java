@@ -16,6 +16,7 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 
     private Timer timer;
     private boolean timeSchedulerChangeStatus = false;
+    private static final String CONFIGFILENAME = "IntervalSensor";
 
     public IntervalSensor() {
     }
@@ -61,7 +62,7 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
     }
 
     public void load() {
-	Config sc = Sensor.getConfig("Sensor");
+	Config sc = getConfig(CONFIGFILENAME);
 	load(sc);
     }
 
@@ -83,8 +84,8 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 	    case configChange:
 		if (msg.getReceiverId() == this.id) {
 		    sc = gson.fromJson(msg.getContent(), cfgType);
-		    setConfig(sc, "Sensor");
-		    getConfig("Sensor");
+		    setConfig(sc, CONFIGFILENAME);
+		    getConfig(CONFIGFILENAME);
 		}
 		break;
 	    case configRequest: //TODO implement
@@ -102,7 +103,7 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 //		sc.setActorIDTab(actorIdTab);
 //		sc.setActorStatusTab(actorStatusTab);
 //                save();
-		sc = getConfig("Sensor");
+		sc = getConfig(CONFIGFILENAME);
 		String content = gson.toJson(sc, cfgType);
 		reply.setContent(content);
 		sendMsg(reply);

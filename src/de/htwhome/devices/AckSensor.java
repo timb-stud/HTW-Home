@@ -15,7 +15,7 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
     T[] actorStatusTab;
     boolean[] actorAckTab;
     int gid;
-    private static final String CONFIGFILENAME = "";
+    private static final String CONFIGFILENAME = "AckSensor";
 
     public AckSensor() { }
 
@@ -52,11 +52,11 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
         sc.setActorIDTab(actorIdTab);
         sc.setActorStatusTab(actorStatusTab);
         sc.setActorAckTab(actorAckTab);
-       setConfig(sc, "AckSensor");
+       setConfig(sc, CONFIGFILENAME);
     }
 
     public void load(){
-        Config sc = Sensor.getConfig("AckSensor");
+        Config sc = getConfig(CONFIGFILENAME);
         load(sc);
         this.actorIdTab = sc.getActorIDTab();
         this.actorStatusTab = (T[]) sc.getActorStatusTab();
@@ -91,8 +91,8 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
 	    case configChange:
 		if (msg.getReceiverId() == this.id) {
 		    sc = gson.fromJson(msg.getContent(), cfgType);
-		    setConfig(sc, "Sensor");
-		    getConfig("Sensor");
+		    setConfig(sc, CONFIGFILENAME);
+		    getConfig(CONFIGFILENAME);
 		}
 		break;
 	    case configRequest: //TODO implement
@@ -110,7 +110,7 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
 //		sc.setActorIDTab(actorIdTab);
 //		sc.setActorStatusTab(actorStatusTab);
 //                save();
-                sc = getConfig("Sensor");
+                sc = getConfig(CONFIGFILENAME);
 		String content = gson.toJson(sc, cfgType);
                 reply.setContent(content);
                 sendMsg(reply);
