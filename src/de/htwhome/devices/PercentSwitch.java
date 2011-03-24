@@ -11,7 +11,7 @@ import de.htwhome.utils.Config;
  *
  * @author Tim Bartsch
  */
-public class PercentSwitch extends Sensor<Integer>{
+public class PercentSwitch extends AckSensor<Integer>{
 
     public static final Type cfgType = new TypeToken<Config<Integer>>(){}.getType();
     public static final DeviceType deviceType = DeviceType.PercentSwitch;

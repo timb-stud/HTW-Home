@@ -11,7 +11,7 @@ import java.net.SocketException;
  *
  * @author Christian Rech, Tim Bartsch
  */
-public class Switch extends Sensor<Boolean> {
+public class Switch extends AckSensor<Boolean> {
 
     public static final DeviceType deviceType = DeviceType.Switch;
     public static final Type cfgType = new TypeToken<Config<Boolean>>(){}.getType();
@@ -20,8 +20,8 @@ public class Switch extends Sensor<Boolean> {
         super.load();
     }
 
-    public Switch (int id, boolean status, String location, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) throws SocketException {
-        super(id, status, location, description, actorIdTab, actorStatusTab, gid);
+    public Switch(int id, Boolean status, String location, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) throws SocketException{
+	super(id, status, location, description, actorIdTab, actorStatusTab, gid);
     }
 
     @Override

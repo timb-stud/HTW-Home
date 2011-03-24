@@ -12,10 +12,10 @@ import java.util.logging.Logger;
  *
  * @author Volkan Gökkaya
  */
-public class actorRespThread extends Thread{
+public class ActorRespThread extends Thread{
 
-    Sensor sensor;
-    public actorRespThread(Sensor sensor){
+    AckSensor sensor;
+    public ActorRespThread(AckSensor sensor){
         this.sensor = sensor;
     }
 
@@ -25,7 +25,7 @@ public class actorRespThread extends Thread{
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
-                Logger.getLogger(actorRespThread.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ActorRespThread.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         System.out.println("Jetzt geht LED am Schalter an... (Sensor.switchLedON(...))");

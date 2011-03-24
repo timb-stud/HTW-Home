@@ -12,7 +12,7 @@ import de.htwhome.utils.Config;
  * @author tobiaslana
  * Anemometer (en) = Windmesser (de)
  */
-public class Anemometer extends Sensor<Double>{
+public class Anemometer extends IntervalSensor<Double>{
 
     public static final DeviceType deviceType = DeviceType.Anemometer;
     public static final Type cfgType = new TypeToken<Config<Double>>(){}.getType();
@@ -24,7 +24,7 @@ public class Anemometer extends Sensor<Double>{
     }
     
     public Anemometer (int id, Double status, String location, String description, int gid) throws SocketException {
-        super(id, status, location, description, gid);
+        super(id, status, location, description);
     }
 
     @Override
@@ -48,7 +48,6 @@ public class Anemometer extends Sensor<Double>{
 	Message msg = new Message();
         msg.setMsgType(MessageType.statusResponse);
         msg.setSenderId(this.id);
-        msg.setReceiverId(this.gid);
         msg.setContent(String.valueOf(this.status));
 	msg.setSenderDevice(deviceType);
 	this.sendMsg(msg);
@@ -59,12 +58,6 @@ public class Anemometer extends Sensor<Double>{
     public void setStatus(String status) {
         double d = Double.valueOf(status);
         this.setStatus(d);
-    }
-
-    @Override
-    public void setActorStatus(String status, int pos) {
-        double d = Double.valueOf(status);
-        this.setActorStatus(d, pos);
     }
 
     public static void main(String[] args) throws SocketException {

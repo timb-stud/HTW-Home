@@ -15,15 +15,15 @@ class TimeSchedulerTask<T> extends TimerTask{
     private T status;
     private T firstStatus;
     private T secondStatus;
-    private Sensor sensor;
+    private IntervalSensor sensor;
 
-    public TimeSchedulerTask(Sensor sensor, T firstStatus, T secondStatus) {
+    public TimeSchedulerTask(IntervalSensor sensor, T firstStatus, T secondStatus) {
         this.sensor = sensor;
         this.firstStatus = firstStatus;
         this.secondStatus = secondStatus;
     }
 
-    public TimeSchedulerTask(Sensor sensor){
+    public TimeSchedulerTask(IntervalSensor sensor){
         this.sensor = sensor;
     }
 

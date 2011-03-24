@@ -11,7 +11,7 @@ import java.net.SocketException;
  *
  * @author Tim Bartsch
  */
-public class SmokeDetector extends Sensor<Boolean>{
+public class SmokeDetector extends IntervalSensor<Boolean>{
 
     public static final DeviceType deviceType = DeviceType.SmokeDetector;
     public static final Type cfgType = new TypeToken<Config<Boolean>>(){}.getType();
@@ -20,13 +20,8 @@ public class SmokeDetector extends Sensor<Boolean>{
         super.load();
     }
     
-    public SmokeDetector (int id, Boolean status, String location, String description, int gid) throws SocketException {
-        super(id, status, location, description, gid);
-    }
-
-    @Override
-    public void setActorStatus(String status, int pos) {
-	throw new UnsupportedOperationException("Not supported yet."); //TODO kann raus, oder?
+    public SmokeDetector (int id, Boolean status, String location, String description) throws SocketException {
+        super(id, status, location, description);
     }
 
     @Override
@@ -56,15 +51,14 @@ public class SmokeDetector extends Sensor<Boolean>{
 	Message msg = new Message();
         msg.setMsgType(MessageType.statusResponse);
         msg.setSenderId(this.id);
-        msg.setReceiverId(this.gid);
         msg.setContent(String.valueOf(this.status));
 	msg.setSenderDevice(deviceType);
 	this.sendMsg(msg);
     }
 
     public static void main(String[] args) throws SocketException {
-        SmokeDetector sd = new SmokeDetector(11301, false, "Wohnzimmer", "Rauchmelder", ALLDEVICES);
+        SmokeDetector sd = new SmokeDetector(11301, false, "Wohnzimmer", "Rauchmelder");
         sd.setStatus(true);
     }
-    
+
 }
