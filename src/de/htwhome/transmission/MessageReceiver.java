@@ -33,6 +33,8 @@ public class MessageReceiver extends Thread{
         while (true) {
             try {
                 pack = new DatagramPacket(new byte[HTWhomeProperties.BUFFERSIZE], HTWhomeProperties.BUFFERSIZE);
+                InetAddress group = InetAddress.getByName(HTWhomeProperties.MULTICASTGROUP);
+                sock.joinGroup(group);
                 sock.receive(pack);
                 ServerThread st = new ServerThread(pack, device);
                 st.start();

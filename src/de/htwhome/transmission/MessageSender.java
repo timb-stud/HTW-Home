@@ -16,6 +16,7 @@ public class MessageSender {
             byte[] buffer = msg.getBytes();
             MulticastSocket multiCastSocket = new MulticastSocket(HTWhomeProperties.PORT);
             InetAddress group = InetAddress.getByName(HTWhomeProperties.MULTICASTGROUP);
+            multiCastSocket.joinGroup(group);
 
             DatagramPacket datagrampacket= new DatagramPacket(msg.getBytes(), msg.length(),group, HTWhomeProperties.PORT);
             multiCastSocket.send(datagrampacket);
