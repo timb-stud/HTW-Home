@@ -2,6 +2,7 @@ package de.htwhome.transmission;
 
 import de.htwhome.devices.AbstractDevice;
 import de.htwhome.devices.Light;
+import de.htwhome.utils.HTWhomeProperties;
 import java.net.*;
 import java.io.*;
 import java.util.logging.Level;
@@ -13,15 +14,13 @@ import java.util.logging.Logger;
  */
 public class MessageReceiver extends Thread{
 
-    static final int    PORT = 1234;
-    private static final int BUFFERSIZE = 256;
     public DatagramPacket pack;
     public MulticastSocket sock;
     private AbstractDevice  device;
     
     public MessageReceiver(AbstractDevice device) throws SocketException {
         try {
-            sock = new MulticastSocket(PORT);
+            sock = new MulticastSocket(HTWhomeProperties.PORT);
         } catch (IOException ex) {
             Logger.getLogger(MessageReceiver.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -33,7 +32,7 @@ public class MessageReceiver extends Thread{
         System.out.println("MsgReceiver: " + device);
         while (true) {
             try {
-                pack = new DatagramPacket(new byte[BUFFERSIZE], BUFFERSIZE);
+                pack = new DatagramPacket(new byte[HTWhomeProperties.BUFFERSIZE], HTWhomeProperties.BUFFERSIZE);
                 sock.receive(pack);
                 ServerThread st = new ServerThread(pack, device);
                 st.start();

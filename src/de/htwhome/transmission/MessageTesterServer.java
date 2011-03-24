@@ -26,6 +26,8 @@ public class MessageTesterServer {
         }
     }
 
+    
+
     public static void main(String[] args) throws IOException, ClassNotFoundException{
         MessageTesterServer test = new MessageTesterServer();
     }

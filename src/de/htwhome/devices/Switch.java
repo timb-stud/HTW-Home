@@ -62,7 +62,7 @@ public class Switch extends AckSensor<Boolean> {
 //        Boolean[] actorListStatus = new Boolean[actorListId.length];
 //        Switch s = new Switch(11101, false, "Wohnzimmer", "Lichtschalter Fenster", actorListId, actorListStatus, 21100);
 
-        int[] actorListId = {12110, 13001};
+        int[] actorListId = {1, 20};
         Boolean[] actorListStatus = new Boolean[actorListId.length];
         Switch s = new Switch(11101, false, "Haustür", "Klingel", actorListId, actorListStatus, 29001);
         s.save();
