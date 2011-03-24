@@ -2,8 +2,7 @@ package de.htwhome.devices;
 
 import com.google.gson.Gson;
 import de.htwhome.transmission.Message;
-import de.htwhome.transmission.MessageReceiver;
-import de.htwhome.transmission.MessageSender;
+import de.htwhome.transmission.MessageDeamon;
 import de.htwhome.utils.Config;
 import java.io.File;
 import java.io.FileWriter;
@@ -24,7 +23,7 @@ public abstract class AbstractDevice<T> {
     protected  String location;
     protected  String description;
     protected static Gson gson = new Gson();
-    private MessageReceiver msgReceiver;
+    private MessageDeamon msgDeamon;
     protected static int ALLDEVICES = 20000;
     
     public AbstractDevice() {}
@@ -34,8 +33,8 @@ public abstract class AbstractDevice<T> {
         this.status = status;
         this.location = location;
         this.description = description;
-        msgReceiver = new MessageReceiver(this);
-        msgReceiver.start();
+        msgDeamon = new MessageDeamon(this);
+        msgDeamon.start();
     }
 
     protected  void load(Config dc){
@@ -82,7 +81,7 @@ public abstract class AbstractDevice<T> {
         try {
             String json = new Gson().toJson(msg);
             // System.out.println("JSON:" + json); //TODO aufraeumen
-            MessageSender.sendMsg(json);
+            msgDeamon.sendMsg(json);
         } catch (IOException ex) {
             Logger.getLogger(Actor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -122,7 +121,7 @@ public abstract class AbstractDevice<T> {
 
     @Override
     public String toString() {
-	return "AbstractDevice{" + "id=" + id + "status=" + status + "location=" + location + "description=" + description + "msgReceiver=" + msgReceiver + '}';
+	return "AbstractDevice{" + "id=" + id + "status=" + status + "location=" + location + "description=" + description + "msgReceiver=" + msgDeamon + '}';
     }
 
 }
