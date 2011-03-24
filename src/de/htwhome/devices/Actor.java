@@ -51,7 +51,6 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
 	Message msg = gson.fromJson(jsonMsg, Message.class);
         Config<T> ac;
-        System.out.println("Verarbeite Nachricht vom Typ: " + msg.getMsgType());
 	switch (msg.getMsgType()) {
 	    case statusChange:
 		if(isReceiver(msg.getReceiverId())){
@@ -84,6 +83,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
                 break;
             case weatherAlarm:
                 handleWeatherAlarm();
+                break;
             case fireAlarm:
                 handleFireAlarm();
                 break;

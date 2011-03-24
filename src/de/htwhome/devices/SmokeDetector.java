@@ -61,5 +61,10 @@ public class SmokeDetector extends Sensor<Boolean>{
 	msg.setSenderDevice(deviceType);
 	this.sendMsg(msg);
     }
+
+    public static void main(String[] args) throws SocketException {
+        SmokeDetector sd = new SmokeDetector(11301, false, "Wohnzimmer", "Rauchmelder", ALLDEVICES);
+        sd.setStatus(true);
+    }
     
 }

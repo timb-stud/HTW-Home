@@ -1,19 +1,12 @@
 package de.htwhome.devices;
 
-import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
-import de.htwhome.utils.ActorConfig;
 import de.htwhome.utils.Config;
 import de.htwhome.utils.LittleHelpers;
-import de.htwhome.utils.SensorConfig;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 import java.util.Timer;
-import javax.xml.bind.JAXB;
 
 /**
  *

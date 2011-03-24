@@ -40,7 +40,7 @@ public class Anemometer extends Sensor<Double>{
             Message warning = new Message();
             warning.setMsgType(MessageType.weatherAlarm);
             warning.setSenderId(this.id);
-            warning.setReceiverId(this.gid);
+            warning.setReceiverId(ALLDEVICES);
             warning.setContent(String.valueOf(this.status));
             warning.setSenderDevice(deviceType);
             this.sendMsg(warning);
@@ -68,7 +68,7 @@ public class Anemometer extends Sensor<Double>{
     }
 
     public static void main(String[] args) throws SocketException {
-        Anemometer a = new Anemometer(125, 5.5, "Garten", "Windmesser", ALLDEVICES);
+        Anemometer a = new Anemometer(11301, 0.0, "Garten", "Windmesser", ALLDEVICES);
         a.startRandomScheduler(5000);
     }
 }

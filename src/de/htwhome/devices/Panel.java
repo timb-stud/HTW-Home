@@ -17,7 +17,10 @@ public class Panel extends AbstractDevice<Boolean>{
     private ArrayList<AbstractDevice> deviceList;
     public static final DeviceType deviceType = DeviceType.Panel;
     public static final Type cfgType = new TypeToken<Config<Boolean>>(){}.getType();
-    
+    public static Boolean FIREALARM = false;
+    public static Boolean WEATHERALARM = false;
+    public static final Boolean OPEN = true;
+    public static final Boolean CLOSE = false;
 
     public Panel() {}
 
@@ -59,10 +62,10 @@ public class Panel extends AbstractDevice<Boolean>{
     @Override
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
 	Message msg = gson.fromJson(jsonMsg, Message.class);
-        System.out.println("Verarbeite Nachricht vom Typ: " + msg.getMsgType());
 	switch (msg.getMsgType()) {
 	    case statusResponse:
-		//TODO implement or remove
+		handleStatusResponse(msg);
+                updateDevicelist(msg.getContent(), msg.getSenderDevice());
 		break;
 	    case configChange:
 		//TODO implement
@@ -72,6 +75,17 @@ public class Panel extends AbstractDevice<Boolean>{
 		break;
             case configResponse:
                 updateDevicelist(msg.getContent(), msg.getSenderDevice());
+                break;
+            case fireAlarm:
+                FIREALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
+                panelPopUp("FEUER");
+                break;
+            case weatherAlarm:
+                WEATHERALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
+                panelPopUp("UNWETTER");
+                break;
+            case statusChange:
+                handleStatusChange(msg);
                 break;
 	}
     }
@@ -97,10 +111,11 @@ public class Panel extends AbstractDevice<Boolean>{
      * @author TL
      * @param String jsonMsg
      * 
-     * Funktion wertet die Nachrichten des Typs configResponse aus
+     * Methode wertet die Nachrichten des Typs configResponse aus
      * und schreibt die Devices in die DeviceList des Panels
      */
     private void updateDevicelist(String jsonCfg, DeviceType devType) {
+        //TODO implement case functions
         switch (devType) {
             case Anemometer:
                 Config<Double> sc = gson.fromJson(jsonCfg, Anemometer.cfgType);
@@ -132,10 +147,68 @@ public class Panel extends AbstractDevice<Boolean>{
 //        System.out.println(msg2);
     }
 
-    public static void main(String[] args) throws SocketException {
-        Panel p = new Panel(123, false, "Wohnzimmer", "Panel", "Megapanel");
-        p.getAllConfigs();
+    /*
+     * Panel muss auf verschiedene StatusChanges unterschiedlich reagieren.
+     * Dies uebernimmt diese Methode
+     * @author TL
+     */
+    private void handleStatusChange(Message msg) {
+        switch (msg.getReceiverId()) {
+            case 29001: //Klingel
+                if (msg.getContent().equals("true")) {
+                    panelPopUp("Jemand an der Tür");
+                } else {
+                    panelPopUp("Verpasster Besucher");
+                }
+                break;
+        }
     }
 
+    /*
+     * Panel muss auf verschiedene StatusResponse unterschiedlich reagieren.
+     * Dies uebernimmt diese Methode
+     * @author TL
+     */
+    private void handleStatusResponse(Message msg) {
+        switch (msg.getSenderId()) {
+            case 12101: //Webcam
+                System.out.println("Neues Webcambild: " + msg.getContent());
+                break;
+        }
+    }
+
+    /*
+     * Mit Hilfe dieser Methode soll ein Popup auf dem Panel erscheinen
+     * @author TL
+     */
+    public void panelPopUp(String meldung) {
+        //TODO PopUp auf Panel bringen
+        //TODO implement
+        System.out.println(meldung);
+    }
+
+    /*
+     * @author TL
+     */
+    public void resetAlarms() {
+        WEATHERALARM = false;
+        FIREALARM = false;
+    }
+
+    public void openDoor() {
+        Message msg = new Message();
+        msg.setMsgType(MessageType.statusChange);
+        msg.setSenderId(this.id);
+        msg.setReceiverId(12501);
+        msg.setSenderDevice(deviceType);
+	msg.setContent(String.valueOf(OPEN));
+        sendMsg(msg);
+    }
+
+    public static void main(String[] args) throws SocketException {
+        Panel p = new Panel(13001, false, "Wohnzimmer", "Panel", "Megapanel");
+        //p.getAllConfigs();
+        p.openDoor();
+    }
 
 }

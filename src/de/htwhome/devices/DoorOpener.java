@@ -9,18 +9,18 @@ import java.net.SocketException;
 
 /**
  *
- * @author Christian Rech, Tim Bartsch
+ * @author tobiaslana
  */
-public class Light extends Actor<Boolean> {
+public class DoorOpener extends Actor<Boolean>{
 
-    public static final DeviceType deviceType = DeviceType.Light;
+    public static final DeviceType deviceType = DeviceType.DoorOpener;
     public static final Type cfgType = new TypeToken<Config<Boolean>>(){}.getType();
 
-    public Light(int id, boolean status, String location, String description, int[] gidTab) throws SocketException {
+    public DoorOpener(int id, boolean status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status, location, description, gidTab);
     }
 
-    public Light() {
+    public DoorOpener() {
         super.load();
     }
 
@@ -33,7 +33,13 @@ public class Light extends Actor<Boolean> {
 	msg.setContent(String.valueOf(this.status));
 	msg.setSenderDevice(deviceType);
 	this.sendMsg(msg);
-        System.out.println("Light.status:" +  this.status);
+//        System.out.println("Neues Bild erstellt. Status: " + this.status);
+        if (status) {
+            this.status = false;
+            msg.setContent(String.valueOf(this.status));
+        }
+        this.sendMsg(msg);
+//        System.out.println("Webcam wieder im Standby. Status: " + this.status);
     }
 
     @Override
@@ -47,25 +53,9 @@ public class Light extends Actor<Boolean> {
 	super.handleMsg(msg, deviceType, cfgType);
     }
 
-    @Override
-    public void handleFireAlarm() {
-        setStatus(true);
-    }
-
     public static void main(String[] args) throws SocketException {
-        int[] gid  = {20000, 21000, 21100, 21101, 29001};
-	Light l = new Light(12101, false, "haus", "Beschreibung", gid);
-//	l.handleMsg("{'msgType':'statusChange','senderId':" + l.id +",'receiverId':20000,'content':'true','senderDevice':'Switch'}");
-
-//        Light l = new Light();
-//	l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
-
-
-        l.save();
-//        ActorConfig sc2 = (ActorConfig) l.getConfig();
-//        System.out.println("sc2 id= " + sc2.getId()
-//                  + "\n" + "status= " + sc2.getStatus()
-//                );
+        int[] gid  = {12501};
+	DoorOpener d = new DoorOpener(12501, false, "Eingangstür", "Türöffner", gid);
+        d.save();
     }
-
 }

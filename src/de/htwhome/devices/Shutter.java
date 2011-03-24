@@ -9,16 +9,19 @@ import java.net.SocketException;
 
 /**
  *
- * @author Christian Rech, Tim Bartsch
+ * @author Tobias Lana
+ * Shutter (en) = Rollladen (de)
  */
-public class SunBlind extends Actor<Integer>{
+public class Shutter extends Actor<Integer>{
 
     public static final Type cfgType = new TypeToken<Config<Integer>>(){}.getType();
-    public static final DeviceType deviceType = DeviceType.Sunblind;
-    private int MIN = 0;    //TODO minimum und maximum festlegen
-    private int MAX = 100;  //TODO minimum und maximum festlegen
+    public static final DeviceType deviceType = DeviceType.Shutter;
+    
+    private int OPEN    = 0;
+    private int SAFETY  = 66;
+    private int CLOSE   = 100;
 
-    public SunBlind(int id, int status, String location, String description, int[] gidTab) throws SocketException {
+    public Shutter(int id, int status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status, location, description, gidTab);
     }
 
@@ -29,12 +32,12 @@ public class SunBlind extends Actor<Integer>{
 
     @Override
     public void handleWeatherAlarm() {
-        setStatus(MIN);
+        setStatus(SAFETY);
     }
 
     @Override
     public void handleFireAlarm() {
-        setStatus(MIN);
+        setStatus(OPEN);
     }
 
     @Override
@@ -55,9 +58,9 @@ public class SunBlind extends Actor<Integer>{
     }
 
     public static void main(String[] args) throws SocketException {
-        int[] gidTab = {23000, 23001};
-        SunBlind sb = new SunBlind(12201, 50, "Wohnzimmer aussen", "Markise", gidTab); //TODO aus Konfig
-        //a.startScheduler(randomMeasurement(), randomMeasurement(), 1, 5);
+        int[] gidTab = {22000, 22100, 22101}; //TODO aus Konfig
+        Shutter s = new Shutter(12301, 0, "Wohnzimmer", "Rolladen vorne", gidTab); //TODO aus Konfig
+        s.setStatus(85);
     }
-    
+
 }
