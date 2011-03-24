@@ -102,8 +102,8 @@ public class MainFrame extends javax.swing.JFrame implements StatusChangeListene
         int[] gid = {1};
         try {
             light = new Light(10, false, "haus", "Beschreibung", gid);
+            light.addStatusChangeListener(this);
             textField.setText(Boolean.toString(light.getStatus()));
-            light.setStatus(true);
         } catch (SocketException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
