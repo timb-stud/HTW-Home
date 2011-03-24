@@ -3,10 +3,8 @@ package de.htwhome.devices;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
-import de.htwhome.utils.LittleHelpers;
 import java.lang.reflect.Type;
 import java.net.SocketException;
-import java.util.Timer;
 
 /**
  *
@@ -14,8 +12,6 @@ import java.util.Timer;
  */
 public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 
-    private Timer timer;
-    private boolean timeSchedulerChangeStatus = false;
     private static final String CONFIGFILENAME = "IntervalSensor";
 
     public IntervalSensor() {
@@ -23,37 +19,6 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 
     public IntervalSensor(int id, T status, String location, String description) throws SocketException {
 	super(id, status, location, description);
-    }
-
-    public void startScheduler(T firstStatus, T secondStatus, long from, long till) {
-	timer = new Timer();
-	long now = System.currentTimeMillis();
-	long start = (from + now) * 1000;  //TODO Berechnung
-	long intervall = till * 1000;
-	timer.schedule(new TimeSchedulerTask<T>(this, firstStatus, secondStatus), start, intervall);
-    }
-
-    public void startRandomScheduler(long intervall) {
-	timer = new Timer();
-	timer.schedule(new TimeSchedulerTask<T>(this), 0, intervall);
-    }
-
-    protected T newTimeSchedulerStatus(T firstStatus, T secondStatus) {
-	if (timeSchedulerChangeStatus) {
-	    status = secondStatus;
-	} else {
-	    status = firstStatus;
-	}
-	timeSchedulerChangeStatus = (timeSchedulerChangeStatus) ? false : true;
-	return status;
-    }
-
-    protected T newTimeSchedulerStatus() {
-	return (T) LittleHelpers.randomMeasurement();
-    }
-
-    public void stopScheduler() {
-	timer.cancel(); //Terminate the timer thread
     }
 
     public void save() {
@@ -111,11 +76,4 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 	}
     }
 
-    public boolean getTimeSchedulerChangeStatus() {
-	return timeSchedulerChangeStatus;
-    }
-
-    public void setTimeSchedulerChangeStatus(boolean TimeSchedulerChangeStatus) {
-	this.timeSchedulerChangeStatus = TimeSchedulerChangeStatus;
-    }
 }
