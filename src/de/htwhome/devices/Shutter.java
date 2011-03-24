@@ -16,10 +16,9 @@ public class Shutter extends Actor<Integer>{
 
     public static final Type cfgType = new TypeToken<Config<Integer>>(){}.getType();
     public static final DeviceType deviceType = DeviceType.Shutter;
-    
-    private int OPEN    = 0;
-    private int SAFETY  = 66;
-    private int CLOSE   = 100;
+    private static final int OPEN_STATUS    = 0;
+    private static final int SAFETY_STATUS  = 66;
+    private static final int CLOSE_STATUS   = 100;
 
     public Shutter(int id, int status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status, location, description, gidTab);
@@ -32,12 +31,12 @@ public class Shutter extends Actor<Integer>{
 
     @Override
     public void handleWeatherAlarm() {
-        setStatus(SAFETY);
+        setStatus(SAFETY_STATUS);
     }
 
     @Override
     public void handleFireAlarm() {
-        setStatus(OPEN);
+        setStatus(OPEN_STATUS);
     }
 
     @Override

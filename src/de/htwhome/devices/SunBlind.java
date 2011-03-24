@@ -15,8 +15,8 @@ public class SunBlind extends Actor<Integer>{
 
     public static final Type cfgType = new TypeToken<Config<Integer>>(){}.getType();
     public static final DeviceType deviceType = DeviceType.Sunblind;
-    private static final int MINSTATUS = 0;  
-    private static final int MAXSTATUS = 100;
+    private static final int MIN_STATUS = 0;
+    private static final int MAX_STATUS = 100;
 
     public SunBlind(int id, int status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status, location, description, gidTab);
@@ -29,12 +29,12 @@ public class SunBlind extends Actor<Integer>{
 
     @Override
     public void handleWeatherAlarm() {
-        setStatus(MINSTATUS);
+        setStatus(MIN_STATUS);
     }
 
     @Override
     public void handleFireAlarm() {
-        setStatus(MINSTATUS);
+        setStatus(MIN_STATUS);
     }
 
     @Override
