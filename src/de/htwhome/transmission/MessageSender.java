@@ -4,23 +4,24 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.MulticastSocket;
 
 /**
  *
  * @author Tobias Lana, Volkan Goekkaya
  */
 public class MessageSender {
-
+    static final int    PORT = 1234;
 
     public static void sendMsg(String msg) throws IOException{
-            DatagramSocket datagramSocket = new DatagramSocket();
+
             byte[] buffer = msg.getBytes();
-            InetAddress receiverAddress = InetAddress.getByName("255.255.255.255");
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, receiverAddress, 1234);
-            datagramSocket.send(packet);
-            System.out.println("Sent " + new String(packet.getData(), 0, packet.getLength()));
-//            datagramSocket.receive(packet);
-//            System.out.println("Received: " + new String(packet.getData(), 0, packet.getLength()));
+            MulticastSocket multiCastSocket = new MulticastSocket(PORT);
+            InetAddress group = InetAddress.getByName("228.5.6.7");
+
+            DatagramPacket datagrampacket= new DatagramPacket(msg.getBytes(), msg.length(),group, PORT);
+             multiCastSocket.send(datagrampacket);
+             System.out.println("Sent " + new String(datagrampacket.getData(), 0, datagrampacket.getLength()));
         }
 
     public static void main(String[] args) throws IOException {

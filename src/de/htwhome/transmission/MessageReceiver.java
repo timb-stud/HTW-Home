@@ -16,11 +16,15 @@ public class MessageReceiver extends Thread{
     static final int    PORT = 1234;
     private static final int BUFFERSIZE = 256;
     public DatagramPacket pack;
-    public DatagramSocket sock;
+    public MulticastSocket sock;
     private AbstractDevice  device;
     
     public MessageReceiver(AbstractDevice device) throws SocketException {
-        sock = new DatagramSocket(PORT);
+        try {
+            sock = new MulticastSocket(PORT);
+        } catch (IOException ex) {
+            Logger.getLogger(MessageReceiver.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.device = device;
     }
     
