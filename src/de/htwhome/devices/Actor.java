@@ -1,6 +1,5 @@
 package de.htwhome.devices;
 
-import de.htwhome.gui.StatusChangeListener;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
