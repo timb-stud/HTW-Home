@@ -66,8 +66,7 @@ public class Panel extends AbstractDevice<Boolean>{
 	    Message msg = gson.fromJson(jsonMsg, Message.class);
 	    switch (msg.getMsgType()) {
 		case statusResponse:
-		    handleStatusResponse(msg);
-		    updateDevicelist(msg.getContent(), msg.getSenderDevice());
+		    updateConfigStatus(msg.getSenderId(), jsonMsg, devType);
 		    break;
 		case configChange:
 		    //TODO implement
@@ -76,18 +75,18 @@ public class Panel extends AbstractDevice<Boolean>{
 		    //TODO implement
 		    break;
 		case configResponse:
-		    updateDevicelist(msg.getContent(), msg.getSenderDevice());
+		    updateConfig(msg.getContent(), msg.getSenderDevice());
 		    break;
 		case fireAlarm:
 		    FIREALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
-		    panelPopUp("FEUER");
+		    System.out.println("FEUER");
 		    break;
 		case weatherAlarm:
 		    WEATHERALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
-		    panelPopUp("UNWETTER");
+		    System.out.println("UNWETTER");
 		    break;
 		case statusChange:
-		    handleStatusChange(msg);
+		    //TODO implement
 		    break;
 	    }
 	} catch (JsonSyntaxException e) {
@@ -113,84 +112,57 @@ public class Panel extends AbstractDevice<Boolean>{
 //        sendMsg(msg, msgType); //TODO msgTyp ueberpruefen
     }
 
-    /*
-     * updateDevicelist
-     * @author TL
-     * @param String jsonMsg
-     * 
-     * Methode wertet die Nachrichten des Typs configResponse aus
-     * und schreibt die Devices in die ConfigList des Panels
-     */
-    private void updateDevicelist(String jsonCfg, DeviceType devType) {
-        switch (devType) {
+    private void updateConfigStatus(int id, String status, DeviceType devType){
+	switch (devType) {
             case Anemometer:
-                updateDevice(jsonCfg, Anemometer.deviceType, Anemometer.cfgType, new Config<Double>());
+		configList.setConfigStatus(id, Double.valueOf(status));
                 break;
             case Light:
-		updateDevice(jsonCfg, Light.deviceType, Light.cfgType, new Config<Boolean>());
+		configList.setConfigStatus(id, Boolean.valueOf(status));
                 break;
             case Panel:
-		updateDevice(jsonCfg, Panel.deviceType, Panel.cfgType, new Config<Boolean>());
+		configList.setConfigStatus(id, Boolean.valueOf(status));
                 break;
             case PercentSwitch:
-		updateDevice(jsonCfg, PercentSwitch.deviceType, PercentSwitch.cfgType, new Config<Integer>());
+		configList.setConfigStatus(id, Integer.valueOf(status));
                 break;
             case Sunblind:
-		updateDevice(jsonCfg, SunBlind.deviceType, SunBlind.cfgType, new Config<Integer>());
+		configList.setConfigStatus(id, Integer.valueOf(status));
                 break;
             case Switch:
-		updateDevice(jsonCfg, Switch.deviceType, Switch.cfgType, new Config<Boolean>());
+		configList.setConfigStatus(id, Boolean.valueOf(status));
                 break;
         }
     }
 
+    private void updateConfig(String jsonCfg, DeviceType devType) {
+        switch (devType) {
+            case Anemometer:
+                updateConfig(jsonCfg, Anemometer.deviceType, Anemometer.cfgType, new Config<Double>());
+                break;
+            case Light:
+		updateConfig(jsonCfg, Light.deviceType, Light.cfgType, new Config<Boolean>());
+                break;
+            case Panel:
+		updateConfig(jsonCfg, Panel.deviceType, Panel.cfgType, new Config<Boolean>());
+                break;
+            case PercentSwitch:
+		updateConfig(jsonCfg, PercentSwitch.deviceType, PercentSwitch.cfgType, new Config<Integer>());
+                break;
+            case Sunblind:
+		updateConfig(jsonCfg, SunBlind.deviceType, SunBlind.cfgType, new Config<Integer>());
+                break;
+            case Switch:
+		updateConfig(jsonCfg, Switch.deviceType, Switch.cfgType, new Config<Boolean>());
+                break;
+        }
+    }
 
-
-    private void updateDevice(String jsonCfg, DeviceType devType, Type cfgType, Config c){
+    private void updateConfig(String jsonCfg, DeviceType devType, Type cfgType, Config c){
 	c = gson.fromJson(jsonCfg, cfgType);
 	c.setDeviceType(deviceType);
 	configList.updateConfig(c);
 	System.out.println("CFG LIST:" + configList);
-    }
-
-    /*
-     * Panel muss auf verschiedene StatusChanges unterschiedlich reagieren.
-     * Dies uebernimmt diese Methode
-     * @author TL
-     */
-    private void handleStatusChange(Message msg) {
-        switch (msg.getReceiverId()) {
-            case 29001: //Klingel
-                if (msg.getContent().equals("true")) {
-                    panelPopUp("Jemand an der Tür");
-                } else {
-                    panelPopUp("Verpasster Besucher");
-                }
-                break;
-        }
-    }
-
-    /*
-     * Panel muss auf verschiedene StatusResponse unterschiedlich reagieren.
-     * Dies uebernimmt diese Methode
-     * @author TL
-     */
-    private void handleStatusResponse(Message msg) {
-        switch (msg.getSenderId()) {
-            case 12101: //Webcam
-                System.out.println("Neues Webcambild: " + msg.getContent());
-                break;
-        }
-    }
-
-    /*
-     * Mit Hilfe dieser Methode soll ein Popup auf dem Panel erscheinen
-     * @author TL
-     */
-    public void panelPopUp(String meldung) {
-        //TODO PopUp auf Panel bringen
-        //TODO implement
-        System.out.println(meldung);
     }
 
     /*
