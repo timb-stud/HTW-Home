@@ -68,6 +68,5 @@ public class Switch extends AckSensor<Boolean> {
         s.save();
         s.setStatus(true);
     }
-
     
 }

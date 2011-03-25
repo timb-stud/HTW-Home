@@ -1,12 +1,13 @@
 package de.htwhome.devices;
 
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
 import java.lang.reflect.Type;
 import java.net.SocketException;
-import java.util.ArrayList;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 public class Panel extends AbstractDevice<Boolean>{
 
-    private ArrayList<AbstractDevice> deviceList;
+    private ConfigList configList;
     public static final DeviceType deviceType = DeviceType.Panel;
     public static final Type cfgType = new TypeToken<Config<Boolean>>(){}.getType();
     public static Boolean FIREALARM = false;
@@ -26,21 +27,21 @@ public class Panel extends AbstractDevice<Boolean>{
 
     public Panel(int id, boolean status, String location, String type, String description) throws SocketException{
         super(id, status, location, description);
-        this.deviceList = new ArrayList<AbstractDevice>();
+        this.configList = new ConfigList();
 
     }
 
     public void save() {
         Config pc = new Config();
         super.save(pc);
-        pc.setDeviceList(deviceList);
+        pc.setConfigList(configList);
         setConfig(pc, "Panel");
     }
 
     public void load(){
         Config pc = this.getConfig("Panel");
         load(pc);
-        this.deviceList = pc.getDeviceList();
+        this.configList = pc.getConfigList();
     }
 
     @Override
@@ -61,32 +62,38 @@ public class Panel extends AbstractDevice<Boolean>{
 
     @Override
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
-	Message msg = gson.fromJson(jsonMsg, Message.class);
-	switch (msg.getMsgType()) {
-	    case statusResponse:
-		handleStatusResponse(msg);
-                updateDevicelist(msg.getContent(), msg.getSenderDevice());
-		break;
-	    case configChange:
-		//TODO implement
-		break;
-	    case configRequest:
-		//TODO implement
-		break;
-            case configResponse:
-                updateDevicelist(msg.getContent(), msg.getSenderDevice());
-                break;
-            case fireAlarm:
-                FIREALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
-                panelPopUp("FEUER");
-                break;
-            case weatherAlarm:
-                WEATHERALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
-                panelPopUp("UNWETTER");
-                break;
-            case statusChange:
-                handleStatusChange(msg);
-                break;
+	try {
+	    Message msg = gson.fromJson(jsonMsg, Message.class);
+	    switch (msg.getMsgType()) {
+		case statusResponse:
+		    handleStatusResponse(msg);
+		    updateDevicelist(msg.getContent(), msg.getSenderDevice());
+		    break;
+		case configChange:
+		    //TODO implement
+		    break;
+		case configRequest:
+		    //TODO implement
+		    break;
+		case configResponse:
+		    updateDevicelist(msg.getContent(), msg.getSenderDevice());
+		    break;
+		case fireAlarm:
+		    FIREALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
+		    panelPopUp("FEUER");
+		    break;
+		case weatherAlarm:
+		    WEATHERALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
+		    panelPopUp("UNWETTER");
+		    break;
+		case statusChange:
+		    handleStatusChange(msg);
+		    break;
+	    }
+	} catch (JsonSyntaxException e) {
+	    System.out.println("Received a non json: " + jsonMsg);
+	} catch(JsonIOException e){
+	    System.out.println("Received a non json: " + jsonMsg);
 	}
     }
 
@@ -112,39 +119,38 @@ public class Panel extends AbstractDevice<Boolean>{
      * @param String jsonMsg
      * 
      * Methode wertet die Nachrichten des Typs configResponse aus
-     * und schreibt die Devices in die DeviceList des Panels
+     * und schreibt die Devices in die ConfigList des Panels
      */
     private void updateDevicelist(String jsonCfg, DeviceType devType) {
-        //TODO implement case functions
         switch (devType) {
             case Anemometer:
-                Config<Double> sc = gson.fromJson(jsonCfg, Anemometer.cfgType);
-                System.out.println("ID " + sc.getId() + " hat sich gemeldet. >> " + sc.getDescription());
-                sc.setDeviceType(deviceType);
+                updateDevice(jsonCfg, Anemometer.deviceType, Anemometer.cfgType, new Config<Double>());
                 break;
             case Light:
-                System.out.println("Light meldet sich");
+		updateDevice(jsonCfg, Light.deviceType, Light.cfgType, new Config<Boolean>());
                 break;
             case Panel:
-                System.out.println("Panel meldet sich");
+		updateDevice(jsonCfg, Panel.deviceType, Panel.cfgType, new Config<Boolean>());
                 break;
             case PercentSwitch:
-                System.out.println("PercentSwitch meldet sich");
+		updateDevice(jsonCfg, PercentSwitch.deviceType, PercentSwitch.cfgType, new Config<Integer>());
                 break;
             case Sunblind:
-                System.out.println("Sunblind meldet sich");
+		updateDevice(jsonCfg, SunBlind.deviceType, SunBlind.cfgType, new Config<Integer>());
                 break;
             case Switch:
-                System.out.println("Switch meldet sich");
+		updateDevice(jsonCfg, Switch.deviceType, Switch.cfgType, new Config<Boolean>());
                 break;
         }
-	//TODO implement
-//        Message<T> msg = gson.fromJson(jsonMsg, msgType);
-//        //Message content = gson.fromJson(msg.getJsonConfig(), msgType);
-//        System.out.println("ID: " + msg.getSenderId() + " hat sich gemeldet");
-//        System.out.println(msg.getJsonConfig());
-//        String msg2 = gson.fromJson(msg.getJsonConfig(), msgType);
-//        System.out.println(msg2);
+    }
+
+
+
+    private void updateDevice(String jsonCfg, DeviceType devType, Type cfgType, Config c){
+	c = gson.fromJson(jsonCfg, cfgType);
+	c.setDeviceType(deviceType);
+	configList.updateConfig(c);
+	System.out.println("CFG LIST:" + configList);
     }
 
     /*
@@ -207,8 +213,8 @@ public class Panel extends AbstractDevice<Boolean>{
 
     public static void main(String[] args) throws SocketException {
         Panel p = new Panel(13001, false, "Wohnzimmer", "Panel", "Megapanel");
-        //p.getAllConfigs();
-        p.openDoor();
+        p.getAllConfigs();
+        //p.openDoor();
     }
 
 }

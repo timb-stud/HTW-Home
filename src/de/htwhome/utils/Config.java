@@ -5,9 +5,8 @@
 
 package de.htwhome.utils;
 
-import de.htwhome.devices.AbstractDevice;
+import de.htwhome.devices.ConfigList;
 import de.htwhome.devices.DeviceType;
-import java.util.ArrayList;
 
 /**
  *
@@ -30,17 +29,17 @@ public class Config<T> { //TODO wenn nicht gebraucht loeschen
     boolean[] actorAckTab; //TODO vllt rauswerfen?
 
     //Panel
-    private ArrayList<AbstractDevice> deviceList;
+    private ConfigList configList;
 
     public Config() {
     }
 
-    public ArrayList<AbstractDevice> getDeviceList() {
-        return deviceList;
+    public ConfigList getConfigList() {
+        return configList;
     }
 
-    public void setDeviceList(ArrayList<AbstractDevice> deviceList) {
-        this.deviceList = deviceList;
+    public void setConfigList(ConfigList configList) {
+        this.configList = configList;
     }
 
     public boolean[] getActorAckTab() {
@@ -114,4 +113,26 @@ public class Config<T> { //TODO wenn nicht gebraucht loeschen
     public void setStatus(T status) {
         this.status = status;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+	if(obj instanceof Config){
+	    Config c = (Config)obj;
+	    return c.getId() == this.getId();
+	}
+	return false;
+    }
+
+    @Override
+    public int hashCode() {
+	int hash = 3;
+	hash = 83 * hash + this.id;
+	return hash;
+    }
+
+    @Override
+    public String toString() {
+	return "Config{" + "id=" + id + "status=" + status + "location=" + location + "deviceType=" + deviceType + "description=" + description + "gidTab=" + gidTab + "actorIDTab=" + actorIDTab + "actorStatusTab=" + actorStatusTab + "actorAckTab=" + actorAckTab + "configList=" + configList + '}';
+    }
+    
 }
