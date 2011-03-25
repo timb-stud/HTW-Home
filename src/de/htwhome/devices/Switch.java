@@ -1,6 +1,8 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.gui.StatusChangeEvent;
+import de.htwhome.gui.StatusChangeListener;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.SensorConfig;
@@ -14,45 +16,54 @@ import java.net.SocketException;
 public class Switch extends Sensor<Boolean> {
 
     public static final DeviceType deviceType = DeviceType.Switch;
-    public static final Type cfgType = new TypeToken<SensorConfig<Boolean>>(){}.getType();
+    public static final Type cfgType = new TypeToken<SensorConfig<Boolean>>() {
+    }.getType();
 
     public Switch() {
         super.load();
     }
 
-    public Switch (int id, boolean status, String location, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) throws SocketException {
+    public Switch(int id, boolean status, String location, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) throws SocketException {
         super(id, status, location, description, actorIdTab, actorStatusTab, gid);
     }
 
     @Override
     public void handleMsg(String msg) {
-	super.handleMsg(msg, deviceType, cfgType);
+        super.handleMsg(msg, deviceType, cfgType);
     }
 
     @Override
     public void setStatus(Boolean status) {
         super.setStatus(status);
-	Message msg = new Message();
-        if (checkRespones())
+        Message msg = new Message();
+        if (checkRespones()) {
             this.status = status;
-	msg.setMsgType(MessageType.statusChange);
-	msg.setReceiverId(this.gid);
-	msg.setContent(String.valueOf(this.status));
-	msg.setSenderDevice(deviceType);
-	this.sendMsg(msg);
+        }
+        msg.setMsgType(MessageType.statusChange);
+        msg.setReceiverId(this.gid);
+        msg.setContent(String.valueOf(this.status));
+        msg.setSenderDevice(deviceType);
+        this.sendMsg(msg);
         System.out.println("Switch.status: " + this.status);
     }
-    
+
     @Override
     public void setStatus(String status) {
-	boolean b = Boolean.valueOf(status);
-	this.setStatus(b);
+        boolean b = Boolean.valueOf(status);
+        this.setStatus(b);
     }
 
     @Override
     public void setActorStatus(String status, int pos) {
-	boolean b = Boolean.valueOf(status);
-	this.setActorStatus(b, pos);
+        boolean b = Boolean.valueOf(status);
+        this.setActorStatus(b, pos);
+    }
+
+    protected void fireChangeEvent() {
+        StatusChangeEvent<Boolean> evt = new StatusChangeEvent<Boolean>(this, this.status);
+        for (StatusChangeListener l : listeners) {
+            l.changeEventReceived(evt);
+        }
     }
 
     public static void main(String[] args) throws SocketException {
@@ -61,9 +72,7 @@ public class Switch extends Sensor<Boolean> {
         Switch s = new Switch(33, true, "haus", "hintt", actorListId, actorListStatus, 1);
         s.save();
         s.setStatus(true);
-        
+
 //        s.startScheduler(Boolean.TRUE, Boolean.FALSE, 2, 4);
     }
-
-    
 }

@@ -1,4 +1,6 @@
 package de.htwhome.devices;
+
+import de.htwhome.gui.StatusChangeListener;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
@@ -13,18 +15,19 @@ import javax.xml.bind.JAXB;
  *
  * @author Christian Rech, Tim Bartsch
  */
-public abstract class Actor<T> extends AbstractDevice<T>{
+public abstract class Actor<T> extends AbstractDevice<T> {
 
     private int[] gidTab;
 
-    public Actor() {}
+    public Actor() {
+    }
 
     public Actor(int id, T status, String location, String description, int[] gidTab) throws SocketException {
-        super(id, status,location, description);
+        super(id, status, location, description);
         this.gidTab = gidTab;
     }
 
-   public static ActorConfig getConfig(){ 
+    public static ActorConfig getConfig() {
         ActorConfig config = JAXB.unmarshal(new File("ActorConfig.xml"), ActorConfig.class);
         return config;
     }
@@ -59,42 +62,42 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     }
 
     private boolean isReceiver(int id) {
-	for (int i = 0; i < this.gidTab.length; i++) {
-	    if (this.gidTab[i] == id) {
-		return true;
-	    }
-	}
-	return false;
+        for (int i = 0; i < this.gidTab.length; i++) {
+            if (this.gidTab[i] == id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
-    public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
-	Message msg = gson.fromJson(jsonMsg, Message.class);
+    public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType) {
+        Message msg = gson.fromJson(jsonMsg, Message.class);
         System.out.println("Verarbeite Nachricht vom Typ: " + msg.getMsgType());
-	switch (msg.getMsgType()) {
-	    case statusChange:
-		if(isReceiver(msg.getReceiverId())){
-		    setStatus(msg.getContent());
-		}
-		break;
-	    case statusRequest:
-		if(isReceiver(msg.getReceiverId())){
-		    setStatus(this.status);
-		}
-		break;
-	    case configChange:  //TODO testen
-                if(isReceiver(msg.getReceiverId())){
+        switch (msg.getMsgType()) {
+            case statusChange:
+                if (isReceiver(msg.getReceiverId())) {
+                    setStatus(msg.getContent());
+                }
+                break;
+            case statusRequest:
+                if (isReceiver(msg.getReceiverId())) {
+                    setStatus(this.status);
+                }
+                break;
+            case configChange:  //TODO testen
+                if (isReceiver(msg.getReceiverId())) {
                     ActorConfig<T> ac = new ActorConfig<T>();
                     //TODO implement
                     setConfig(ac);
-		}
-		break;
-	    case configRequest:
+                }
+                break;
+            case configRequest:
                 Message reply = new Message();
-		reply.setMsgType(MessageType.configChange);
-		reply.setSenderId(this.id);
-		reply.setReceiverId(ALLDEVICES);
-		reply.setSenderDevice(devType);
+                reply.setMsgType(MessageType.configChange);
+                reply.setSenderId(this.id);
+                reply.setReceiverId(ALLDEVICES);
+                reply.setSenderDevice(devType);
 //		ActorConfig<T> ac = new ActorConfig<T>();
 ////		ac.setDescription(this.description);
 ////		ac.setId(this.id);
@@ -103,9 +106,9 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 //                save(ac);
 //		ac.setGidTab(this.gidTab);
                 save();
-                ActorConfig<T> ac =  getConfig();
-		String content = gson.toJson(ac, cfgType);
-		reply.setContent(content);
+                ActorConfig<T> ac = getConfig();
+                String content = gson.toJson(ac, cfgType);
+                reply.setContent(content);
                 sendMsg(reply);
                 break;
             case weatherAlarm:
@@ -113,11 +116,12 @@ public abstract class Actor<T> extends AbstractDevice<T>{
             case fireAlarm:
                 handleFireAlarm();
                 break;
-	}
+        }
     }
 
-    public void handleFireAlarm() {}
+    public void handleFireAlarm() {
+    }
 
-    public void handleWeatherAlarm() {}
-    
+    public void handleWeatherAlarm() {
+    }
 }

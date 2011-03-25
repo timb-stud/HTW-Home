@@ -1,6 +1,7 @@
 package de.htwhome.devices;
 
 import com.google.gson.Gson;
+import de.htwhome.gui.StatusChangeListener;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageReceiver;
 import de.htwhome.transmission.MessageSender;
@@ -8,6 +9,7 @@ import de.htwhome.utils.DeviceConfig;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +25,7 @@ public abstract class AbstractDevice<T> {
     protected static Gson gson = new Gson();
     private MessageReceiver msgReceiver;
     protected static int ALLDEVICES = 999;
+    protected final CopyOnWriteArrayList<StatusChangeListener> listeners = new CopyOnWriteArrayList<StatusChangeListener>();
     
     public AbstractDevice() {}
 

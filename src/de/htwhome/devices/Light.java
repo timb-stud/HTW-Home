@@ -8,7 +8,6 @@ import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.ActorConfig;
 import java.lang.reflect.Type;
 import java.net.SocketException;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -16,7 +15,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Light extends Actor<Boolean> {
 
-    private final CopyOnWriteArrayList<StatusChangeListener> listeners = new CopyOnWriteArrayList<StatusChangeListener>();
     public static final DeviceType deviceType = DeviceType.Light;
     public static final Type cfgType = new TypeToken<ActorConfig<Boolean>>() {
     }.getType();
@@ -51,14 +49,6 @@ public class Light extends Actor<Boolean> {
     @Override
     public void handleMsg(String msg) {
         super.handleMsg(msg, deviceType, cfgType);
-    }
-
-    public void addStatusChangeListener(StatusChangeListener l) {
-        this.listeners.add(l);
-    }
-
-    public void removeStatusChangeListener(StatusChangeListener l) {
-        this.listeners.remove(l);
     }
 
     protected void fireChangeEvent() {
