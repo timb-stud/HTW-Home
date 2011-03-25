@@ -11,7 +11,7 @@ package de.htwhome.utils;
  */
 public class HTWhomeProperties {
     public static final int    PORT = 1234;
-    public static final int BUFFERSIZE = 256;
+    public static final int BUFFERSIZE = 512;
     public static final String MULTICASTGROUP = "228.5.6.7";
 
 }
