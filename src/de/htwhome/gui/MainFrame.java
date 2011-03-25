@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * MainFrame.java
- *
- * Created on 22.03.2011, 13:15:26
- */
 package de.htwhome.gui;
 
 import de.htwhome.devices.Light;
