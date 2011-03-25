@@ -27,7 +27,8 @@ class ServerThread extends Thread {
 
     @Override
     public void run() {
-	String msg = new String(pack.getData(), 0, pack.getLength());
+	String msg = new String(pack.getData());
+	msg = msg.trim();
 	System.out.println("Received: " + msg);
 	this.device.handleMsg(msg);
     }
