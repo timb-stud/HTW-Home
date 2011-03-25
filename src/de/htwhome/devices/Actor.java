@@ -2,12 +2,8 @@ package de.htwhome.devices;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
-import javax.xml.bind.JAXB;
 
 /**
  *
@@ -71,7 +67,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		break;
 	    case configRequest:
                 Message reply = new Message();
-		reply.setMsgType(MessageType.configChange);
+		reply.setMsgType(MessageType.configResponse);
 		reply.setSenderId(this.id);
 		reply.setReceiverId(ALLDEVICES);
 		reply.setSenderDevice(devType);
