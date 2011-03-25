@@ -6,7 +6,6 @@ import java.net.SocketException;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.SensorConfig;
-import java.text.DecimalFormat;
 
 /**
  *
