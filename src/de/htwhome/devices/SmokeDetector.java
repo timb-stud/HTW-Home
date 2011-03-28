@@ -1,11 +1,15 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.timer.TimeScheduler;
+import de.htwhome.timer.TimerOptions;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -56,9 +60,18 @@ public class SmokeDetector extends IntervalSensor<Boolean>{
 	this.sendMsg(msg);
     }
 
-    public static void main(String[] args) throws SocketException {
-        SmokeDetector sd = new SmokeDetector(11301, false, "Wohnzimmer", "Rauchmelder");
-        sd.setStatus(true);
+    private void startNotifier(int intervall){
+        TimeScheduler<Boolean> ts = new TimeScheduler<Boolean>(this, TimerOptions.SMOKEDETECTOR);
+        ts.startIntervallRandom(intervall);
+    }
+
+    public static void main(String[] args) {
+        try {
+            SmokeDetector sd = new SmokeDetector(11301, false, "Wohnzimmer", "Rauchmelder");
+            sd.startNotifier(2000);
+        } catch (SocketException ex) {
+            Logger.getLogger(SmokeDetector.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

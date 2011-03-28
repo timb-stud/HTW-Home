@@ -2,6 +2,7 @@ package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.timer.TimeScheduler;
+import de.htwhome.timer.TimerOptions;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 import de.htwhome.transmission.Message;
@@ -61,8 +62,8 @@ public class Anemometer extends IntervalSensor<Double>{
         this.setStatus(d);
     }
 
-    private void startNotifier(int intervall){ //ToDO geht nicht
-        TimeScheduler<Double> ts = new TimeScheduler<Double>(this);
+    private void startNotifier(int intervall){
+        TimeScheduler<Double> ts = new TimeScheduler<Double>(this, TimerOptions.ANEMOMETER);
         ts.startIntervallRandom(intervall);
     }
 
@@ -70,7 +71,6 @@ public class Anemometer extends IntervalSensor<Double>{
         Anemometer a = new Anemometer(11301, 0.0, "Garten", "Windmesser", ALLDEVICES);
 //        TimeScheduler<Double> ts = new TimeScheduler<Double>(a);
 //        ts.startIntervallRandom(1000);
-        a.startNotifier(1000);
-        System.out.println("ende");
+        a.startNotifier(10000);
     }
 }
