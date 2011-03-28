@@ -134,10 +134,7 @@ public abstract class AbstractDevice<T> {
 
     public abstract void setStatus(String status);
 
-    public void setStatus(T status) {
-        this.status = status;
-        fireChangeEvent();
-    }
+    public abstract void setStatus(T status);
 
     @Override
     public String toString() {

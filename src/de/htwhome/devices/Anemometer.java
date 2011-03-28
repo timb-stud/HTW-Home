@@ -38,6 +38,7 @@ public class Anemometer extends IntervalSensor<Double>{
     @Override
     public void setStatus(Double status) {
         this.status = status;
+	fireChangeEvent();
         if (this.status > MAXLEVELWARNING) {
             System.out.println("!! ACHTUNG !!");
             Message warning = new Message();

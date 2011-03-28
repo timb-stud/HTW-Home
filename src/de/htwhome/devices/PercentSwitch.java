@@ -35,6 +35,7 @@ public class PercentSwitch extends AckSensor<Integer>{
     @Override
     public void setStatus(Integer status) {
         this.status = status;
+	fireChangeEvent();
 	Message msg = new Message();
 	msg.setMsgType(MessageType.statusChange);
 	msg.setReceiverId(this.gid);

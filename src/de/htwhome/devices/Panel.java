@@ -40,6 +40,7 @@ public class Panel extends AbstractDevice<Boolean>{
     @Override
     public void setStatus(Boolean status) {
         this.status = status;
+	fireChangeEvent();
     }
 
     @Override

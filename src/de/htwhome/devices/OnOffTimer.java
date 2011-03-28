@@ -42,6 +42,7 @@ public class OnOffTimer extends IntervalSensor<Boolean>{
     @Override
     public void setStatus(Boolean status) {
         this.status = status;
+	fireChangeEvent();
 	Message msg = new Message();
         msg.setMsgType(MessageType.statusResponse);
         msg.setSenderId(this.id);
