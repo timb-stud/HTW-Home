@@ -1,6 +1,8 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.gui.StatusChangeEvent;
+import de.htwhome.gui.StatusChangeListener;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
@@ -11,9 +13,10 @@ import java.net.SocketException;
  *
  * @author Christian Rech, Tim Bartsch
  */
-public class SunBlind extends Actor<Integer>{
+public class SunBlind extends Actor<Integer> {
 
-    public static final Type cfgType = new TypeToken<Config<Integer>>(){}.getType();
+    public static final Type cfgType = new TypeToken<Config<Integer>>() {
+    }.getType();
     public static final DeviceType deviceType = DeviceType.Sunblind;
     private static final int MIN_STATUS = 0;
     private static final int MAX_STATUS = 100;
@@ -22,14 +25,14 @@ public class SunBlind extends Actor<Integer>{
         super(id, status, location, description, gidTab);
     }
 
-    public SunBlind(int id){
-	this.id = id;
-	loadConfig(deviceType);
+    public SunBlind(int id) {
+        this.id = id;
+        loadConfig(deviceType);
     }
 
     @Override
     public void handleMsg(String msg) {
-	super.handleMsg(msg, deviceType, cfgType);
+        super.handleMsg(msg, deviceType, cfgType);
     }
 
     @Override
@@ -44,19 +47,20 @@ public class SunBlind extends Actor<Integer>{
 
     @Override
     public void setStatus(Integer status) {
-	this.status = status;
-	Message msg = new Message();
-	msg.setMsgType(MessageType.statusResponse);
-	msg.setSenderId(this.id);
-	msg.setSenderDevice(deviceType);
-	msg.setContent(String.valueOf(this.status));
-	sendMsg(msg);
+        this.status = status;
+        fireChangeEvent();
+        Message msg = new Message();
+        msg.setMsgType(MessageType.statusResponse);
+        msg.setSenderId(this.id);
+        msg.setSenderDevice(deviceType);
+        msg.setContent(String.valueOf(this.status));
+        sendMsg(msg);
     }
 
     @Override
     public void setStatus(String status) {
-	int i = Integer.valueOf(status);
-	this.setStatus(i);
+        int i = Integer.valueOf(status);
+        this.setStatus(i);
     }
 
     public static void main(String[] args) throws SocketException {
@@ -67,7 +71,9 @@ public class SunBlind extends Actor<Integer>{
 
     @Override
     protected void fireChangeEvent() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        StatusChangeEvent<Integer> evt = new StatusChangeEvent<Integer>(this, this.status);
+        for (StatusChangeListener l : listeners) {
+            l.changeEventReceived(evt);
+        }
     }
-    
 }

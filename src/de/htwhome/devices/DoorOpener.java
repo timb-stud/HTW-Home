@@ -28,6 +28,7 @@ public class DoorOpener extends Actor<Boolean>{
     @Override
     public void setStatus(Boolean status) {
 	this.status = status;
+	fireChangeEvent();
 	Message msg = new Message();
 	msg.setMsgType(MessageType.statusResponse);
 	msg.setSenderId(this.id);

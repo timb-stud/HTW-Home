@@ -47,6 +47,7 @@ public class Shutter extends Actor<Integer>{
     @Override
     public void setStatus(Integer status) {
 	this.status = status;
+	fireChangeEvent();
 	Message msg = new Message();
 	msg.setMsgType(MessageType.statusResponse);
 	msg.setSenderId(this.id);
