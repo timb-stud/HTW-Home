@@ -71,6 +71,7 @@ public class Anemometer extends IntervalSensor<Double>{
         Anemometer a = new Anemometer(11301, 0.0, "Garten", "Windmesser", ALLDEVICES);
 //        TimeScheduler<Double> ts = new TimeScheduler<Double>(a);
 //        ts.startIntervallRandom(1000);
-        a.startNotifier(10000);
+        a.startNotifier(5000);
+        a.save();
     }
 }

@@ -1,5 +1,7 @@
 package de.htwhome.devices;
 
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
@@ -65,56 +67,52 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
 
     @Override
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType) {
-		Message msg = gson.fromJson(jsonMsg, Message.class);
-        Message reply;
-        Config<T> sc;
-	switch (msg.getMsgType()) {
-	    case statusRequest: //denke ist fertig. TL
-                reply = new Message();
-                reply.setMsgType(MessageType.statusResponse);
-		reply.setSenderId(this.id);
-		reply.setReceiverId(ALLDEVICES);
-		reply.setSenderDevice(devType);
-                reply.setContent(String.valueOf(this.status));
-                sendMsg(reply);
-		break;
-	    case statusResponse:
-                if (actorIdTab != null) {
+	try {
+	    Message msg = gson.fromJson(jsonMsg, Message.class);
+	    Message reply;
+	    Config<T> sc;
+	    switch (msg.getMsgType()) {
+		case statusRequest: //denke ist fertig. TL
+		    reply = new Message();
+		    reply.setMsgType(MessageType.statusResponse);
+		    reply.setSenderId(this.id);
+		    reply.setReceiverId(ALLDEVICES);
+		    reply.setSenderDevice(devType);
+		    reply.setContent(String.valueOf(this.status));
+		    sendMsg(reply);
+		    break;
+		case statusResponse:
                     for (int i = 0; i < actorIdTab.length; i++) {
                         if (actorIdTab[i] == msg.getSenderId()) {
-			    this.setActorStatus(msg.getContent(), i);
+                            this.setActorStatus(msg.getContent(), i);
                             actorAckTab[i] = true;
                         }
                     }
-                }
-		break;
-	    case configChange:
-		if (msg.getReceiverId() == this.id) {
-		    sc = gson.fromJson(msg.getContent(), cfgType);
-		    setConfig(sc, CONFIGFILENAME);
-		    getConfig(CONFIGFILENAME);
-		}
-		break;
-	    case configRequest: //TODO implement
-                reply = new Message();
-		reply.setMsgType(MessageType.configResponse);
-		reply.setSenderId(this.id);
-		reply.setReceiverId(ALLDEVICES);
-		reply.setSenderDevice(devType);
-//		SensorConfig<T> sc = new SensorConfig<T>();
-////                sc.setDescription(this.description);
-////                sc.setId(this.id);
-////                sc.setLocation(this.location);
-////                sc.setStatus(this.status);
-//              save(sc);
-//		sc.setActorIDTab(actorIdTab);
-//		sc.setActorStatusTab(actorStatusTab);
-//                save();
-                sc = getConfig(CONFIGFILENAME);
-		String content = gson.toJson(sc, cfgType);
-                reply.setContent(content);
-                sendMsg(reply);
-                break;
+		    break;
+		case configChange:
+		    if (msg.getReceiverId() == this.id) {
+			sc = gson.fromJson(msg.getContent(), cfgType);
+			setConfig(sc, CONFIGFILENAME);
+			getConfig(CONFIGFILENAME);
+		    }
+		    break;
+		case configRequest: //TODO implement
+		    reply = new Message();
+		    reply.setMsgType(MessageType.configResponse);
+		    reply.setSenderId(this.id);
+		    reply.setReceiverId(ALLDEVICES);
+		    reply.setSenderDevice(devType);
+		    sc = getConfig(CONFIGFILENAME);
+		    String content = gson.toJson(sc, cfgType);
+		    reply.setContent(content);
+		    sendMsg(reply);
+		    break;
+	    }
+
+	} catch (JsonSyntaxException e) {
+	    System.out.println("Received a non json: " + jsonMsg);
+	}catch(JsonIOException e){
+	    System.out.println("Received a non json: " + jsonMsg);
 	}
     }
 }

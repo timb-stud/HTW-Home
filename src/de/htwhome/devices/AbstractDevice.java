@@ -124,4 +124,19 @@ public abstract class AbstractDevice<T> {
 	return "AbstractDevice{" + "id=" + id + "status=" + status + "location=" + location + "description=" + description + "msgReceiver=" + msgDeamon + '}';
     }
 
+    @Override
+    public boolean equals(Object obj) {
+	if(obj instanceof AbstractDevice){
+	    AbstractDevice dev = (AbstractDevice)obj;
+	    return this.id == dev.id;
+	}
+	return false;
+    }
+
+    @Override
+    public int hashCode() {
+	int hash = 7;
+	hash = 83 * hash + this.id;
+	return hash;
+    }
 }

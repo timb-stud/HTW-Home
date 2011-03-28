@@ -1,4 +1,6 @@
 package de.htwhome.devices;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
@@ -45,44 +47,50 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 
     @Override
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
-	Message msg = gson.fromJson(jsonMsg, Message.class);
-        Config<T> ac;
-	switch (msg.getMsgType()) {
-	    case statusChange:
-		if(isReceiver(msg.getReceiverId())){
-		    setStatus(msg.getContent());
-		}
-		break;
-	    case statusRequest:
-		if(isReceiver(msg.getReceiverId())){
-		    setStatus(this.status);
-		}
-		break;
-	    case configChange:  //TODO testen
-                if(isReceiver(msg.getReceiverId())){
-                    ac = gson.fromJson(msg.getContent(), cfgType);
-                    setConfig(ac, "Actor");
-		    getConfig("Actor"); //TODO Quittierung?
-		}
-		break;
-	    case configRequest:
-                Message reply = new Message();
-		reply.setMsgType(MessageType.configResponse);
-		reply.setSenderId(this.id);
-		reply.setReceiverId(ALLDEVICES);
-		reply.setSenderDevice(devType);
-                save();
-                ac =  getConfig("Actor");
-		String content = gson.toJson(ac, cfgType);
-		reply.setContent(content);
-                sendMsg(reply);
-                break;
-            case weatherAlarm:
-                handleWeatherAlarm();
-                break;
-            case fireAlarm:
-                handleFireAlarm();
-                break;
+	try {
+	    Message msg = gson.fromJson(jsonMsg, Message.class);
+	    Config<T> ac;
+	    switch (msg.getMsgType()) {
+		case statusChange:
+		    if (isReceiver(msg.getReceiverId())) {
+			setStatus(msg.getContent());
+		    }
+		    break;
+		case statusRequest:
+		    if (isReceiver(msg.getReceiverId())) {
+			setStatus(this.status);
+		    }
+		    break;
+		case configChange:  //TODO testen
+		    if (isReceiver(msg.getReceiverId())) {
+			ac = gson.fromJson(msg.getContent(), cfgType);
+			setConfig(ac, "Actor");
+			getConfig("Actor"); //TODO Quittierung?
+		    }
+		    break;
+		case configRequest: //TODO testen
+		    Message reply = new Message();
+		    reply.setMsgType(MessageType.configResponse);
+		    reply.setSenderId(this.id);
+		    reply.setReceiverId(ALLDEVICES);
+		    reply.setSenderDevice(devType);
+		    save();
+		    ac = getConfig("Actor");
+		    String content = gson.toJson(ac, cfgType);
+		    reply.setContent(content);
+		    sendMsg(reply);
+		    break;
+		case weatherAlarm:
+		    handleWeatherAlarm();
+		    break;
+		case fireAlarm:
+		    handleFireAlarm();
+		    break;
+	    }
+	} catch (JsonSyntaxException e) {
+	    System.out.println("Received a non json: " + jsonMsg);
+	}catch(JsonIOException e){
+	    System.out.println("Received a non json: " + jsonMsg);
 	}
     }
 
