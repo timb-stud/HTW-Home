@@ -74,4 +74,9 @@ public class Anemometer extends IntervalSensor<Double>{
 //        ts.startIntervallRandom(1000);
         a.startNotifier(5000);
     }
+
+    @Override
+    protected void fireChangeEvent() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

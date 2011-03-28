@@ -7,16 +7,17 @@ import java.util.logging.Logger;
  *
  * @author Volkan Gökkaya
  */
-public class ActorRespThread extends Thread{
+public class ActorRespThread extends Thread {
 
     AckSensor sensor;
-    public ActorRespThread(AckSensor sensor){
+
+    public ActorRespThread(AckSensor sensor) {
         this.sensor = sensor;
     }
 
     @Override
     public void run() {
-        while(sensor.checkRespones() == false){
+        while (sensor.checkRespones() == false) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
@@ -24,6 +25,9 @@ public class ActorRespThread extends Thread{
             }
         }
         System.out.println("Jetzt geht LED am Schalter an... (Sensor.switchLedON(...))");
+        if (sensor instanceof Switch) {
+            Switch s = (Switch) sensor;
+            s.setStatusLED(true);
+        }
     }
-
 }

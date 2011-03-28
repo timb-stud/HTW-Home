@@ -56,4 +56,9 @@ public class PercentSwitch extends AckSensor<Integer>{
 	this.setActorStatus(i, pos);
     }
 
+    @Override
+    protected void fireChangeEvent() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

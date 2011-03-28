@@ -1,6 +1,7 @@
 package de.htwhome.devices;
 
 import com.google.gson.Gson;
+import de.htwhome.gui.StatusChangeListener;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageDeamon;
 import de.htwhome.utils.Config;
@@ -9,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXB;
@@ -18,15 +20,18 @@ import javax.xml.bind.JAXB;
  * @author Christian Rech, Tim Bartsch
  */
 public abstract class AbstractDevice<T> {
+
     protected int id;
-    protected  T status;
-    protected  String location;
-    protected  String description;
+    protected T status;
+    protected String location;
+    protected String description;
     protected static Gson gson = new Gson();
     private MessageDeamon msgDeamon;
     protected static int ALLDEVICES = 20000;
-    
-    public AbstractDevice() {}
+    protected final CopyOnWriteArrayList<StatusChangeListener> listeners = new CopyOnWriteArrayList<StatusChangeListener>();
+
+    public AbstractDevice() {
+    }
 
     public AbstractDevice(int id, T status, String location, String description) throws SocketException {
         this.id = id;
@@ -36,7 +41,7 @@ public abstract class AbstractDevice<T> {
         msgDeamon = new MessageDeamon(this);
         msgDeamon.start();
     }
-
+    
     protected void loadAttributesFrom(Config cfg){
         this.id = cfg.getId();
         this.status = (T) cfg.getStatus();
@@ -79,7 +84,7 @@ public abstract class AbstractDevice<T> {
 
     public abstract void handleMsg(String jsonMsg, DeviceType devType, Type cfgType);
 
-    public void sendMsg(Message msg){
+    public void sendMsg(Message msg) {
         try {
             String json = new Gson().toJson(msg);
             // System.out.println("JSON:" + json); //TODO aufraeumen
@@ -88,6 +93,16 @@ public abstract class AbstractDevice<T> {
             Logger.getLogger(Actor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void addStatusChangeListener(StatusChangeListener l) {
+        this.listeners.add(l);
+    }
+
+    public void removeStatusChangeListener(StatusChangeListener l) {
+        this.listeners.remove(l);
+    }
+
+    protected abstract void fireChangeEvent();
 
     public String getDescription() {
         return description;
@@ -116,14 +131,17 @@ public abstract class AbstractDevice<T> {
     public T getStatus() {
         return status;
     }
-    
+
     public abstract void setStatus(String status);
 
-    public abstract void setStatus(T status);
+    public void setStatus(T status) {
+        this.status = status;
+        fireChangeEvent();
+    }
 
     @Override
     public String toString() {
-	return "AbstractDevice{" + "id=" + id + "status=" + status + "location=" + location + "description=" + description + "msgReceiver=" + msgDeamon + '}';
+        return "AbstractDevice{" + "id=" + id + "status=" + status + "location=" + location + "description=" + description + "msgReceiver=" + msgDeamon + '}';
     }
 
     @Override

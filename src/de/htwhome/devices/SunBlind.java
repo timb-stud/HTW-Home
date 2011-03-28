@@ -64,5 +64,10 @@ public class SunBlind extends Actor<Integer>{
         SunBlind sb = new SunBlind(12201, 50, "Wohnzimmer aussen", "Markise", gidTab); //TODO aus Konfig
         //a.startScheduler(randomMeasurement(), randomMeasurement(), 1, 5);
     }
+
+    @Override
+    protected void fireChangeEvent() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

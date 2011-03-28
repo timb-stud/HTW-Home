@@ -66,4 +66,9 @@ public class Shutter extends Actor<Integer>{
         Shutter s = new Shutter(12301, 0, "Wohnzimmer", "Rolladen vorne", gidTab); //TODO aus Konfig
     }
 
+    @Override
+    protected void fireChangeEvent() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }
