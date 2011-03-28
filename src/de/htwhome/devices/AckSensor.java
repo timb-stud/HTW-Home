@@ -96,7 +96,7 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
 			getConfig(CONFIGFILENAME);
 		    }
 		    break;
-		case configRequest: //TODO implement
+		case configRequest:
 		    reply = new Message();
 		    reply.setMsgType(MessageType.configResponse);
 		    reply.setSenderId(this.id);
