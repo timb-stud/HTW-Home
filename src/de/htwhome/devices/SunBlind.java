@@ -22,6 +22,11 @@ public class SunBlind extends Actor<Integer>{
         super(id, status, location, description, gidTab);
     }
 
+    public SunBlind(int id){
+	this.id = id;
+	loadConfig(deviceType);
+    }
+
     @Override
     public void handleMsg(String msg) {
 	super.handleMsg(msg, deviceType, cfgType);

@@ -18,30 +18,18 @@ public class Panel extends AbstractDevice<Boolean>{
     private ConfigList configList;
     public static final DeviceType deviceType = DeviceType.Panel;
     public static final Type cfgType = new TypeToken<Config<Boolean>>(){}.getType();
-    public static Boolean FIREALARM = false;
-    public static Boolean WEATHERALARM = false;
-    public static final Boolean OPEN = true;
-    public static final Boolean CLOSE = false;
+    public static Boolean firealarm = false;
+    public static Boolean weatheralarm = false;
 
-    public Panel() {}
+    public Panel(int id) {
+	this.id = id;
+	super.loadConfig(deviceType);
+    }
 
     public Panel(int id, boolean status, String location, String type, String description) throws SocketException{
         super(id, status, location, description);
         this.configList = new ConfigList();
 
-    }
-
-    public void save() {
-        Config pc = new Config();
-        super.save(pc);
-        pc.setConfigList(configList);
-        setConfig(pc, "Panel");
-    }
-
-    public void load(){
-        Config pc = this.getConfig("Panel");
-        load(pc);
-        this.configList = pc.getConfigList();
     }
 
     @Override
@@ -78,11 +66,11 @@ public class Panel extends AbstractDevice<Boolean>{
 		    updateConfig(msg.getContent(), msg.getSenderDevice());
 		    break;
 		case fireAlarm:
-		    FIREALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
+		    firealarm = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
 		    System.out.println("FEUER");
 		    break;
 		case weatherAlarm:
-		    WEATHERALARM = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
+		    weatheralarm = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
 		    System.out.println("UNWETTER");
 		    break;
 		case statusChange:
@@ -97,19 +85,11 @@ public class Panel extends AbstractDevice<Boolean>{
     }
 
     public void getAllConfigs() {
-	//TODO implement
         Message msg = new Message();
         msg.setMsgType(MessageType.configRequest);
         msg.setSenderId(this.id);
         msg.setReceiverId(ALLDEVICES);
         sendMsg(msg);
-//        sendMsg(msg, msgType); //TODO msgTyp ueberpruefen
-    }
-
-    public void useDeviceFunction(int receiverId) {
-	//TODO implement
-//        Message msg = new Message(MessageType.statusChange, this.id, receiverId, null, null);
-//        sendMsg(msg, msgType); //TODO msgTyp ueberpruefen
     }
 
     private void updateConfigStatus(int id, String status, DeviceType devType){
@@ -165,23 +145,32 @@ public class Panel extends AbstractDevice<Boolean>{
 	System.out.println("CFG LIST:" + configList);
     }
 
-    /*
-     * @author TL
-     */
-    public void resetAlarms() {
-        WEATHERALARM = false;
-        FIREALARM = false;
+//    public void openDoor() {
+//        Message msg = new Message();
+//        msg.setMsgType(MessageType.statusChange);
+//        msg.setSenderId(this.id);
+//        msg.setReceiverId(12501);
+//        msg.setSenderDevice(deviceType);
+//	msg.setContent(String.valueOf(OPEN));
+//        sendMsg(msg);
+//    }
+
+    public static Boolean getFirealarm() {
+	return firealarm;
     }
 
-    public void openDoor() {
-        Message msg = new Message();
-        msg.setMsgType(MessageType.statusChange);
-        msg.setSenderId(this.id);
-        msg.setReceiverId(12501);
-        msg.setSenderDevice(deviceType);
-	msg.setContent(String.valueOf(OPEN));
-        sendMsg(msg);
+    public static void setFirealarm(Boolean firealarm) {
+	Panel.firealarm = firealarm;
     }
+
+    public static Boolean getWeatheralarm() {
+	return weatheralarm;
+    }
+
+    public static void setWeatheralarm(Boolean weatheralarm) {
+	Panel.weatheralarm = weatheralarm;
+    }
+
 
     public static void main(String[] args) throws SocketException {
         Panel p = new Panel(13001, false, "Wohnzimmer", "Panel", "Megapanel");

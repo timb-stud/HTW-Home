@@ -20,8 +20,9 @@ public class Anemometer extends IntervalSensor<Double>{
     private static final double MAXLEVELWARNING = 9.0; //TODO Wert muss aus Konfig gelesen werden
 
 
-    public Anemometer () {
-        super.load();
+    public Anemometer (int id) {
+	this.id = id;
+        super.loadConfig(deviceType);
     }
     
     public Anemometer (int id, Double status, String location, String description, int gid) throws SocketException {
@@ -68,8 +69,6 @@ public class Anemometer extends IntervalSensor<Double>{
 
     public static void main(String[] args) throws SocketException {
         Anemometer a = new Anemometer(11301, 0.0, "Garten", "Windmesser", ALLDEVICES);
-//        TimeScheduler<Double> ts = new TimeScheduler<Double>(a);
-//        ts.startIntervallRandom(1000);
         a.startNotifier(1000);
         System.out.println("ende");
     }

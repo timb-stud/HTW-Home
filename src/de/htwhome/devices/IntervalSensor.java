@@ -14,8 +14,6 @@ import java.net.SocketException;
  */
 public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 
-    private static final String CONFIGFILENAME = "IntervalSensor";
-
     public IntervalSensor() {
     }
 
@@ -23,22 +21,11 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 	super(id, status, location, description);
     }
 
-    public void save() {
-	Config sc = new Config();
-	save(sc);
-    }
-
-    public void load() {
-	Config sc = getConfig(CONFIGFILENAME);
-	load(sc);
-    }
-
     @Override
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType) {
 	try {
 	    Message msg = gson.fromJson(jsonMsg, Message.class);
 	    Message reply;
-	    Config<T> sc;
 	    switch (msg.getMsgType()) {
 		case statusRequest:
 		    reply = new Message();
@@ -51,9 +38,9 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 		    break;
 		case configChange:
 		    if (msg.getReceiverId() == this.id) {
-			sc = gson.fromJson(msg.getContent(), cfgType);
-			setConfig(sc, CONFIGFILENAME);
-			getConfig(CONFIGFILENAME);
+			Config cfg = gson.fromJson(msg.getContent(), cfgType);
+			loadAttributesFrom(cfg);
+			saveConfig(devType);
 		    }
 		    break;
 		case configRequest: //TODO implement
@@ -62,17 +49,9 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 		    reply.setSenderId(this.id);
 		    reply.setReceiverId(ALLDEVICES);
 		    reply.setSenderDevice(devType);
-//		SensorConfig<T> sc = new SensorConfig<T>();
-////                sc.setDescription(this.description);
-////                sc.setId(this.id);
-////                sc.setLocation(this.location);
-////                sc.setStatus(this.status);
-//              save(sc);
-//		sc.setActorIDTab(actorIdTab);
-//		sc.setActorStatusTab(actorStatusTab);
-//                save();
-		    sc = getConfig(CONFIGFILENAME);
-		    String content = gson.toJson(sc, cfgType);
+		    Config cfg = new Config();
+		    writeAttributesTo(cfg);
+		    String content = gson.toJson(cfg, cfgType);
 		    reply.setContent(content);
 		    sendMsg(reply);
 		    break;

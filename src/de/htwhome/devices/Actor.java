@@ -20,20 +20,6 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     public Actor(int id, T status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status,location, description);
         this.gidTab = gidTab;
-        save();
-    }
-
-    public void save() {
-        Config ac = new Config();
-        save(ac);
-        ac.setGidTab(gidTab);
-        setConfig(ac, "Actor");
-    }
-
-    public void load() {
-        Config ac = this.getConfig("Actor");
-        load(ac);
-        this.gidTab = ac.getGidTab();
     }
 
     private boolean isReceiver(int id) {
@@ -49,7 +35,6 @@ public abstract class Actor<T> extends AbstractDevice<T>{
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType){
 	try {
 	    Message msg = gson.fromJson(jsonMsg, Message.class);
-	    Config<T> ac;
 	    switch (msg.getMsgType()) {
 		case statusChange:
 		    if (isReceiver(msg.getReceiverId())) {
@@ -63,9 +48,9 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		    break;
 		case configChange:  //TODO testen
 		    if (isReceiver(msg.getReceiverId())) {
-			ac = gson.fromJson(msg.getContent(), cfgType);
-			setConfig(ac, "Actor");
-			getConfig("Actor"); //TODO Quittierung?
+			Config cfg = gson.fromJson(msg.getContent(), cfgType);
+			loadAttributesFrom(cfg);
+			saveConfig(devType);
 		    }
 		    break;
 		case configRequest:
@@ -74,9 +59,9 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		    reply.setSenderId(this.id);
 		    reply.setReceiverId(ALLDEVICES);
 		    reply.setSenderDevice(devType);
-		    save();
-		    ac = getConfig("Actor");
-		    String content = gson.toJson(ac, cfgType);
+		    Config cfg = new Config();
+		    writeAttributesTo(cfg);
+		    String content = gson.toJson(cfg, cfgType);
 		    reply.setContent(content);
 		    sendMsg(reply);
 		    break;
