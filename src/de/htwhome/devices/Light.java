@@ -58,7 +58,6 @@ public class Light extends Actor<Boolean> {
     }
 
     protected void fireChangeEvent() {
-        System.out.println("fireeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         StatusChangeEvent<Boolean> evt = new StatusChangeEvent<Boolean>(this, this.status);
         for (StatusChangeListener l : listeners) {
             l.changeEventReceived(evt);
