@@ -58,4 +58,9 @@ public class Webcam extends Actor<Boolean> {
 	Webcam w = new Webcam(12101, false, "Eingangstür", "Webcam", gid);
         w.save();
     }
+
+    @Override
+    protected void fireChangeEvent() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

@@ -58,4 +58,9 @@ public class DoorOpener extends Actor<Boolean>{
 	DoorOpener d = new DoorOpener(12501, false, "Eingangstür", "Türöffner", gid);
         d.save();
     }
+
+    @Override
+    protected void fireChangeEvent() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

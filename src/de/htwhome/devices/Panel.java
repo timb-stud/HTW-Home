@@ -211,4 +211,9 @@ public class Panel extends AbstractDevice<Boolean>{
         p.openDoor();
     }
 
+    @Override
+    protected void fireChangeEvent() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

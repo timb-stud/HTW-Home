@@ -61,4 +61,9 @@ public class SmokeDetector extends IntervalSensor<Boolean>{
         sd.setStatus(true);
     }
 
+    @Override
+    protected void fireChangeEvent() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

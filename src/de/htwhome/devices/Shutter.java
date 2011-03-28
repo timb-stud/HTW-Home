@@ -62,4 +62,9 @@ public class Shutter extends Actor<Integer>{
         s.setStatus(85);
     }
 
+    @Override
+    protected void fireChangeEvent() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }
