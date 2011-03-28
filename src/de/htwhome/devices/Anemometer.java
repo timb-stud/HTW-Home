@@ -2,6 +2,7 @@ package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.timer.TimeScheduler;
+import de.htwhome.timer.TimerOptions;
 import java.lang.reflect.Type;
 import java.net.SocketException;
 import de.htwhome.transmission.Message;
@@ -20,8 +21,9 @@ public class Anemometer extends IntervalSensor<Double>{
     private static final double MAXLEVELWARNING = 9.0; //TODO Wert muss aus Konfig gelesen werden
 
 
-    public Anemometer () {
-        super.load();
+    public Anemometer (int id) {
+	this.id = id;
+        super.loadConfig(deviceType);
     }
     
     public Anemometer (int id, Double status, String location, String description, int gid) throws SocketException {
@@ -61,8 +63,8 @@ public class Anemometer extends IntervalSensor<Double>{
         this.setStatus(d);
     }
 
-    private void startNotifier(int intervall){ //ToDO geht nicht
-        TimeScheduler<Double> ts = new TimeScheduler<Double>(this);
+    private void startNotifier(int intervall){
+        TimeScheduler<Double> ts = new TimeScheduler<Double>(this, TimerOptions.ANEMOMETER);
         ts.startIntervallRandom(intervall);
     }
 
@@ -70,8 +72,6 @@ public class Anemometer extends IntervalSensor<Double>{
         Anemometer a = new Anemometer(11301, 0.0, "Garten", "Windmesser", ALLDEVICES);
 //        TimeScheduler<Double> ts = new TimeScheduler<Double>(a);
 //        ts.startIntervallRandom(1000);
-        a.startNotifier(1000);
-        a.save();
-        System.out.println("ende");
+        a.startNotifier(5000);
     }
 }

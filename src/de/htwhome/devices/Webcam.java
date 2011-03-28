@@ -20,8 +20,9 @@ public class Webcam extends Actor<Boolean> {
         super(id, status, location, description, gidTab);
     }
 
-    public Webcam() {
-        super.load();
+    public Webcam(int id) {
+	this.id = id;
+        super.loadConfig(deviceType);
     }
 
     @Override
@@ -56,6 +57,5 @@ public class Webcam extends Actor<Boolean> {
     public static void main(String[] args) throws SocketException {
         int[] gid  = {29001};
 	Webcam w = new Webcam(12101, false, "Eingangstür", "Webcam", gid);
-        w.save();
     }
 }

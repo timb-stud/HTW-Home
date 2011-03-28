@@ -37,31 +37,28 @@ public abstract class AbstractDevice<T> {
         msgDeamon.start();
     }
 
-    protected  void load(Config dc){
-        this.id = dc.getId();
-        this.status = (T) dc.getStatus();
-        this.location = dc.getLocation();
-        this.description = dc.getDescription();
+    protected void loadAttributesFrom(Config cfg){
+        this.id = cfg.getId();
+        this.status = (T) cfg.getStatus();
+        this.location = cfg.getLocation();
+        this.description = cfg.getDescription();
     }
 
-    protected void save (Config dc){
-        dc.setId(id);
-        dc.setStatus(status);
-        dc.setLocation(location);
-        dc.setDescription(description);
+    protected Config writeAttributesTo(Config cfg){
+        cfg.setId(id);
+        cfg.setStatus(status);
+        cfg.setLocation(location);
+        cfg.setDescription(description);
+	return cfg;
     }
 
-
-    public static Config getConfig(String filename){
-        Config config = JAXB.unmarshal(new File(filename + ".xml"), Config.class);
-        return config;
-    }
-
-    public static void setConfig(Config config, String filename) {
-        FileWriter filewriter = null;
+     public void saveConfig(DeviceType devType){
+        Config cfg = new Config();
+        writeAttributesTo(cfg);
+	FileWriter filewriter = null;
         try {
-            filewriter = new FileWriter((filename + ".xml"));
-            JAXB.marshal(config, filewriter);
+            filewriter = new FileWriter(devType.toString() + this.id + ".xml");
+            JAXB.marshal(cfg, filewriter);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -71,6 +68,11 @@ public abstract class AbstractDevice<T> {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void loadConfig(DeviceType deviceType){
+        Config cfg = JAXB.unmarshal(new File(deviceType.toString() + this.id + ".xml"), Config.class);
+        loadAttributesFrom(cfg);
     }
 
     public abstract void handleMsg(String msg);

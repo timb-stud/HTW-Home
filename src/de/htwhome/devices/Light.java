@@ -20,8 +20,9 @@ public class Light extends Actor<Boolean> {
         super(id, status, location, description, gidTab);
     }
 
-    public Light() {
-        super.load();
+    public Light(int id) {
+	this.id = id;
+        super.loadConfig(deviceType);
     }
 
     @Override
@@ -55,16 +56,6 @@ public class Light extends Actor<Boolean> {
     public static void main(String[] args) throws SocketException {
         int[] gid  = {29001};
 	Light l = new Light(12, false, "haus", "Beschreibung", gid);
-//	l.handleMsg("{'msgType':'statusChange','senderId':" + l.id +",'receiverId':20000,'content':'true','senderDevice':'Switch'}");
-
-//        Light l = new Light();
-//	l.handleMsg("{'gid': '1', 'status': 'false', 'action': 'changeStatus'}");
-
-//        l.save();
-//        ActorConfig sc2 = (ActorConfig) l.getConfig();
-//        System.out.println("sc2 id= " + sc2.getId()
-//                  + "\n" + "status= " + sc2.getStatus()
-//                );
     }
 
 }
