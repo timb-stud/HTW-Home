@@ -64,4 +64,9 @@ public class OnOffTimer extends IntervalSensor<Boolean>{
         }
     }
 
+    @Override
+    protected void fireChangeEvent() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }
