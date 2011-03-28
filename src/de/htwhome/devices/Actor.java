@@ -68,7 +68,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 			getConfig("Actor"); //TODO Quittierung?
 		    }
 		    break;
-		case configRequest:
+		case configRequest: //TODO testen
 		    Message reply = new Message();
 		    reply.setMsgType(MessageType.configResponse);
 		    reply.setSenderId(this.id);

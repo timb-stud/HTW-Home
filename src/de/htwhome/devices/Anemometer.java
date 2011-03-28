@@ -71,6 +71,7 @@ public class Anemometer extends IntervalSensor<Double>{
 //        TimeScheduler<Double> ts = new TimeScheduler<Double>(a);
 //        ts.startIntervallRandom(1000);
         a.startNotifier(1000);
+        a.save();
         System.out.println("ende");
     }
 }

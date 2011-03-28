@@ -26,6 +26,7 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
     public void save() {
 	Config sc = new Config();
 	save(sc);
+        setConfig(sc, CONFIGFILENAME);
     }
 
     public void load() {
@@ -56,21 +57,12 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 			getConfig(CONFIGFILENAME);
 		    }
 		    break;
-		case configRequest: //TODO implement
+		case configRequest:
 		    reply = new Message();
 		    reply.setMsgType(MessageType.configResponse);
 		    reply.setSenderId(this.id);
 		    reply.setReceiverId(ALLDEVICES);
 		    reply.setSenderDevice(devType);
-//		SensorConfig<T> sc = new SensorConfig<T>();
-////                sc.setDescription(this.description);
-////                sc.setId(this.id);
-////                sc.setLocation(this.location);
-////                sc.setStatus(this.status);
-//              save(sc);
-//		sc.setActorIDTab(actorIdTab);
-//		sc.setActorStatusTab(actorStatusTab);
-//                save();
 		    sc = getConfig(CONFIGFILENAME);
 		    String content = gson.toJson(sc, cfgType);
 		    reply.setContent(content);

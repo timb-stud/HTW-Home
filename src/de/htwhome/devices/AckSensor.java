@@ -82,14 +82,12 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
 		    sendMsg(reply);
 		    break;
 		case statusResponse:
-		    if (actorIdTab != null) {
-			for (int i = 0; i < actorIdTab.length; i++) {
-			    if (actorIdTab[i] == msg.getSenderId()) {
-				this.setActorStatus(msg.getContent(), i);
-				actorAckTab[i] = true;
-			    }
-			}
-		    }
+                    for (int i = 0; i < actorIdTab.length; i++) {
+                        if (actorIdTab[i] == msg.getSenderId()) {
+                            this.setActorStatus(msg.getContent(), i);
+                            actorAckTab[i] = true;
+                        }
+                    }
 		    break;
 		case configChange:
 		    if (msg.getReceiverId() == this.id) {
@@ -104,15 +102,6 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
 		    reply.setSenderId(this.id);
 		    reply.setReceiverId(ALLDEVICES);
 		    reply.setSenderDevice(devType);
-//		SensorConfig<T> sc = new SensorConfig<T>();
-////                sc.setDescription(this.description);
-////                sc.setId(this.id);
-////                sc.setLocation(this.location);
-////                sc.setStatus(this.status);
-//              save(sc);
-//		sc.setActorIDTab(actorIdTab);
-//		sc.setActorStatusTab(actorStatusTab);
-//                save();
 		    sc = getConfig(CONFIGFILENAME);
 		    String content = gson.toJson(sc, cfgType);
 		    reply.setContent(content);
