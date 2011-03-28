@@ -79,14 +79,12 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
 		    sendMsg(reply);
 		    break;
 		case statusResponse:
-		    if (actorIdTab != null) {
-			for (int i = 0; i < actorIdTab.length; i++) {
-			    if (actorIdTab[i] == msg.getSenderId()) {
-				this.setActorStatus(msg.getContent(), i);
-				actorAckTab[i] = true;
-			    }
-			}
-		    }
+                    for (int i = 0; i < actorIdTab.length; i++) {
+                        if (actorIdTab[i] == msg.getSenderId()) {
+                            this.setActorStatus(msg.getContent(), i);
+                            actorAckTab[i] = true;
+                        }
+                    }
 		    break;
 		case configChange:
 		    if (msg.getReceiverId() == this.id) {

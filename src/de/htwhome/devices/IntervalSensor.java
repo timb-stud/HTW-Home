@@ -43,7 +43,7 @@ public abstract class IntervalSensor<T> extends AbstractDevice<T> {
 			saveConfig(devType);
 		    }
 		    break;
-		case configRequest: //TODO implement
+		case configRequest:
 		    reply = new Message();
 		    reply.setMsgType(MessageType.configResponse);
 		    reply.setSenderId(this.id);

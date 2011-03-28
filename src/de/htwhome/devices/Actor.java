@@ -53,7 +53,7 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 			saveConfig(devType);
 		    }
 		    break;
-		case configRequest:
+		case configRequest: //TODO testen
 		    Message reply = new Message();
 		    reply.setMsgType(MessageType.configResponse);
 		    reply.setSenderId(this.id);

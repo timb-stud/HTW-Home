@@ -6,5 +6,5 @@ package de.htwhome.devices;
  */
 public enum DeviceType {
     Light, Switch, Sunblind, PercentSwitch, Panel, Anemometer, SmokeDetector,
-    Shutter, Webcam, DoorOpener;
+    Shutter, Webcam, DoorOpene, OnOffTimer;
 }
