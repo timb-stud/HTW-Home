@@ -12,22 +12,24 @@ class TimeSchedulerTask<T> extends TimerTask{
     private T status;
     private T firstStatus;
     private T secondStatus;
+    private TimerOptions option;
     private AbstractDevice device;
     private boolean timeSchedulerChangeStatus = false;
 
-    public TimeSchedulerTask(AbstractDevice device, T firstStatus, T secondStatus) {
-        this.device = device;
+    public TimeSchedulerTask(AbstractDevice device, TimerOptions option, T firstStatus, T secondStatus) {
+        this (device, option);
         this.firstStatus = firstStatus;
         this.secondStatus = secondStatus;
     }
 
-    public TimeSchedulerTask(AbstractDevice device){
+    public TimeSchedulerTask(AbstractDevice device, TimerOptions option){
         this.device = device;
+        this.option = option;
     }
 
 
     private T newTimeSchedulerStatus(){
-       timeSchedulerChangeStatus = (timeSchedulerChangeStatus) ? true : false;
+       timeSchedulerChangeStatus = (timeSchedulerChangeStatus) ? false : true;
        if (timeSchedulerChangeStatus)
             return secondStatus;
         else
@@ -36,11 +38,25 @@ class TimeSchedulerTask<T> extends TimerTask{
 
     @Override
     public void run() {
-        if (firstStatus != null){
-            status = (T) newTimeSchedulerStatus();
-//            device.stopScheduler(); //TODO info: wird nun noch einem durchlauf beendet
-        } else
-            status = (T) LittleHelpers.randomMeasurement();
+        switch (option){
+            case ANEMOMETER:
+                status = (T) LittleHelpers.randomMeasurement();
+                break;
+            case SMOKEDETECTOR:
+                Double testwert = LittleHelpers.randomMeasurement();
+                if (testwert > 9.0)
+                    status = (T) Boolean.TRUE;
+                else
+                    status = (T) Boolean.FALSE;
+                break;
+            case ONOFFTIMER:
+                status = newTimeSchedulerStatus();
+                break;
+//            default:
+//                status = (T) newTimeSchedulerStatus();
+//                break;
+        }
+        System.out.println("Status: " + status);
         device.setStatus(status);
     }
 }

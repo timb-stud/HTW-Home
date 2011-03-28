@@ -29,14 +29,13 @@ public class MessageDeamon extends Thread{
     }
 
     public void sendMsg(String msg) throws IOException {
-	DatagramPacket datagrampacket = new DatagramPacket(msg.getBytes(), msg.length(), group, HTWhomeProperties.PORT);
+	DatagramPacket datagrampacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, group, HTWhomeProperties.PORT);
 	sock.send(datagrampacket);
-	System.out.println("Sent " + new String(datagrampacket.getData(), 0, datagrampacket.getLength()));
+	System.out.println("Send: " + new String(datagrampacket.getData()));
     }
     
     @Override
     public synchronized void run(){
-        System.out.println("MsgReceiver: " + device);
 	try {
 	    while (true) {
 		DatagramPacket pack = new DatagramPacket(new byte[HTWhomeProperties.BUFFERSIZE], HTWhomeProperties.BUFFERSIZE);

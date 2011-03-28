@@ -20,8 +20,9 @@ public class DoorOpener extends Actor<Boolean>{
         super(id, status, location, description, gidTab);
     }
 
-    public DoorOpener() {
-        super.load();
+    public DoorOpener(int id) {
+	this.id = id;
+        super.loadConfig(deviceType);
     }
 
     @Override
@@ -56,7 +57,6 @@ public class DoorOpener extends Actor<Boolean>{
     public static void main(String[] args) throws SocketException {
         int[] gid  = {12501};
 	DoorOpener d = new DoorOpener(12501, false, "Eingangstür", "Türöffner", gid);
-        d.save();
     }
 
     @Override

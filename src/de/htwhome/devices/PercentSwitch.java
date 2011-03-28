@@ -22,6 +22,11 @@ public class PercentSwitch extends AckSensor<Integer>{
         super(id, status, location, description, actorListId, actorStatusTab, gid);
     }
 
+    public PercentSwitch(int id){
+	this.id = id;
+	loadConfig(deviceType);
+    }
+
     @Override
     public void handleMsg(String msg) {
 	super.handleMsg(msg, deviceType, cfgType);

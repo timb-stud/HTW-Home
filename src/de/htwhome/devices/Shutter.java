@@ -24,6 +24,11 @@ public class Shutter extends Actor<Integer>{
         super(id, status, location, description, gidTab);
     }
 
+    public Shutter(int id){
+	this.id = id;
+	loadConfig(deviceType);
+    }
+
     @Override
     public void handleMsg(String msg) {
 	super.handleMsg(msg, deviceType, cfgType);
@@ -59,7 +64,6 @@ public class Shutter extends Actor<Integer>{
     public static void main(String[] args) throws SocketException {
         int[] gidTab = {22000, 22100, 22101}; //TODO aus Konfig
         Shutter s = new Shutter(12301, 0, "Wohnzimmer", "Rolladen vorne", gidTab); //TODO aus Konfig
-        s.setStatus(85);
     }
 
     @Override
