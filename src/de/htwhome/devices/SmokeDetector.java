@@ -43,6 +43,7 @@ public class SmokeDetector extends IntervalSensor<Boolean>{
     @Override
     public void setStatus(Boolean status) {
 	this.status = status;
+	fireChangeEvent();
 	if(this.status == true){
             System.out.println("!! ACHTUNG !!");
 	    Message warning = new Message();
