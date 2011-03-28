@@ -57,7 +57,7 @@ public abstract class AbstractDevice<T> {
         writeAttributesTo(cfg);
 	FileWriter filewriter = null;
         try {
-            filewriter = new FileWriter((devType + ":" + this.id + ".xml"));
+            filewriter = new FileWriter(devType.toString() + this.id + ".xml");
             JAXB.marshal(cfg, filewriter);
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,7 +71,7 @@ public abstract class AbstractDevice<T> {
     }
 
     public void loadConfig(DeviceType deviceType){
-        Config cfg = JAXB.unmarshal(new File(deviceType + ":" + this.id + ".xml"), Config.class);
+        Config cfg = JAXB.unmarshal(new File(deviceType.toString() + this.id + ".xml"), Config.class);
         loadAttributesFrom(cfg);
     }
 
