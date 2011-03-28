@@ -13,12 +13,9 @@ public class PercentSwitchFrame extends javax.swing.JFrame implements StatusChan
 
     public PercentSwitch pswitch;
 
-    public PercentSwitchFrame() throws SocketException {
+    public PercentSwitchFrame(int id, int status, String location, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException {
         initComponents();
-        int[] gidTab = {23000, 23001};
-        int[] actorListId = {2};
-        Integer[] actorStatusTab = {0};
-        pswitch = new PercentSwitch(10, 50, "Terasse", "cool", actorListId, actorStatusTab, 3);
+        pswitch = new PercentSwitch(id, status, location, description, actorListId, actorStatusTab, gid);
         jSlider1.setMinimum(0);
         jSlider1.setMaximum(100);
         jSlider1.setMajorTickSpacing(10);
@@ -89,14 +86,18 @@ public class PercentSwitchFrame extends javax.swing.JFrame implements StatusChan
     }//GEN-LAST:event_jButton1MouseClicked
 
     public void changeEventReceived(StatusChangeEvent evt) {
+        jLabel1.setText((Integer) evt.getStatus() + "%");
     }
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
+                int[] actorListId = {2};
+                Integer[] actorStatusTab = {0};
+                int gid = 3;
                 try {
-                    new PercentSwitchFrame().setVisible(true);
+                    new PercentSwitchFrame(10, 50, "Wohnzimmer", "Switcher", actorListId, actorStatusTab, gid).setVisible(true);
                 } catch (SocketException ex) {
                     Logger.getLogger(PercentSwitchFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }

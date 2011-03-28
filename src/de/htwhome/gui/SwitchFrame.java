@@ -18,12 +18,10 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
 
     private Switch s;
 
-    public SwitchFrame() {
+    public SwitchFrame(int id, Boolean status, String location, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) {
         initComponents();
         try {
-            int[] actorListId = {12};
-            Boolean[] actorListStatus = new Boolean[actorListId.length];
-            s = new Switch(20, false, "Haustür", "Klingel", actorListId, actorListStatus, 1);
+            s = new Switch(id, status, location, description, actorIdTab, actorStatusTab, gid);
             s.addStatusChangeListener(this);
         } catch (SocketException ex) {
             Logger.getLogger(SwitchFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,7 +90,9 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new SwitchFrame().setVisible(true);
+                int[] actorListId = {12};
+                Boolean[] actorListStatus = new Boolean[actorListId.length];
+                new SwitchFrame(20, false, "Haustür", "Klingel", actorListId, actorListStatus, 1).setVisible(true);
             }
         });
     }

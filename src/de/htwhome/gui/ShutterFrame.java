@@ -1,6 +1,6 @@
 package de.htwhome.gui;
 
-import de.htwhome.devices.SunBlind;
+import de.htwhome.devices.Shutter;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,16 +9,16 @@ import java.util.logging.Logger;
  *
  * @author Volkan Gökkaya
  */
-public class SunBlindFrame extends javax.swing.JFrame implements StatusChangeListener {
+public class ShutterFrame extends javax.swing.JFrame implements StatusChangeListener {
 
-    public SunBlind sb;
+    private Shutter shutter;
 
-    public SunBlindFrame(int id, int status, String location, String description, int[] gidTab) throws SocketException {
+    public ShutterFrame(int id, int status, String location, String description, int[] gidTab) throws SocketException {
         initComponents();
-        sb = new SunBlind(10, 50, "Wohnzimmer aussen", "Markise", gidTab);
-        jProgressBar1.setValue(sb.getStatus());
-        jLabel1.setText(sb.getStatus() + "%");
-        sb.addStatusChangeListener(this);
+        shutter = new Shutter(id, status, location, description, gidTab);
+        jProgressBar1.setValue(shutter.getStatus());
+        jLabel1.setText(shutter.getStatus() + "%");
+        shutter.addStatusChangeListener(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -39,23 +39,23 @@ public class SunBlindFrame extends javax.swing.JFrame implements StatusChangeLis
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
-                        .addComponent(jLabel1)))
-                .addContainerGap())
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(179, 179, 179))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(74, 74, 74)
+                .addGap(42, 42, 42)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addGap(49, 49, 49)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         pack();
@@ -72,9 +72,9 @@ public class SunBlindFrame extends javax.swing.JFrame implements StatusChangeLis
             public void run() {
                 int[] gidTab = {3};
                 try {
-                    new SunBlindFrame(10, 50, "Wohnzimmer aussen", "Markise", gidTab).setVisible(true);
+                    new ShutterFrame(10, 50, "Wohnzimmer aussen", "Markise", gidTab).setVisible(true);
                 } catch (SocketException ex) {
-                    Logger.getLogger(SunBlindFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ShutterFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });

@@ -11,13 +11,12 @@ import java.util.logging.Logger;
  */
 public class LightFrame extends javax.swing.JFrame implements StatusChangeListener {
 
-    Light light;
+    private Light light;
 
-    public LightFrame() {
+    public LightFrame(int id, boolean status, String location, String description, int[] gidTab) {
         initComponents();
-        int[] gid = {1};
         try {
-            light = new Light(12, false, "haus", "Beschreibung", gid);
+            light = new Light(id, status, location, description, gidTab);
             light.addStatusChangeListener(this);
         } catch (SocketException ex) {
             Logger.getLogger(LightFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +65,8 @@ public class LightFrame extends javax.swing.JFrame implements StatusChangeListen
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new LightFrame().setVisible(true);
+                int[] gid = {1};
+                new LightFrame(12, false, "haus", "Beschreibung", gid).setVisible(true);
             }
         });
     }
