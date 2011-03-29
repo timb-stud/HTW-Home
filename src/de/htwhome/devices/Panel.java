@@ -57,12 +57,6 @@ public class Panel extends AbstractDevice<Boolean>{
 		case statusResponse:
 		    updateConfigStatus(msg.getSenderId(), jsonMsg, devType);
 		    break;
-		case configChange:
-		    //TODO implement
-		    break;
-		case configRequest:
-		    //TODO implement
-		    break;
 		case configResponse:
 		    updateConfig(msg.getContent(), msg.getSenderDevice());
 		    break;
@@ -73,9 +67,6 @@ public class Panel extends AbstractDevice<Boolean>{
 		case weatherAlarm:
 		    weatheralarm = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
 		    System.out.println("UNWETTER");
-		    break;
-		case statusChange:
-		    //TODO implement
 		    break;
 	    }
 	} catch (JsonSyntaxException e) {

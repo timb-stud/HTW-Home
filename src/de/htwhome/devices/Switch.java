@@ -18,8 +18,7 @@ public class Switch extends AckSensor<Boolean> {
 
     public boolean statusLED;
     public static final DeviceType deviceType = DeviceType.Switch;
-    public static final Type cfgType = new TypeToken<Config<Boolean>>() {
-    }.getType();
+    public static final Type cfgType = new TypeToken<Config<Boolean>>() {}.getType();
 
     public Switch(int id) {
         this.id = id;
@@ -90,10 +89,6 @@ public class Switch extends AckSensor<Boolean> {
     }
 
     public static void main(String[] args) throws SocketException {
-//        int[] actorListId = {12};
-//        Boolean[] actorListStatus = new Boolean[actorListId.length];
-//        Switch s = new Switch(20, false, "Haustür", "Klingel", actorListId, actorListStatus, 1);
-//	  s.saveConfig(deviceType);
         int[] actorListId = {12};
         Boolean[] actorListStatus = new Boolean[actorListId.length];
         SwitchFrame sf = new SwitchFrame(20, false, "Haustür", "Klingel", actorListId, actorListStatus, 1);
