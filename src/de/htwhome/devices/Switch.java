@@ -16,9 +16,9 @@ import java.net.SocketException;
  */
 public class Switch extends AckSensor<Boolean> {
 
-    public boolean statusLED;
     public static final DeviceType deviceType = DeviceType.Switch;
-    public static final Type cfgType = new TypeToken<Config<Boolean>>() {}.getType();
+    public static final Type cfgType = new TypeToken<Config<Boolean>>() {
+    }.getType();
 
     public Switch(int id) {
         this.id = id;
@@ -62,6 +62,15 @@ public class Switch extends AckSensor<Boolean> {
     public void setActorStatus(String status, int pos) {
         boolean b = Boolean.valueOf(status);
         this.setActorStatus(b, pos);
+    }
+
+    public void setStatusLed() {
+        for (int i = 0; i < actorAckTab.length; i++) {
+            if (actorAckTab[i] != this.status) {
+                statusLED = false;
+            }
+        }
+        statusLED = this.status;
     }
 
     @Override

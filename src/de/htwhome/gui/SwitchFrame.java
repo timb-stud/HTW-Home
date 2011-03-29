@@ -26,6 +26,9 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
         } catch (SocketException ex) {
             Logger.getLogger(SwitchFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        jLabel2.setText(s.getDescription() + " : " + s.getLocation());
+        StringBuffer sb = new StringBuffer();
+        sb = sb.append("");
     }
 
     @SuppressWarnings("unchecked")
@@ -34,6 +37,7 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
 
         OnOffButton = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,6 +50,8 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/rot.png"))); // NOI18N
 
+        jLabel2.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -53,6 +59,7 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
             .addGroup(layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
                     .addComponent(jLabel1)
                     .addComponent(OnOffButton, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(72, Short.MAX_VALUE))
@@ -60,7 +67,9 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(46, 46, 46)
                 .addComponent(OnOffButton, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
@@ -99,5 +108,6 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton OnOffButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
