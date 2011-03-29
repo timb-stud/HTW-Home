@@ -69,7 +69,7 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
         return super.writeAttributesTo(cfg);
     }
 
-    public abstract void setStatusLed();
+    public abstract void checkAndSetStatusLed();
 
     @Override
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType) {
@@ -91,7 +91,7 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
                         if (actorIdTab[i] == msg.getSenderId()) {
                             this.setActorStatus(msg.getContent(), i);
                             actorAckTab[i] = true;
-                            setStatusLed();
+                            checkAndSetStatusLed();
                         }
                     }
                     break;

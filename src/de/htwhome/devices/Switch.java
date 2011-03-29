@@ -64,7 +64,7 @@ public class Switch extends AckSensor<Boolean> {
         this.setActorStatus(b, pos);
     }
 
-    public void setStatusLed() {
+    public void checkAndSetStatusLed() {
         for (int i = 0; i < actorAckTab.length; i++) {
             if (actorAckTab[i] != this.status) {
                 statusLED = false;
