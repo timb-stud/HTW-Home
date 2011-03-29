@@ -27,6 +27,7 @@ public class Config<T> { //TODO wenn nicht gebraucht loeschen
     int[] actorIDTab;
     T[] actorStatusTab;
     boolean[] actorAckTab; //TODO vllt rauswerfen?
+    int gid;
 
     //Panel
     private ConfigList configList;
@@ -114,6 +115,16 @@ public class Config<T> { //TODO wenn nicht gebraucht loeschen
         this.status = status;
     }
 
+    public int getGid() {
+	return gid;
+    }
+
+    public void setGid(int gid) {
+	this.gid = gid;
+    }
+
+
+
     @Override
     public boolean equals(Object obj) {
 	if(obj instanceof Config){
@@ -132,7 +143,7 @@ public class Config<T> { //TODO wenn nicht gebraucht loeschen
 
     @Override
     public String toString() {
-	return "Config{" + "id=" + id + "status=" + status + "location=" + location + "deviceType=" + deviceType + "description=" + description + "gidTab=" + gidTab + "actorIDTab=" + actorIDTab + "actorStatusTab=" + actorStatusTab + "actorAckTab=" + actorAckTab + "configList=" + configList + '}';
+	return "Config{" + "id=" + id + "status=" + status + "location=" + location + "deviceType=" + deviceType + "description=" + description + "gidTab=" + gidTab + "actorIDTab=" + actorIDTab + "actorStatusTab=" + actorStatusTab + "actorAckTab=" + actorAckTab + "gid=" + gid + "configList=" + configList + '}';
     }
-    
+
 }

@@ -3,6 +3,7 @@ package de.htwhome.devices;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.gui.panel.ConfigChangeListener;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
@@ -23,13 +24,18 @@ public class Panel extends AbstractDevice<Boolean>{
 
     public Panel(int id) {
 	this.id = id;
+	configList = new ConfigList();
 	super.loadConfig(deviceType);
     }
 
-    public Panel(int id, boolean status, String location, String type, String description) throws SocketException{
+    public Panel(int id, boolean status, String location, String description) throws SocketException{
         super(id, status, location, description);
         this.configList = new ConfigList();
+    }
 
+
+    public void addConfigChangeListener(ConfigChangeListener l){
+	configList.addConfigChangeListener(l);
     }
 
     @Override
@@ -132,9 +138,41 @@ public class Panel extends AbstractDevice<Boolean>{
 
     private void updateConfig(String jsonCfg, DeviceType devType, Type cfgType, Config c){
 	c = gson.fromJson(jsonCfg, cfgType);
-	c.setDeviceType(deviceType);
+	c.setDeviceType(devType);
 	configList.updateConfig(c);
 	System.out.println("CFG LIST:" + configList);
+    }
+
+    public void changeConfig(Config cfg){
+	configList.updateConfig(cfg);
+	Message msg = new Message();
+        msg.setMsgType(MessageType.configChange);
+        msg.setSenderId(this.id);
+        msg.setReceiverId(cfg.getId());
+	String json = "";
+	System.out.println("WHAA" + cfg);
+	switch (cfg.getDeviceType()) {
+            case Anemometer:
+		json = gson.toJson(cfg, Anemometer.cfgType);
+                break;
+            case Light:
+		json = gson.toJson(cfg, Light.cfgType);
+                break;
+            case Panel:
+		json = gson.toJson(cfg, Panel.cfgType);
+                break;
+            case PercentSwitch:
+		json = gson.toJson(cfg, PercentSwitch.cfgType);
+                break;
+            case Sunblind:
+		json = gson.toJson(cfg, SunBlind.cfgType);
+                break;
+            case Switch:
+		json = gson.toJson(cfg, Switch.cfgType);
+                break;
+        }
+	msg.setContent(json);
+        sendMsg(msg);
     }
 
 //    public void openDoor() {
@@ -163,9 +201,12 @@ public class Panel extends AbstractDevice<Boolean>{
 	Panel.weatheralarm = weatheralarm;
     }
 
+    public ConfigList getConfigList() {
+	return configList;
+    }
 
     public static void main(String[] args) throws SocketException {
-        Panel p = new Panel(13001, false, "Wohnzimmer", "Panel", "Megapanel");
+        Panel p = new Panel(13001, false, "Wohnzimmer", "Megapanel");
         p.getAllConfigs();
         //p.openDoor();
     }
