@@ -53,6 +53,7 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
 	this.actorIdTab = cfg.getActorIDTab();
         this.actorStatusTab = (T[]) cfg.getActorStatusTab();
         this.actorAckTab = cfg.getActorAckTab();
+	this.gid = cfg.getGid();
     }
 
     @Override
@@ -60,6 +61,7 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
 	cfg.setActorIDTab(actorIdTab);
         cfg.setActorStatusTab(actorStatusTab);
         cfg.setActorAckTab(actorAckTab);
+	cfg.setGid(gid);
 	return super.writeAttributesTo(cfg);
     }
 

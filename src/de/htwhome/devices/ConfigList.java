@@ -1,7 +1,10 @@
 package de.htwhome.devices;
 
+import de.htwhome.gui.panel.ConfigChangeEvent;
+import de.htwhome.gui.panel.ConfigChangeListener;
 import de.htwhome.utils.Config;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -9,10 +12,28 @@ import java.util.ArrayList;
  */
 public class ConfigList extends ArrayList<Config> {
 
+    protected final CopyOnWriteArrayList<ConfigChangeListener> listeners = new CopyOnWriteArrayList<ConfigChangeListener>();
+
+    public void addConfigChangeListener(ConfigChangeListener l) {
+        this.listeners.add(l);
+    }
+
+    public void removeConfigChangeListener(ConfigChangeListener l) {
+        this.listeners.remove(l);
+    }
+
+    protected void fireChangeEvent(Config cfg) {
+	ConfigChangeEvent evt = new ConfigChangeEvent(this, cfg);
+	for (ConfigChangeListener l : listeners) {
+	    l.changeEventReceived(evt);
+	}
+    }
+
     public void setConfigStatus(int id, Object status){
 	for(Config c: this){
 	    if(c.getId() == id){
 		c.setStatus(status);
+		fireChangeEvent(c);
 	    }
 	}
     }
@@ -28,5 +49,6 @@ public class ConfigList extends ArrayList<Config> {
 	if (!found) {
 	    this.add(c);
 	}
+	fireChangeEvent(c);
     }
 }
