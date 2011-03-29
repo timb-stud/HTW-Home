@@ -15,8 +15,20 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 
     private int[] gidTab;
 
+    /**
+     * Standardkonstruktor
+     */
     public Actor() {}
 
+    /**
+     * Konstruktor
+     * @param id
+     * @param status
+     * @param location
+     * @param description
+     * @param gidTab
+     * @throws SocketException
+     */
     public Actor(int id, T status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status,location, description);
         this.gidTab = gidTab;

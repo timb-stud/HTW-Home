@@ -67,4 +67,14 @@ public class PercentSwitch extends AckSensor<Integer> {
             l.changeEventReceived(evt);
         }
     }
+
+    //TODO was ist das???
+    public void setStatusLed() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void checkAndSetStatusLed() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
