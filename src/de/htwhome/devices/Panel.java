@@ -175,6 +175,16 @@ public class Panel extends AbstractDevice<Boolean>{
         sendMsg(msg);
     }
 
+    public void changeStatus(int gid, Object status){
+	Message msg = new Message();
+        msg.setSenderId(this.id);
+        msg.setMsgType(MessageType.statusChange);
+        msg.setReceiverId(gid);
+        msg.setContent(String.valueOf(status));
+        msg.setSenderDevice(deviceType);
+        this.sendMsg(msg);
+    }
+
 //    public void openDoor() {
 //        Message msg = new Message();
 //        msg.setMsgType(MessageType.statusChange);
