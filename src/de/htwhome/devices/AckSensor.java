@@ -18,8 +18,22 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
     boolean[] actorAckTab;
     int gid;
 
+    /**
+     * Standardkonstruktor
+     */
     public AckSensor() { }
 
+    /**
+     * Konstruktor
+     * @param id
+     * @param status
+     * @param location
+     * @param description
+     * @param actorIdTab
+     * @param actorStatusTab
+     * @param gid
+     * @throws SocketException
+     */
     public AckSensor(int id, T status, String location, String description, int[] actorIdTab, T[] actorStatusTab, int gid) throws SocketException {
 	super(id, status, location, description);
 	this.actorIdTab = actorIdTab;
@@ -28,17 +42,34 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
 	this.gid = gid;
     }
 
+    /**
+     * Startet das Response Thread
+     */
     public void startResponseThread() {
         ActorRespThread art = new ActorRespThread(this);
         art.start();
     }
-    
+
+    /**
+     * setzt den Status an einer bestimmten Position
+     * @param status
+     * @param pos
+     */
     public void setActorStatus(T status, int pos){
 	actorStatusTab[pos] = status;
     }
 
+    /**
+     * wird später initialisiert
+     * @param status
+     * @param pos
+     */
     public abstract void setActorStatus(String status, int pos);
 
+    /**
+     * Prüft den Response und setzt Status neu
+     * @return
+     */
     public boolean checkRespones(){
         for (int i = 0; i < actorAckTab.length; i++) {
             if(actorAckTab[i] == false)
@@ -63,6 +94,12 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
 	return super.writeAttributesTo(cfg);
     }
 
+    /**
+     * Handhabt die ankommenden Nachrichten
+     * @param jsonMsg
+     * @param devType
+     * @param cfgType
+     */
     @Override
     public void handleMsg(String jsonMsg, DeviceType devType, Type cfgType) {
 	try {
