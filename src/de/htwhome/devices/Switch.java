@@ -22,7 +22,7 @@ public class Switch extends AckSensor<Boolean> {
     }.getType();
 
     public Switch(int id) {
-	this.id = id;
+        this.id = id;
         super.loadConfig(deviceType);
     }
 
@@ -94,7 +94,9 @@ public class Switch extends AckSensor<Boolean> {
 //        Boolean[] actorListStatus = new Boolean[actorListId.length];
 //        Switch s = new Switch(20, false, "Haustür", "Klingel", actorListId, actorListStatus, 1);
 //	  s.saveConfig(deviceType);
-        SwitchFrame sf = new SwitchFrame();
+        int[] actorListId = {12};
+        Boolean[] actorListStatus = new Boolean[actorListId.length];
+        SwitchFrame sf = new SwitchFrame(20, false, "Haustür", "Klingel", actorListId, actorListStatus, 1);
         sf.setVisible(true);
     }
 }
