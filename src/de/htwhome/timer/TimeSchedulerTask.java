@@ -38,12 +38,13 @@ class TimeSchedulerTask<T> extends TimerTask{
 
     @Override
     public void run() {
+        Double testwert = 0.0;
         switch (option){
             case ANEMOMETER:
                 status = (T) LittleHelpers.randomMeasurement();
                 break;
             case SMOKEDETECTOR:
-                Double testwert = LittleHelpers.randomMeasurement();
+                testwert = LittleHelpers.randomMeasurement();
                 if (testwert > 9.0)
                     status = (T) Boolean.TRUE;
                 else
@@ -51,6 +52,10 @@ class TimeSchedulerTask<T> extends TimerTask{
                 break;
             case ONOFFTIMER:
                 status = newTimeSchedulerStatus();
+                break;
+            case THERMOMETER:
+                testwert = LittleHelpers.randomMeasurement() * 3;
+                status = (T) testwert;
                 break;
 //            default:
 //                status = (T) newTimeSchedulerStatus();

@@ -78,6 +78,6 @@ public class Anemometer extends IntervalSensor<Double>{
 
     @Override
     protected void fireChangeEvent() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 }

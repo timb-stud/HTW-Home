@@ -10,5 +10,5 @@ package de.htwhome.timer;
  * @author christian
  */
 public enum TimerOptions {
-    ANEMOMETER, SMOKEDETECTOR, ONOFFTIMER;
+    ANEMOMETER, SMOKEDETECTOR, ONOFFTIMER, THERMOMETER;
 }

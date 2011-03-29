@@ -3,6 +3,7 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.gui.StatusChangeEvent;
 import de.htwhome.gui.StatusChangeListener;
+import de.htwhome.gui.SwitchFrame;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
@@ -20,7 +21,7 @@ public class Switch extends AckSensor<Boolean> {
     public static final Type cfgType = new TypeToken<Config<Boolean>>() {}.getType();
 
     public Switch(int id) {
-	this.id = id;
+        this.id = id;
         super.loadConfig(deviceType);
     }
 
@@ -90,7 +91,7 @@ public class Switch extends AckSensor<Boolean> {
     public static void main(String[] args) throws SocketException {
         int[] actorListId = {12};
         Boolean[] actorListStatus = new Boolean[actorListId.length];
-        Switch s = new Switch(20, false, "Haustür", "Klingel", actorListId, actorListStatus, 1);
-	s.saveConfig(deviceType);
+        SwitchFrame sf = new SwitchFrame(20, false, "Haustür", "Klingel", actorListId, actorListStatus, 1);
+        sf.setVisible(true);
     }
 }

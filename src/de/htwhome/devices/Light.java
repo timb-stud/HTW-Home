@@ -1,6 +1,7 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.gui.LightFrame;
 import de.htwhome.gui.StatusChangeEvent;
 import de.htwhome.gui.StatusChangeListener;
 import de.htwhome.transmission.Message;
@@ -24,7 +25,7 @@ public class Light extends Actor<Boolean> {
     }
 
     public Light(int id) {
-	this.id = id;
+        this.id = id;
         super.loadConfig(deviceType);
     }
 
@@ -65,7 +66,10 @@ public class Light extends Actor<Boolean> {
     }
 
     public static void main(String[] args) throws SocketException {
-        int[] gid  = {1};
-	Light l = new Light(12, false, "haus", "Beschreibung", gid);
+//        int[] gid  = {1};
+//	Light l = new Light(12, false, "haus", "Beschreibung", gid);
+        int[] gid = {1};
+        LightFrame lf = new LightFrame(12, false, "haus", "Beschreibung", gid);
+        lf.setVisible(true);
     }
 }
