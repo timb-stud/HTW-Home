@@ -38,7 +38,7 @@ public class Switch extends AckSensor<Boolean> {
     public void setStatus(Boolean status) {
         this.status = status;
         fireChangeEvent();
-        startResponseThread();
+//        startResponseThread();
         Message msg = new Message();
         if (checkRespones()) {
             this.status = status;

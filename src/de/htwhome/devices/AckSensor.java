@@ -31,10 +31,10 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
         this.gid = gid;
     }
 
-    public void startResponseThread() {
-        ActorRespThread art = new ActorRespThread(this);
-        art.start();
-    }
+//    public void startResponseThread() {
+//        ActorRespThread art = new ActorRespThread(this);
+//        art.start();
+//    }
 
     public void setActorStatus(T status, int pos) {
         actorStatusTab[pos] = status;
@@ -65,7 +65,6 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
         cfg.setActorIDTab(actorIdTab);
         cfg.setActorStatusTab(actorStatusTab);
         cfg.setActorAckTab(actorAckTab);
-
         cfg.setGid(gid);
         return super.writeAttributesTo(cfg);
     }
