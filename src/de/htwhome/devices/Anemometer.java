@@ -1,6 +1,8 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.gui.StatusChangeEvent;
+import de.htwhome.gui.StatusChangeListener;
 import de.htwhome.timer.TimeScheduler;
 import de.htwhome.timer.TimerOptions;
 import java.lang.reflect.Type;
@@ -14,19 +16,19 @@ import de.htwhome.utils.Config;
  * @author tobiaslana
  * Anemometer (en) = Windmesser (de)
  */
-public class Anemometer extends IntervalSensor<Double>{
+public class Anemometer extends IntervalSensor<Double> {
 
     public static final DeviceType deviceType = DeviceType.Anemometer;
-    public static final Type cfgType = new TypeToken<Config<Double>>(){}.getType();
+    public static final Type cfgType = new TypeToken<Config<Double>>() {
+    }.getType();
     private static final double MAXLEVELWARNING = 9.0; //TODO Wert muss aus Konfig gelesen werden
 
-
-    public Anemometer (int id) {
-	this.id = id;
+    public Anemometer(int id) {
+        this.id = id;
         super.loadConfig(deviceType);
     }
-    
-    public Anemometer (int id, Double status, String location, String description, int gid) throws SocketException {
+
+    public Anemometer(int id, Double status, String location, String description, int gid) throws SocketException {
         super(id, status, location, description);
     }
 
@@ -38,7 +40,7 @@ public class Anemometer extends IntervalSensor<Double>{
     @Override
     public void setStatus(Double status) {
         this.status = status;
-	fireChangeEvent();
+        fireChangeEvent();
         if (this.status > MAXLEVELWARNING) {
             System.out.println("!! ACHTUNG !!");
             Message warning = new Message();
@@ -49,12 +51,12 @@ public class Anemometer extends IntervalSensor<Double>{
             warning.setSenderDevice(deviceType);
             this.sendMsg(warning);
         }
-	Message msg = new Message();
+        Message msg = new Message();
         msg.setMsgType(MessageType.statusResponse);
         msg.setSenderId(this.id);
         msg.setContent(String.valueOf(this.status));
-	msg.setSenderDevice(deviceType);
-	this.sendMsg(msg);
+        msg.setSenderDevice(deviceType);
+        this.sendMsg(msg);
         System.out.println("Neue Windgeschwindigkeit: " + this.status); //TODO sout entfernen
     }
 
@@ -64,9 +66,16 @@ public class Anemometer extends IntervalSensor<Double>{
         this.setStatus(d);
     }
 
-    private void startNotifier(int intervall){
+    public void startNotifier(int intervall) {
         TimeScheduler<Double> ts = new TimeScheduler<Double>(this, TimerOptions.ANEMOMETER);
         ts.startIntervallRandom(intervall);
+    }
+
+    protected void fireChangeEvent() {
+        StatusChangeEvent<Double> evt = new StatusChangeEvent<Double>(this, this.status);
+        for (StatusChangeListener l : listeners) {
+            l.changeEventReceived(evt);
+        }
     }
 
     public static void main(String[] args) throws SocketException {
@@ -74,10 +83,5 @@ public class Anemometer extends IntervalSensor<Double>{
 //        TimeScheduler<Double> ts = new TimeScheduler<Double>(a);
 //        ts.startIntervallRandom(1000);
         a.startNotifier(5000);
-    }
-
-    @Override
-    protected void fireChangeEvent() {
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 }
