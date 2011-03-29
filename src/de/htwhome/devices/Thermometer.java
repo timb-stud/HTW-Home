@@ -1,6 +1,8 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.gui.StatusChangeEvent;
+import de.htwhome.gui.StatusChangeListener;
 import de.htwhome.timer.TimeScheduler;
 import de.htwhome.timer.TimerOptions;
 import java.lang.reflect.Type;
@@ -13,17 +15,18 @@ import de.htwhome.utils.Config;
  *
  * @author tobiaslana
  */
-public class Thermometer extends IntervalSensor<Double>{
+public class Thermometer extends IntervalSensor<Double> {
 
     public static final DeviceType deviceType = DeviceType.Thermometer;
-    public static final Type cfgType = new TypeToken<Config<Double>>(){}.getType();
+    public static final Type cfgType = new TypeToken<Config<Double>>() {
+    }.getType();
 
-    public Thermometer (int id) {
-	this.id = id;
+    public Thermometer(int id) {
+        this.id = id;
         super.loadConfig(deviceType);
     }
 
-    public Thermometer (int id, Double status, String location, String description, int gid) throws SocketException {
+    public Thermometer(int id, Double status, String location, String description, int gid) throws SocketException {
         super(id, status, location, description);
     }
 
@@ -35,13 +38,13 @@ public class Thermometer extends IntervalSensor<Double>{
     @Override
     public void setStatus(Double status) {
         this.status = status;
-	fireChangeEvent();
-	Message msg = new Message();
+        fireChangeEvent();
+        Message msg = new Message();
         msg.setMsgType(MessageType.statusResponse);
         msg.setSenderId(this.id);
         msg.setContent(String.valueOf(this.status));
-	msg.setSenderDevice(deviceType);
-	this.sendMsg(msg);
+        msg.setSenderDevice(deviceType);
+        this.sendMsg(msg);
     }
 
     @Override
@@ -50,16 +53,21 @@ public class Thermometer extends IntervalSensor<Double>{
         this.setStatus(d);
     }
 
-    private void startNotifier(int intervall){
+    public void startNotifier(int intervall) {
         TimeScheduler<Double> ts = new TimeScheduler<Double>(this, TimerOptions.THERMOMETER);
         ts.startIntervallRandom(intervall);
+    }
+
+    @Override
+    protected void fireChangeEvent() {
+        StatusChangeEvent<Double> evt = new StatusChangeEvent<Double>(this, this.status);
+        for (StatusChangeListener l : listeners) {
+            l.changeEventReceived(evt);
+        }
     }
 
     public static void main(String[] args) throws SocketException {
         Thermometer t = new Thermometer(11501, 0.0, "Garten", "Thermometer", ALLDEVICES);
         t.startNotifier(5000);
     }
-
-    @Override
-    protected void fireChangeEvent() {}
 }
