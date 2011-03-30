@@ -65,17 +65,11 @@ public class Shutter extends Actor<Integer> {
         this.setStatus(i);
     }
 
-    public static void main(String[] args) throws SocketException {
-        int[] gidTab = {22000, 22100, 22101}; //TODO aus Konfig
-        Shutter s = new Shutter(12301, 0, "Wohnzimmer", "Rolladen vorne", gidTab); //TODO aus Konfig
-    }
-
     @Override
     protected void fireChangeEvent() {
         StatusChangeEvent<Integer> evt = new StatusChangeEvent<Integer>(this, this.status);
         for (StatusChangeListener l : listeners) {
             l.changeEventReceived(evt);
         }
-
     }
 }

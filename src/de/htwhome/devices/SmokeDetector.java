@@ -70,15 +70,6 @@ public class SmokeDetector extends IntervalSensor<Boolean> {
         ts.startIntervallRandom(intervall);
     }
 
-    public static void main(String[] args) {
-        try {
-            SmokeDetector sd = new SmokeDetector(11301, false, "Wohnzimmer", "Rauchmelder");
-            sd.startNotifier(2000);
-        } catch (SocketException ex) {
-            Logger.getLogger(SmokeDetector.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     @Override
     protected void fireChangeEvent() {
         StatusChangeEvent<Boolean> evt = new StatusChangeEvent<Boolean>(this, this.status);

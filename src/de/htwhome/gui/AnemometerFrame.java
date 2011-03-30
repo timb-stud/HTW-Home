@@ -3,8 +3,6 @@ package de.htwhome.gui;
 import de.htwhome.devices.Anemometer;
 import java.net.SocketException;
 import java.text.DecimalFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -56,20 +54,6 @@ public class AnemometerFrame extends javax.swing.JFrame implements StatusChangeL
 
     public void changeEventReceived(StatusChangeEvent evt) {
         jLabel1.setText(df.format(a.getStatus()) + "");
-    }
-
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                int ALLDEVICES = 20000;
-                try {
-                    new AnemometerFrame(11301, 0.0, "Garten", "Windmesser", ALLDEVICES).setVisible(true);
-                } catch (SocketException ex) {
-                    Logger.getLogger(AnemometerFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

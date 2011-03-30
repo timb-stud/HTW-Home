@@ -2,8 +2,6 @@ package de.htwhome.gui;
 
 import de.htwhome.devices.DoorOpener;
 import java.net.SocketException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -55,20 +53,6 @@ public class DoorOpenerFrame extends javax.swing.JFrame implements StatusChangeL
         } else {
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/tuerzu.jpg")));
         }
-    }
-
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                int[] gid = {12501};
-                try {
-                    new DoorOpenerFrame(12501, false, "Eingangstür", "Türöffner", gid).setVisible(true);
-                } catch (SocketException ex) {
-                    Logger.getLogger(DoorOpenerFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

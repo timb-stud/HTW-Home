@@ -106,11 +106,4 @@ public class Switch extends AckSensor<Boolean> {
         this.statusLED = b;
         fireChangeEvent();
     }
-
-    public static void main(String[] args) throws SocketException {
-        int[] actorListId = {12};
-        Boolean[] actorListStatus = new Boolean[actorListId.length];
-        SwitchFrame sf = new SwitchFrame(22, false, "Haustür", "Klingel", actorListId, actorListStatus, 1);
-        sf.setVisible(true);
-    }
 }

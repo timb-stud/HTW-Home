@@ -77,11 +77,4 @@ public class Anemometer extends IntervalSensor<Double> {
             l.changeEventReceived(evt);
         }
     }
-
-    public static void main(String[] args) throws SocketException {
-        Anemometer a = new Anemometer(11301, 0.0, "Garten", "Windmesser", ALLDEVICES);
-//        TimeScheduler<Double> ts = new TimeScheduler<Double>(a);
-//        ts.startIntervallRandom(1000);
-        a.startNotifier(5000);
-    }
 }

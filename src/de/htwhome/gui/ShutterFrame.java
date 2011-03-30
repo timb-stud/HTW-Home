@@ -65,20 +65,6 @@ public class ShutterFrame extends javax.swing.JFrame implements StatusChangeList
         jProgressBar1.setValue((Integer) evt.getStatus());
         jLabel1.setText(evt.getStatus() + "%");
     }
-
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                int[] gidTab = {3};
-                try {
-                    new ShutterFrame(10, 50, "Wohnzimmer aussen", "Markise", gidTab).setVisible(true);
-                } catch (SocketException ex) {
-                    Logger.getLogger(ShutterFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JProgressBar jProgressBar1;

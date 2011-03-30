@@ -23,6 +23,8 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
         try {
             s = new Switch(id, status, location, description, actorIdTab, actorStatusTab, gid);
             s.addStatusChangeListener(this);
+            jLabel2.setText(s.getDescription());
+            jLabel3.setText(s.getLocation());
         } catch (SocketException ex) {
             Logger.getLogger(SwitchFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -35,58 +37,58 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        OnOffButton = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        OnOffButton.setText("Switch");
-        OnOffButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                OnOffButtonMouseClicked(evt);
-            }
-        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/rot.png"))); // NOI18N
 
         jLabel2.setText("jLabel2");
+
+        jLabel3.setText("jLabel3");
+
+        jButton1.setText("jButton1");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(61, 61, 61)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addComponent(OnOffButton, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(72, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(46, 46, 46)
-                .addComponent(OnOffButton, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(33, 33, 33)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
-
-        OnOffButton.getAccessibleContext().setAccessibleName("OnOffButton");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void OnOffButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OnOffButtonMouseClicked
-        s.setStatus(OnOffButton.isSelected());
-        if (!OnOffButton.isSelected()) {
-            s.setStatusLED(false);
-        }
-    }//GEN-LAST:event_OnOffButtonMouseClicked
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        s.setStatus(!s.getStatus());
+    }//GEN-LAST:event_jButton1MouseClicked
     public void changeEventReceived(StatusChangeEvent evt) {
         if (s.getStatusLED()) {
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/gruen.png")));
@@ -94,20 +96,10 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/rot.png")));
         }
     }
-
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                int[] actorListId = {12};
-                Boolean[] actorListStatus = new Boolean[actorListId.length];
-                new SwitchFrame(20, false, "Haustür", "Klingel", actorListId, actorListStatus, 1).setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton OnOffButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

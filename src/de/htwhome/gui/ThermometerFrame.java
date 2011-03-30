@@ -3,8 +3,6 @@ package de.htwhome.gui;
 import de.htwhome.devices.Thermometer;
 import java.net.SocketException;
 import java.text.DecimalFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -56,21 +54,6 @@ public class ThermometerFrame extends javax.swing.JFrame implements StatusChange
 
     public void changeEventReceived(StatusChangeEvent evt) {
         jLabel1.setText(df.format(t.getStatus()) + "");
-    }
-
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            int ALLDEVICES = 20000;
-
-            public void run() {
-                try {
-                    new ThermometerFrame(11501, 0.0, "Garten", "Thermometer", ALLDEVICES).setVisible(true);
-                } catch (SocketException ex) {
-                    Logger.getLogger(ThermometerFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

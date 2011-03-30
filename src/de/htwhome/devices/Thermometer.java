@@ -65,9 +65,4 @@ public class Thermometer extends IntervalSensor<Double> {
             l.changeEventReceived(evt);
         }
     }
-
-    public static void main(String[] args) throws SocketException {
-        Thermometer t = new Thermometer(11501, 0.0, "Garten", "Thermometer", ALLDEVICES);
-        t.startNotifier(5000);
-    }
 }

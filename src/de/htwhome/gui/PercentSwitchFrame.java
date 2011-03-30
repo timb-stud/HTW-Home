@@ -88,22 +88,6 @@ public class PercentSwitchFrame extends javax.swing.JFrame implements StatusChan
     public void changeEventReceived(StatusChangeEvent evt) {
         jLabel1.setText((Integer) evt.getStatus() + "%");
     }
-
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                int[] actorListId = {2};
-                Integer[] actorStatusTab = {0};
-                int gid = 3;
-                try {
-                    new PercentSwitchFrame(10, 50, "Wohnzimmer", "Switcher", actorListId, actorStatusTab, gid).setVisible(true);
-                } catch (SocketException ex) {
-                    Logger.getLogger(PercentSwitchFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

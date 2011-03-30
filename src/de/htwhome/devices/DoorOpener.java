@@ -72,9 +72,4 @@ public class DoorOpener extends Actor<Boolean> {
             l.changeEventReceived(evt);
         }
     }
-
-    public static void main(String[] args) throws SocketException {
-        int[] gid = {12501};
-        DoorOpener d = new DoorOpener(12501, false, "Eingangstür", "Türöffner", gid);
-    }
 }

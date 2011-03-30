@@ -64,12 +64,4 @@ public class Light extends Actor<Boolean> {
             l.changeEventReceived(evt);
         }
     }
-
-    public static void main(String[] args) throws SocketException {
-//        int[] gid  = {1};
-//	Light l = new Light(12, false, "haus", "Beschreibung", gid);
-        int[] gid = {1};
-        LightFrame lf = new LightFrame(12, false, "haus", "Beschreibung", gid);
-        lf.setVisible(true);
-    }
 }

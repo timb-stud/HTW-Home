@@ -75,19 +75,6 @@ public class SmokeDetectorFrame extends javax.swing.JFrame implements StatusChan
     public void changeEventReceived(StatusChangeEvent evt) {
         this.setBackground(Color.red);
     }
-
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                try {
-                    new SmokeDetectorFrame(30, false, "Wohnzimmerdecke", "rauch hilfee").setVisible(true);
-                } catch (SocketException ex) {
-                    Logger.getLogger(SmokeDetectorFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JToggleButton jToggleButton1;
