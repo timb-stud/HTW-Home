@@ -8,8 +8,6 @@ import de.htwhome.timer.TimerOptions;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import java.net.SocketException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

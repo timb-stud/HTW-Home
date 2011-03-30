@@ -95,21 +95,33 @@ public class Panel extends AbstractDevice<Boolean> {
             case Anemometer:
                 configList.setConfigStatus(id, Double.valueOf(status));
                 break;
+	    case DoorOpener:
+		configList.setConfigStatus(id, Boolean.valueOf(status));
+		break;
             case Light:
                 configList.setConfigStatus(id, Boolean.valueOf(status));
                 break;
+	    case OnOffTimer:
+	        configList.setConfigStatus(id, Boolean.valueOf(status));
+		break;
             case Panel:
                 configList.setConfigStatus(id, Boolean.valueOf(status));
                 break;
             case PercentSwitch:
                 configList.setConfigStatus(id, Integer.valueOf(status));
                 break;
+	    case Shutter:
+		configList.setConfigStatus(id, Integer.valueOf(status));
+		break;
             case Sunblind:
                 configList.setConfigStatus(id, Integer.valueOf(status));
                 break;
             case Switch:
                 configList.setConfigStatus(id, Boolean.valueOf(status));
                 break;
+	    case Thermometer:
+		configList.setConfigStatus(id, Double.valueOf(status));
+		break;
         }
     }
 
@@ -118,8 +130,14 @@ public class Panel extends AbstractDevice<Boolean> {
             case Anemometer:
                 updateConfig(jsonCfg, Anemometer.deviceType, Anemometer.cfgType, new Config<Double>());
                 break;
+	    case DoorOpener:
+		updateConfig(jsonCfg, DoorOpener.deviceType, DoorOpener.cfgType, new Config<Boolean>());
+                break;
             case Light:
                 updateConfig(jsonCfg, Light.deviceType, Light.cfgType, new Config<Boolean>());
+                break;
+	    case OnOffTimer:
+		updateConfig(jsonCfg, OnOffTimer.deviceType, OnOffTimer.cfgType, new Config<Boolean>());
                 break;
             case Panel:
                 updateConfig(jsonCfg, Panel.deviceType, Panel.cfgType, new Config<Boolean>());
@@ -127,12 +145,22 @@ public class Panel extends AbstractDevice<Boolean> {
             case PercentSwitch:
                 updateConfig(jsonCfg, PercentSwitch.deviceType, PercentSwitch.cfgType, new Config<Integer>());
                 break;
+	    case Shutter:
+		updateConfig(jsonCfg, Shutter.deviceType, Shutter.cfgType, new Config<Integer>());
+                break;
+	    case SmokeDetector:
+		updateConfig(jsonCfg, SmokeDetector.deviceType, SmokeDetector.cfgType, new Config<Boolean>());
+                break;
             case Sunblind:
                 updateConfig(jsonCfg, SunBlind.deviceType, SunBlind.cfgType, new Config<Integer>());
                 break;
             case Switch:
                 updateConfig(jsonCfg, Switch.deviceType, Switch.cfgType, new Config<Boolean>());
                 break;
+	    case Thermometer:
+		updateConfig(jsonCfg, Thermometer.deviceType, Thermometer.cfgType, new Config<Double>());
+                break;
+
         }
     }
 
@@ -155,21 +183,32 @@ public class Panel extends AbstractDevice<Boolean> {
             case Anemometer:
                 json = gson.toJson(cfg, Anemometer.cfgType);
                 break;
+	    case DoorOpener:
+		json = gson.toJson(cfg, DoorOpener.cfgType);
+		break;
             case Light:
                 json = gson.toJson(cfg, Light.cfgType);
                 break;
+	    case OnOffTimer:
+		json = gson.toJson(cfg, OnOffTimer.cfgType);
+		break;
             case Panel:
                 json = gson.toJson(cfg, Panel.cfgType);
                 break;
             case PercentSwitch:
                 json = gson.toJson(cfg, PercentSwitch.cfgType);
                 break;
+	    case Shutter:
+		json = gson.toJson(cfg, Shutter.cfgType);
             case Sunblind:
                 json = gson.toJson(cfg, SunBlind.cfgType);
                 break;
             case Switch:
                 json = gson.toJson(cfg, Switch.cfgType);
                 break;
+	    case Thermometer:
+		json = gson.toJson(cfg, Thermometer.cfgType);
+		break;
         }
         msg.setContent(json);
         sendMsg(msg);
