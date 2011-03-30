@@ -185,15 +185,15 @@ public class Panel extends AbstractDevice<Boolean> {
         this.sendMsg(msg);
     }
 
-//    public void openDoor() {
-//        Message msg = new Message();
-//        msg.setMsgType(MessageType.statusChange);
-//        msg.setSenderId(this.id);
-//        msg.setReceiverId(12501);
-//        msg.setSenderDevice(deviceType);
-//	msg.setContent(String.valueOf(OPEN));
-//        sendMsg(msg);
-//    }
+    public void openDoor() {
+        Message msg = new Message();
+        msg.setMsgType(MessageType.statusChange);
+        msg.setSenderId(this.id);
+        msg.setReceiverId(12501);
+        msg.setSenderDevice(deviceType);
+	msg.setContent(String.valueOf(true));
+        sendMsg(msg);
+    }
     public static Boolean getFirealarm() {
         return firealarm;
     }
