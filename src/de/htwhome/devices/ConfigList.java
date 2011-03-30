@@ -3,14 +3,13 @@ package de.htwhome.devices;
 import de.htwhome.gui.panel.ConfigChangeEvent;
 import de.htwhome.gui.panel.ConfigChangeListener;
 import de.htwhome.utils.Config;
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
  * @author Tim Bartsch
  */
-public class ConfigList extends ArrayList<Config> {
+public class ConfigList extends CopyOnWriteArrayList<Config> {
 
     protected final CopyOnWriteArrayList<ConfigChangeListener> listeners = new CopyOnWriteArrayList<ConfigChangeListener>();
 

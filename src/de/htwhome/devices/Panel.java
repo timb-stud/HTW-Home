@@ -61,7 +61,7 @@ public class Panel extends AbstractDevice<Boolean> {
             Message msg = gson.fromJson(jsonMsg, Message.class);
             switch (msg.getMsgType()) {
                 case statusResponse:
-                    updateConfigStatus(msg.getSenderId(), jsonMsg, devType);
+                    updateConfigStatus(msg.getSenderId(), msg.getContent(), devType);
                     break;
                 case configResponse:
                     updateConfig(msg.getContent(), msg.getSenderDevice());

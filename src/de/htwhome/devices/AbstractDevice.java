@@ -47,6 +47,7 @@ public abstract class AbstractDevice<T> {
         this.status = (T) cfg.getStatus();
         this.location = cfg.getLocation();
         this.description = cfg.getDescription();
+	fireChangeEvent();
     }
 
     protected Config writeAttributesTo(Config cfg){

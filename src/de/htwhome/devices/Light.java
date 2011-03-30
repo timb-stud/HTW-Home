@@ -1,7 +1,6 @@
 package de.htwhome.devices;
 
 import com.google.gson.reflect.TypeToken;
-import de.htwhome.gui.LightFrame;
 import de.htwhome.gui.StatusChangeEvent;
 import de.htwhome.gui.StatusChangeListener;
 import de.htwhome.transmission.Message;

@@ -34,7 +34,6 @@ public class PanelFrame extends javax.swing.JFrame {
 	} catch (SocketException ex) {
 	    Logger.getLogger(PanelFrame.class.getName()).log(Level.SEVERE, null, ex);
 	}
-
     }
 
     /** This method is called from within the constructor to

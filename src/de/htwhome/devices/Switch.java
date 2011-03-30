@@ -3,7 +3,6 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.gui.StatusChangeEvent;
 import de.htwhome.gui.StatusChangeListener;
-import de.htwhome.gui.SwitchFrame;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
@@ -37,6 +36,7 @@ public class Switch extends AckSensor<Boolean> {
     @Override
     public void setStatus(Boolean status) {
         this.status = status;
+	sendStatusResponse();
         fireChangeEvent();
         Message msg = new Message();
         if (checkRespones()) {
@@ -49,6 +49,15 @@ public class Switch extends AckSensor<Boolean> {
         msg.setSenderDevice(deviceType);
         this.sendMsg(msg);
         System.out.println("Switch.status: " + this.status);
+    }
+
+    private void sendStatusResponse(){
+	Message msg = new Message();
+        msg.setMsgType(MessageType.statusResponse);
+        msg.setSenderId(this.id);
+        msg.setContent(String.valueOf(this.statusLED));
+        msg.setSenderDevice(deviceType);
+        this.sendMsg(msg);
     }
 
     @Override
@@ -66,14 +75,12 @@ public class Switch extends AckSensor<Boolean> {
     public void checkAndSetStatusLed() {
         for (int i = 0; i < actorStatusTab.length; i++) {
             if (actorStatusTab[i] == false) {
-                statusLED = false;
+		setStatusLED(false);
                 fireChangeEventLED();
                 return;
             }
         }
-        statusLED = true;
-        this.status = true;
-        fireChangeEvent();
+        setStatusLED(true);
     }
 
     public static void setNullToFalse(Boolean[] tab) {
@@ -105,6 +112,8 @@ public class Switch extends AckSensor<Boolean> {
 
     public void setStatusLED(boolean b) {
         this.statusLED = b;
+	this.status = b;
+	sendStatusResponse();
         fireChangeEvent();
     }
 }
