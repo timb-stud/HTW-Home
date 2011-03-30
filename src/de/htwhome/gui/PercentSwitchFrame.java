@@ -21,6 +21,7 @@ public class PercentSwitchFrame extends javax.swing.JFrame implements StatusChan
         pswitch.addStatusChangeListener(this);
         image = ImageIO.read(getClass().getResource("/de/htwhome/gui/Pics/logo.png"));
         setSlider();
+        setLabels();
         this.setIconImage(image);
     }
 

@@ -48,7 +48,7 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/rot.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/Pics/rot.png"))); // NOI18N
 
         jLabel2.setText("jLabel2");
 
@@ -108,7 +108,6 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
     }
 
     private void setLabels() {
-        jLabel1.setText(s.getStatus() + "%");
         jLabel2.setText(s.getDescription());
         jLabel3.setText(s.getLocation());
         jLabel4.setText("ID: " + s.getId());
