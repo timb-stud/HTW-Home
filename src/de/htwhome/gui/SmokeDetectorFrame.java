@@ -21,7 +21,7 @@ public class SmokeDetectorFrame extends javax.swing.JFrame implements StatusChan
         sd = new SmokeDetector(id, status, location, description);
         sd.addStatusChangeListener(this);
         this.setBackground(Color.green);
-        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/Pics/logo.png"));
         this.setIconImage(image);
         setLabels();
     }

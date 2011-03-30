@@ -20,7 +20,7 @@ public class SunBlindFrame extends javax.swing.JFrame implements StatusChangeLis
         sb = new SunBlind(10, 50, "Wohnzimmer aussen", "Markise", gidTab);
         jProgressBar1.setValue(sb.getStatus());
         setLabels();
-        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/Pics/logo.png"));
         this.setIconImage(image);
         sb.addStatusChangeListener(this);
     }

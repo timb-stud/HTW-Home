@@ -27,14 +27,12 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
         try {
             s = new Switch(id, status, location, description, actorIdTab, actorStatusTab, gid);
             s.addStatusChangeListener(this);
-            jLabel2.setText(s.getDescription());
-            jLabel3.setText(s.getLocation());
-            jLabel4.setText("ID: " + s.getId());
+            setLabels();
         } catch (SocketException ex) {
             Logger.getLogger(SwitchFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         jButton1.setText("Click me!");
-        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/Pics/logo.png"));
         this.setIconImage(image);
     }
 
@@ -101,10 +99,11 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
         s.setStatus(!s.getStatus());
     }//GEN-LAST:event_jButton1MouseClicked
     public void changeEventReceived(StatusChangeEvent evt) {
+        setLabels();
         if (s.getStatusLED()) {
-            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/gruen.png")));
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/Pics/gruen.png")));
         } else {
-            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/rot.png")));
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/Pics/rot.png")));
         }
     }
 
