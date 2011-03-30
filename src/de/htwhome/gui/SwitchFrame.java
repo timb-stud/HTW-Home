@@ -109,10 +109,10 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
     }
 
     private void setLabels() {
-        jLabel1.setText(sb.getStatus() + "%");
-        jLabel2.setText(sb.getDescription());
-        jLabel3.setText(sb.getLocation());
-        jLabel4.setText("ID: " + sb.getId());
+        jLabel1.setText(s.getStatus() + "%");
+        jLabel2.setText(s.getDescription());
+        jLabel3.setText(s.getLocation());
+        jLabel4.setText("ID: " + s.getId());
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

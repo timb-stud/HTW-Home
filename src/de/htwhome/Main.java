@@ -17,7 +17,7 @@ public class Main {
 //        new AnemometerFrame(11301, 0.0, "Garten", "Windmesser", 20000).setVisible(true);
 //        new ThermometerFrame(11501, 0.0, "Garten", "Thermometer", 20000).setVisible(true);
 //        new SmokeDetectorFrame(30, false, "Wohnzimmerdecke", "rauch hilfee").setVisible(true);
-        new DoorOpenerFrame(id, false, "Wohnzimmer", "SESAM ÖFFNE DICH!", gidTab);
+//        new DoorOpenerFrame(id, false, "Wohnzimmer", "SESAM ÖFFNE DICH!", gidTab);
         //ACK Sensoren
         //Wohnzimmer Markise Schalter
 //        int[] alPercentSwitch = {12201};
