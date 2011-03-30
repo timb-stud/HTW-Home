@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * PanelFrame.java
  *
  * Created on 29.03.2011, 12:44:06
@@ -33,6 +28,9 @@ public class PanelFrame extends javax.swing.JFrame {
 	    panel.addConfigChangeListener(cfgPanel);
 	    panel.getAllConfigs();
 	    tabbedPane.add(cfgPanel);
+	    LightPanel lightPanel= new LightPanel(panel);
+	    tabbedPane.add(lightPanel);
+	    panel.addConfigChangeListener(lightPanel);
 	} catch (SocketException ex) {
 	    Logger.getLogger(PanelFrame.class.getName()).log(Level.SEVERE, null, ex);
 	}
