@@ -72,6 +72,7 @@ public class Switch extends AckSensor<Boolean> {
             }
         }
         statusLED = true;
+        this.status = true;
         fireChangeEvent();
     }
 
