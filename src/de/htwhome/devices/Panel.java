@@ -18,10 +18,9 @@ public class Panel extends AbstractDevice<Boolean> {
 
     private ConfigList configList;
     public static final DeviceType deviceType = DeviceType.Panel;
-    public static final Type cfgType = new TypeToken<Config<Boolean>>() {
-    }.getType();
-    public static Boolean firealarm = false;
-    public static Boolean weatheralarm = false;
+    public static final Type cfgType = new TypeToken<Config<Boolean>>() {}.getType();
+    public boolean firealarm = false;
+    public boolean weatheralarm = false;
 
     public Panel(int id) {
         this.id = id;
@@ -61,7 +60,7 @@ public class Panel extends AbstractDevice<Boolean> {
             Message msg = gson.fromJson(jsonMsg, Message.class);
             switch (msg.getMsgType()) {
                 case statusResponse:
-                    updateConfigStatus(msg.getSenderId(), msg.getContent(), devType);
+                    updateConfigStatus(msg.getSenderId(), msg.getContent(), msg.getSenderDevice());
                     break;
                 case configResponse:
                     updateConfig(msg.getContent(), msg.getSenderDevice());
@@ -233,20 +232,21 @@ public class Panel extends AbstractDevice<Boolean> {
 	msg.setContent(String.valueOf(true));
         sendMsg(msg);
     }
-    public static Boolean getFirealarm() {
-        return firealarm;
+
+    public void sendFireAlarm(){
+	Message msg = new Message();
+	msg.setMsgType(MessageType.fireAlarm);
+	msg.setSenderId(this.id);
+	msg.setSenderDevice(deviceType);
+	sendMsg(msg);
     }
 
-    public static void setFirealarm(Boolean firealarm) {
-        Panel.firealarm = firealarm;
-    }
-
-    public static Boolean getWeatheralarm() {
-        return weatheralarm;
-    }
-
-    public static void setWeatheralarm(Boolean weatheralarm) {
-        Panel.weatheralarm = weatheralarm;
+    public void sendWeatherAlarm(){
+	Message msg = new Message();
+	msg.setMsgType(MessageType.weatherAlarm);
+	msg.setSenderId(this.id);
+	msg.setSenderDevice(deviceType);
+	sendMsg(msg);
     }
 
     public ConfigList getConfigList() {

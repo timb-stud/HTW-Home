@@ -33,6 +33,11 @@ public class PanelFrame extends javax.swing.JFrame {
 	    panel.addConfigChangeListener(lightPanel);
 	    DoorPanel doorPanel = new DoorPanel(panel);
 	    tabbedPane.add(doorPanel);
+	    EmergencyPanel emerencyPanel = new EmergencyPanel(panel);
+	    tabbedPane.add(emerencyPanel);
+	    HomePanel homePanel = new HomePanel(panel);
+	    panel.addConfigChangeListener(homePanel);
+	    tabbedPane.add(homePanel);
 	} catch (SocketException ex) {
 	    Logger.getLogger(PanelFrame.class.getName()).log(Level.SEVERE, null, ex);
 	}
