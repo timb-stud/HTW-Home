@@ -18,14 +18,9 @@ public class PercentSwitchFrame extends javax.swing.JFrame implements StatusChan
     public PercentSwitchFrame(int id, int status, String location, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException, IOException {
         initComponents();
         pswitch = new PercentSwitch(id, status, location, description, actorListId, actorStatusTab, gid);
-        jSlider1.setMinimum(0);
-        jSlider1.setMaximum(100);
-        jSlider1.setMajorTickSpacing(10);
-        jSlider1.setMinorTickSpacing(5);
         pswitch.addStatusChangeListener(this);
-        jSlider1.setPaintTicks(true);
-        jSlider1.setPaintLabels(true);
         image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        setSlider();
         this.setIconImage(image);
     }
 
@@ -119,6 +114,15 @@ public class PercentSwitchFrame extends javax.swing.JFrame implements StatusChan
         jLabel2.setText(pswitch.getDescription());
         jLabel3.setText(pswitch.getLocation());
         jLabel4.setText("ID: " + pswitch.getId());
+    }
+
+    private void setSlider() {
+        jSlider1.setPaintTicks(true);
+        jSlider1.setPaintLabels(true);
+        jSlider1.setMinimum(0);
+        jSlider1.setMaximum(100);
+        jSlider1.setMajorTickSpacing(10);
+        jSlider1.setMinorTickSpacing(5);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

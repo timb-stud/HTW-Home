@@ -19,10 +19,7 @@ public class SunBlindFrame extends javax.swing.JFrame implements StatusChangeLis
         initComponents();
         sb = new SunBlind(10, 50, "Wohnzimmer aussen", "Markise", gidTab);
         jProgressBar1.setValue(sb.getStatus());
-        jLabel1.setText(sb.getStatus() + "%");
-        jLabel2.setText(sb.getDescription());
-        jLabel3.setText(sb.getLocation());
-        jLabel4.setText("ID: " + sb.getId());
+        setLabels();
         image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
         this.setIconImage(image);
         sb.addStatusChangeListener(this);
@@ -94,7 +91,14 @@ public class SunBlindFrame extends javax.swing.JFrame implements StatusChangeLis
 
     public void changeEventReceived(StatusChangeEvent evt) {
         jProgressBar1.setValue((Integer) evt.getStatus());
-        jLabel1.setText(evt.getStatus() + "%");
+        setLabels();
+    }
+
+    private void setLabels() {
+        jLabel1.setText(sb.getStatus() + "%");
+        jLabel2.setText(sb.getDescription());
+        jLabel3.setText(sb.getLocation());
+        jLabel4.setText("ID: " + sb.getId());
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

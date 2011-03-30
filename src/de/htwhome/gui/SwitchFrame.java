@@ -107,6 +107,13 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
             jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/rot.png")));
         }
     }
+
+    private void setLabels() {
+        jLabel1.setText(sb.getStatus() + "%");
+        jLabel2.setText(sb.getDescription());
+        jLabel3.setText(sb.getLocation());
+        jLabel4.setText("ID: " + sb.getId());
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

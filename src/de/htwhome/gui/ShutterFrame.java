@@ -18,9 +18,9 @@ public class ShutterFrame extends javax.swing.JFrame implements StatusChangeList
     public ShutterFrame(int id, int status, String location, String description, int[] gidTab) throws SocketException, IOException {
         initComponents();
         shutter = new Shutter(id, status, location, description, gidTab);
-
         shutter.addStatusChangeListener(this);
         image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        setLabels();
         this.setIconImage(image);
     }
 
