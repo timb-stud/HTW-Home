@@ -14,7 +14,6 @@ package de.htwhome.gui.panel;
 import de.htwhome.devices.DeviceType;
 import de.htwhome.devices.Panel;
 import de.htwhome.utils.Config;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -67,27 +66,29 @@ public class HomePanel extends javax.swing.JPanel implements ConfigChangeListene
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(thermometerLabel)
-                            .addComponent(anemomenterLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 306, Short.MAX_VALUE)
-                        .addComponent(timeLabel))
+                    .addComponent(thermometerLabel)
+                    .addComponent(anemomenterLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
+                .addComponent(timeLabel)
+                .addGap(24, 24, 24))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lightStatusLabel))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(245, 245, 245)
                         .addComponent(statusLabel)))
-                .addContainerGap())
+                .addContainerGap(296, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(timeLabel)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(thermometerLabel)
                         .addGap(18, 18, 18)
@@ -95,8 +96,7 @@ public class HomePanel extends javax.swing.JPanel implements ConfigChangeListene
                         .addGap(105, 105, 105)
                         .addComponent(statusLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
-                        .addComponent(lightStatusLabel))
-                    .addComponent(timeLabel))
+                        .addComponent(lightStatusLabel)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -135,7 +135,21 @@ public class HomePanel extends javax.swing.JPanel implements ConfigChangeListene
 
     public void updateClock(){
 	Date d = new Date();
-	timeLabel.setText(d.getHours() + ":" + d.getMinutes());
+	int h = d.getHours();
+	String hs;
+	int m = d.getMinutes();
+	String ms;
+	if(h < 10){
+	    hs = "0" + h;
+	}else{
+	    hs = String.valueOf(h);
+	}
+	if(m < 10){
+	    ms = "0" + m;
+	}else{
+	    ms = String.valueOf(m);
+	}
+	timeLabel.setText(hs + ":" + ms);
     }
 
 }
