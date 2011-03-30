@@ -2,9 +2,10 @@ package de.htwhome.gui;
 
 import de.htwhome.devices.SmokeDetector;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.SocketException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -13,13 +14,16 @@ import java.util.logging.Logger;
 public class SmokeDetectorFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     public SmokeDetector sd;
+    private BufferedImage image;
 
-    public SmokeDetectorFrame(int id, Boolean status, String location, String description) throws SocketException {
+    public SmokeDetectorFrame(int id, Boolean status, String location, String description) throws SocketException, IOException {
         initComponents();
         sd = new SmokeDetector(id, status, location, description);
         sd.addStatusChangeListener(this);
         this.setBackground(Color.green);
         jLabel1.setText(" ");
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        this.setIconImage(image);
     }
 
     @SuppressWarnings("unchecked")
