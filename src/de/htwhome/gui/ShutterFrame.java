@@ -19,9 +19,9 @@ public class ShutterFrame extends javax.swing.JFrame implements StatusChangeList
         initComponents();
         shutter = new Shutter(id, status, location, description, gidTab);
         shutter.addStatusChangeListener(this);
+        setLabels();
         image = ImageIO.read(getClass().getResource("/de/htwhome/gui/Pics/logo.png"));
         jProgressBar1.setValue(shutter.getStatus());
-        setLabels();
         this.setIconImage(image);
     }
 
@@ -91,7 +91,7 @@ public class ShutterFrame extends javax.swing.JFrame implements StatusChangeList
     }
 
     private void setLabels() {
-        jLabel1.setText((Integer) shutter.getStatus() + "%");
+        jLabel1.setText(shutter.getStatus() + "%");
         jLabel2.setText(shutter.getDescription());
         jLabel3.setText(shutter.getLocation());
         jLabel4.setText("ID: " + shutter.getId());
