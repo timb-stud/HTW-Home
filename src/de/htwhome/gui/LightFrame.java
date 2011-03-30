@@ -41,7 +41,7 @@ public class LightFrame extends javax.swing.JFrame implements StatusChangeListen
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/sparlampeoff.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/Pics/sparlampeoff.png"))); // NOI18N
 
         jLabel2.setText("jLabel2");
 
