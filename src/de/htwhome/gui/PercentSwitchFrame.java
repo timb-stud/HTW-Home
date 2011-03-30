@@ -1,9 +1,10 @@
 package de.htwhome.gui;
 
 import de.htwhome.devices.PercentSwitch;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.SocketException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -12,8 +13,9 @@ import java.util.logging.Logger;
 public class PercentSwitchFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     public PercentSwitch pswitch;
+    private BufferedImage image;
 
-    public PercentSwitchFrame(int id, int status, String location, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException {
+    public PercentSwitchFrame(int id, int status, String location, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException, IOException {
         initComponents();
         pswitch = new PercentSwitch(id, status, location, description, actorListId, actorStatusTab, gid);
         jSlider1.setMinimum(0);
@@ -24,6 +26,8 @@ public class PercentSwitchFrame extends javax.swing.JFrame implements StatusChan
         pswitch.addStatusChangeListener(this);
         jSlider1.setPaintTicks(true);
         jSlider1.setPaintLabels(true);
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        this.setIconImage(image);
     }
 
     @SuppressWarnings("unchecked")

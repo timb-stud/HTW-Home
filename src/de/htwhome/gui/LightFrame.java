@@ -1,9 +1,12 @@
 package de.htwhome.gui;
 
 import de.htwhome.devices.Light;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -12,14 +15,17 @@ import java.util.logging.Logger;
 public class LightFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     private Light light;
+    private BufferedImage image;
 
-    public LightFrame(int id, boolean status, String location, String description, int[] gidTab) {
+    public LightFrame(int id, boolean status, String location, String description, int[] gidTab) throws IOException {
         initComponents();
         try {
             light = new Light(id, status, location, description, gidTab);
             light.addStatusChangeListener(this);
             jLabel2.setText(light.getDescription());
             jLabel3.setText(light.getLocation());
+            image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+            this.setIconImage(image);
         } catch (SocketException ex) {
             Logger.getLogger(LightFrame.class.getName()).log(Level.SEVERE, null, ex);
         }

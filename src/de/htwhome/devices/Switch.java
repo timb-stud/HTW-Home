@@ -3,7 +3,6 @@ package de.htwhome.devices;
 import com.google.gson.reflect.TypeToken;
 import de.htwhome.gui.StatusChangeEvent;
 import de.htwhome.gui.StatusChangeListener;
-import de.htwhome.gui.SwitchFrame;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;

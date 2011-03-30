@@ -1,7 +1,10 @@
 package de.htwhome.gui;
 
 import de.htwhome.devices.DoorOpener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.SocketException;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -10,11 +13,14 @@ import java.net.SocketException;
 public class DoorOpenerFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     public DoorOpener d;
+    private BufferedImage image;
 
-    public DoorOpenerFrame(int id, boolean status, String location, String description, int[] gidTab) throws SocketException {
+    public DoorOpenerFrame(int id, boolean status, String location, String description, int[] gidTab) throws SocketException, IOException {
         initComponents();
         d = new DoorOpener(id, status, location, description, gidTab);
         d.addStatusChangeListener(this);
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        this.setIconImage(image);
     }
 
     @SuppressWarnings("unchecked")

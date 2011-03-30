@@ -1,9 +1,10 @@
 package de.htwhome.gui;
 
 import de.htwhome.devices.Shutter;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.SocketException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -12,13 +13,16 @@ import java.util.logging.Logger;
 public class ShutterFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     private Shutter shutter;
+    private BufferedImage image;
 
-    public ShutterFrame(int id, int status, String location, String description, int[] gidTab) throws SocketException {
+    public ShutterFrame(int id, int status, String location, String description, int[] gidTab) throws SocketException, IOException {
         initComponents();
         shutter = new Shutter(id, status, location, description, gidTab);
         jProgressBar1.setValue(shutter.getStatus());
         jLabel1.setText(shutter.getStatus() + "%");
         shutter.addStatusChangeListener(this);
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        this.setIconImage(image);
     }
 
     @SuppressWarnings("unchecked")

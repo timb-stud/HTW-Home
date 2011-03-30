@@ -1,8 +1,11 @@
 package de.htwhome.gui;
 
 import de.htwhome.devices.Thermometer;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.SocketException;
 import java.text.DecimalFormat;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -12,14 +15,17 @@ public class ThermometerFrame extends javax.swing.JFrame implements StatusChange
 
     public Thermometer t;
     DecimalFormat df;
+    private BufferedImage image;
 
-    public ThermometerFrame(int id, Double status, String location, String description, int gid) throws SocketException {
+    public ThermometerFrame(int id, Double status, String location, String description, int gid) throws SocketException, IOException {
         initComponents();
         df = new DecimalFormat("#.##");
         t = new Thermometer(id, status, location, description, gid);
         t.addStatusChangeListener(this);
         t.startNotifier(5000);
         jLabel1.setText(df.format(t.getStatus()) + "");
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        this.setIconImage(image);
     }
 
     @SuppressWarnings("unchecked")
@@ -36,17 +42,17 @@ public class ThermometerFrame extends javax.swing.JFrame implements StatusChange
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(44, 44, 44))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(40, 40, 40))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
