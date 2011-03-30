@@ -38,7 +38,6 @@ public class Switch extends AckSensor<Boolean> {
     public void setStatus(Boolean status) {
         this.status = status;
         fireChangeEvent();
-//        startResponseThread();
         Message msg = new Message();
         if (checkRespones()) {
             this.status = status;
@@ -68,12 +67,20 @@ public class Switch extends AckSensor<Boolean> {
         for (int i = 0; i < actorStatusTab.length; i++) {
             if (actorStatusTab[i] == false) {
                 statusLED = false;
-                fireChangeEvent();
+                fireChangeEventLED();
                 return;
             }
         }
         statusLED = true;
         fireChangeEvent();
+    }
+
+    public static void setNullToFalse(Boolean[] tab) {
+        for (int i = 0; i < tab.length; i++) {
+            if (tab[i] == null) {
+                tab[i] = false;
+            }
+        }
     }
 
     @Override

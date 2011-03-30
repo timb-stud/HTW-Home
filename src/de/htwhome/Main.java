@@ -1,17 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.htwhome;
 
-import de.htwhome.gui.AnemometerFrame;
 import de.htwhome.gui.LightFrame;
-import de.htwhome.gui.PercentSwitchFrame;
-import de.htwhome.gui.ShutterFrame;
-import de.htwhome.gui.SmokeDetectorFrame;
-import de.htwhome.gui.SunBlindFrame;
 import de.htwhome.gui.SwitchFrame;
-import de.htwhome.gui.ThermometerFrame;
 import java.net.SocketException;
 
 /**
@@ -20,9 +10,6 @@ import java.net.SocketException;
  */
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) throws SocketException {
         //Intervall-Sensoren
 //        new AnemometerFrame(11301, 0.0, "Garten", "Windmesser", 20000).setVisible(true);
@@ -46,9 +33,9 @@ public class Main {
         Boolean[] alStatusLicht1 = new Boolean[alLicht1.length];
         new SwitchFrame(11102, false, "Wohnzimmer", "Licht alle", alLicht1, alStatusLicht1, 21100).setVisible(true);
 
-//        int[] alLicht2 = {12101};
-//        Boolean[] alStatusLicht2 = new Boolean[alLicht2.length];
-//        new SwitchFrame(11102, false, "Wohnzimmer", "Licht vorne", alLicht2, alStatusLicht2, 21101).setVisible(true);
+        int[] alLicht2 = {12101};
+        Boolean[] alStatusLicht2 = new Boolean[alLicht2.length];
+        new SwitchFrame(11102, false, "Wohnzimmer", "Licht vorne", alLicht2, alStatusLicht2, 21101).setVisible(true);
 
         //Aktoren
         // new DoorOpenerFrame(12501, false, "Eingangstür", "Türöffner", gid).setVisible(true);

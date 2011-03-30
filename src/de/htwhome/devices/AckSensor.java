@@ -29,12 +29,10 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
         this.actorStatusTab = actorStatusTab;
         this.actorAckTab = new boolean[actorIdTab.length];
         this.gid = gid;
+        if (actorStatusTab instanceof Boolean[]) {
+            Switch.setNullToFalse((Boolean[]) actorStatusTab);
+        }
     }
-
-//    public void startResponseThread() {
-//        ActorRespThread art = new ActorRespThread(this);
-//        art.start();
-//    }
 
     public void setActorStatus(T status, int pos) {
         actorStatusTab[pos] = status;
