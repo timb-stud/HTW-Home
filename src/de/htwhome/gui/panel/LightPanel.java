@@ -4,7 +4,6 @@ import de.htwhome.devices.DeviceType;
 import de.htwhome.devices.Panel;
 import de.htwhome.utils.Config;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
@@ -30,6 +29,7 @@ public class LightPanel extends JPanel implements ConfigChangeListener{
 		    SwitchPanel sp = (SwitchPanel)c;
 		    if(sp.getId() == cfg.getId()){
 			sp.setText(cfg.getLocation(), cfg.getDescription());
+			sp.setBtnStatus((Boolean)cfg.getStatus());
 			found = true;
 		    }
 		}
