@@ -3,12 +3,14 @@ package de.htwhome.devices;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import de.htwhome.gui.panel.ConfigChangeEvent;
 import de.htwhome.gui.panel.ConfigChangeListener;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
 import java.lang.reflect.Type;
 import java.net.SocketException;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -19,8 +21,25 @@ public class Panel extends AbstractDevice<Boolean> {
     private ConfigList configList;
     public static final DeviceType deviceType = DeviceType.Panel;
     public static final Type cfgType = new TypeToken<Config<Boolean>>() {}.getType();
-    public boolean firealarm = false;
-    public boolean weatheralarm = false;
+    private boolean firealarm = false;
+    private boolean weatheralarm = false;
+
+    protected final CopyOnWriteArrayList<AlarmListener> listeners = new CopyOnWriteArrayList<AlarmListener>();
+
+    public void addAlarmListener(AlarmListener l) {
+        this.listeners.add(l);
+    }
+
+    public void removeAlarmListener(AlarmListener l) {
+        this.listeners.remove(l);
+    }
+
+    protected void fireAlarmChangeEvent() {
+	AlarmEvent evt = new AlarmEvent(this);
+	for (AlarmListener l : listeners) {
+	    l.alarmEventReceived(evt);
+	}
+    }
 
     public Panel(int id) {
         this.id = id;
@@ -66,12 +85,10 @@ public class Panel extends AbstractDevice<Boolean> {
                     updateConfig(msg.getContent(), msg.getSenderDevice());
                     break;
                 case fireAlarm:
-                    firealarm = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
-                    System.out.println("FEUER");
+		    setFirealarm(true);
                     break;
                 case weatherAlarm:
-                    weatheralarm = true; //TODO Methode um boolean wieder durch Benutzereingabe auf false zu setzen
-                    System.out.println("UNWETTER");
+		    setWeatheralarm(true);
                     break;
             }
         } catch (JsonSyntaxException e) {
@@ -256,4 +273,23 @@ public class Panel extends AbstractDevice<Boolean> {
     @Override
     protected void fireChangeEvent() {
     }
+
+    public boolean isFirealarm() {
+	return firealarm;
+    }
+
+    public void setFirealarm(boolean firealarm) {
+	this.firealarm = firealarm;
+	fireAlarmChangeEvent();
+    }
+
+    public boolean isWeatheralarm() {
+	return weatheralarm;
+    }
+
+    public void setWeatheralarm(boolean weatheralarm) {
+	this.weatheralarm = weatheralarm;
+	fireAlarmChangeEvent();
+    }
+
 }

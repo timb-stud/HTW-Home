@@ -7,9 +7,13 @@
 package de.htwhome.gui.panel;
 
 import de.htwhome.devices.Panel;
+import java.awt.Component;
+import java.awt.Image;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JTabbedPane;
 
 /**
  *
@@ -26,20 +30,39 @@ public class PanelFrame extends javax.swing.JFrame {
 	    panel = new Panel(1337, false, "Wohnzimmer", "Panel");
 	    ConfigPanel cfgPanel = new ConfigPanel(panel);
 	    panel.addConfigChangeListener(cfgPanel);
-	    panel.getAllConfigs();
-	    tabbedPane.add(cfgPanel);
 	    LightPanel lightPanel= new LightPanel(panel);
-	    tabbedPane.add(lightPanel);
 	    panel.addConfigChangeListener(lightPanel);
 	    DoorPanel doorPanel = new DoorPanel(panel);
-	    tabbedPane.add(doorPanel);
-	    EmergencyPanel emerencyPanel = new EmergencyPanel(panel);
-	    tabbedPane.add(emerencyPanel);
+	    EmergencyPanel emergencyPanel = new EmergencyPanel(panel);
 	    HomePanel homePanel = new HomePanel(panel);
 	    panel.addConfigChangeListener(homePanel);
-	    tabbedPane.add(homePanel);
+	    panel.addAlarmListener(homePanel);
+	    tabbedPane.setTabPlacement(JTabbedPane.BOTTOM);
+	    addTab(homePanel, "button_info.png");
+	    addTab(lightPanel, "button_lampe.png");
+	    addTab(doorPanel, "button_door_open.png");
+	    addTab(cfgPanel, "button_einstellungen.png");
+	    addTab(emergencyPanel, "button_emergency.png");
+	    panel.getAllConfigs();
 	} catch (SocketException ex) {
 	    Logger.getLogger(PanelFrame.class.getName()).log(Level.SEVERE, null, ex);
+	}
+    }
+
+    private void addTab(Component c, String icon){
+	ImageIcon image = createImageIcon(icon);
+	Image img = image.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+	image = new ImageIcon(img);
+	tabbedPane.addTab("", image, c);
+    }
+
+    protected static ImageIcon createImageIcon(String path) {
+	java.net.URL imgURL = PanelFrame.class.getResource(path);
+	if (imgURL != null) {
+	    return new ImageIcon(imgURL);
+	} else {
+	    System.err.println("Couldn't find file: " + path);
+	    return null;
 	}
     }
 

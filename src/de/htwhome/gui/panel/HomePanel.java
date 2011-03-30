@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * HomePanel.java
  *
  * Created on 30.03.2011, 15:00:37
@@ -11,16 +6,19 @@
 
 package de.htwhome.gui.panel;
 
+import de.htwhome.devices.AlarmEvent;
+import de.htwhome.devices.AlarmListener;
 import de.htwhome.devices.DeviceType;
 import de.htwhome.devices.Panel;
 import de.htwhome.utils.Config;
+import java.awt.event.ActionEvent;
 import java.util.Date;
 
 /**
  *
  * @author tim
  */
-public class HomePanel extends javax.swing.JPanel implements ConfigChangeListener {
+public class HomePanel extends javax.swing.JPanel implements ConfigChangeListener, AlarmListener {
     Panel panel;
     ClockThread clockThread;
 
@@ -46,42 +44,54 @@ public class HomePanel extends javax.swing.JPanel implements ConfigChangeListene
         timeLabel = new javax.swing.JLabel();
         statusLabel = new javax.swing.JLabel();
         lightStatusLabel = new javax.swing.JLabel();
+        resetStatusButton = new javax.swing.JButton();
 
-        thermometerLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        thermometerLabel.setFont(new java.awt.Font("Tahoma", 1, 14));
         thermometerLabel.setText("Temperatur:");
 
-        anemomenterLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        anemomenterLabel.setFont(new java.awt.Font("Tahoma", 1, 14));
         anemomenterLabel.setText("Wingeschwindigkeit:");
 
-        timeLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        timeLabel.setFont(new java.awt.Font("Tahoma", 1, 36));
         timeLabel.setText("12:45");
 
-        statusLabel.setText("Status");
+        statusLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        statusLabel.setForeground(new java.awt.Color(255, 0, 0));
 
-        lightStatusLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lightStatusLabel.setFont(new java.awt.Font("Tahoma", 1, 14));
         lightStatusLabel.setText("Brennende Lampen: ");
+
+        resetStatusButton.setText("Status zurücksetzen");
+        resetStatusButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetStatusButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(thermometerLabel)
-                    .addComponent(anemomenterLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
-                .addComponent(timeLabel)
-                .addGap(24, 24, 24))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(lightStatusLabel))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(245, 245, 245)
+                            .addComponent(statusLabel))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(thermometerLabel)
+                                .addComponent(anemomenterLabel))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
+                            .addComponent(timeLabel)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lightStatusLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(245, 245, 245)
-                        .addComponent(statusLabel)))
-                .addContainerGap(296, Short.MAX_VALUE))
+                        .addComponent(resetStatusButton)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,16 +105,25 @@ public class HomePanel extends javax.swing.JPanel implements ConfigChangeListene
                         .addComponent(anemomenterLabel)
                         .addGap(105, 105, 105)
                         .addComponent(statusLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                        .addComponent(resetStatusButton)
+                        .addGap(18, 18, 18)
                         .addComponent(lightStatusLabel)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void resetStatusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetStatusButtonActionPerformed
+	statusLabel.setText("");
+	panel.setFirealarm(false);
+	panel.setWeatheralarm(false);
+    }//GEN-LAST:event_resetStatusButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel anemomenterLabel;
     private javax.swing.JLabel lightStatusLabel;
+    private javax.swing.JButton resetStatusButton;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JLabel thermometerLabel;
     private javax.swing.JLabel timeLabel;
@@ -150,6 +169,20 @@ public class HomePanel extends javax.swing.JPanel implements ConfigChangeListene
 	    ms = String.valueOf(m);
 	}
 	timeLabel.setText(hs + ":" + ms);
+    }
+
+    public void alarmEventReceived(AlarmEvent evt) {
+	Object obj = evt.getSource();
+	if(obj instanceof Panel){
+	    Panel p = (Panel)obj;
+	    if(p.isWeatheralarm()){
+		statusLabel.setText("WETTERALARM");
+	    }else{
+		if(p.isFirealarm()){
+		    statusLabel.setText("FEUERALARM");
+		}
+	    }
+	}
     }
 
 }
