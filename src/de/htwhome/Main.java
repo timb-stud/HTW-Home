@@ -1,8 +1,6 @@
 package de.htwhome;
 
 import de.htwhome.gui.DoorOpenerFrame;
-import de.htwhome.gui.LightFrame;
-import de.htwhome.gui.SwitchFrame;
 import java.io.IOException;
 import java.net.SocketException;
 

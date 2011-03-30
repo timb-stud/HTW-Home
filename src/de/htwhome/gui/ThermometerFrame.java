@@ -23,7 +23,7 @@ public class ThermometerFrame extends javax.swing.JFrame implements StatusChange
         t = new Thermometer(id, status, location, description, gid);
         t.addStatusChangeListener(this);
         t.startNotifier(5000);
-        jLabel1.setText(df.format(t.getStatus()) + "");
+        setLabels();
         image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
         this.setIconImage(image);
     }
@@ -33,26 +33,54 @@ public class ThermometerFrame extends javax.swing.JFrame implements StatusChange
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("jLabel1");
 
+        jLabel2.setText("jLabel2");
+
+        jLabel4.setText("jLabel4");
+
+        jLabel3.setText("jLabel3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 118, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 118, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addContainerGap())
         );
 
         pack();
@@ -60,8 +88,19 @@ public class ThermometerFrame extends javax.swing.JFrame implements StatusChange
 
     public void changeEventReceived(StatusChangeEvent evt) {
         jLabel1.setText(df.format(t.getStatus()) + "");
+        setLabels();
+    }
+
+    private void setLabels() {
+        jLabel1.setText(df.format(t.getStatus()) + "");
+        jLabel2.setText(t.getDescription());
+        jLabel3.setText(t.getLocation());
+        jLabel4.setText("ID: " + t.getId());
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }
