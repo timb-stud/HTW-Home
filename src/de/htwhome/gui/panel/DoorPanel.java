@@ -11,7 +11,10 @@
 
 package de.htwhome.gui.panel;
 
+import de.htwhome.devices.ConfigList;
+import de.htwhome.devices.DeviceType;
 import de.htwhome.devices.Panel;
+import de.htwhome.utils.Config;
 
 /**
  *
@@ -70,7 +73,17 @@ public class DoorPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void openDoorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openDoorButtonActionPerformed
-	panel.openDoor();
+	ConfigList cfgList = panel.getConfigList();
+	for(Config c: cfgList){
+	    if(c.getDeviceType() == DeviceType.DoorOpener){
+		int[] gidTab = c.getGidTab();
+		if(gidTab != null){
+		    for(int i=0; i < gidTab.length; i++){
+			panel.openDoor(gidTab[i]);
+		    }
+		}
+	    }
+	}
     }//GEN-LAST:event_openDoorButtonActionPerformed
 
 
