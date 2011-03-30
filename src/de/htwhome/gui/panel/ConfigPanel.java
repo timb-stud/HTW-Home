@@ -54,6 +54,7 @@ public class ConfigPanel extends javax.swing.JPanel implements ConfigChangeListe
         actorsLabel = new javax.swing.JLabel();
         gidLabel = new javax.swing.JLabel();
         saveConfigButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
 
         configScrollPane.setViewportView(configList);
 
@@ -80,6 +81,13 @@ public class ConfigPanel extends javax.swing.JPanel implements ConfigChangeListe
             }
         });
 
+        refreshButton.setText("Aktualisieren");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,6 +109,7 @@ public class ConfigPanel extends javax.swing.JPanel implements ConfigChangeListe
                             .addComponent(gidsTextField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(actorsTextField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(gidTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)))
+                    .addComponent(refreshButton, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                     .addComponent(saveConfigButton, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(configScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -131,8 +140,10 @@ public class ConfigPanel extends javax.swing.JPanel implements ConfigChangeListe
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(gidTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(gidLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-                        .addComponent(saveConfigButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addComponent(saveConfigButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(configScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -143,6 +154,7 @@ public class ConfigPanel extends javax.swing.JPanel implements ConfigChangeListe
     }//GEN-LAST:event_actorsTextFieldActionPerformed
 
     private void saveConfigButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveConfigButtonActionPerformed
+	System.out.println("SAVE");
 	String location = locationTextField.getText();
 	String description = descriptionTextField.getText();
 	String gids = gidsTextField.getText();
@@ -163,6 +175,10 @@ public class ConfigPanel extends javax.swing.JPanel implements ConfigChangeListe
 	}
     }//GEN-LAST:event_saveConfigButtonActionPerformed
 
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+	panel.requireConfigs();
+    }//GEN-LAST:event_refreshButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel actorsLabel;
@@ -177,21 +193,24 @@ public class ConfigPanel extends javax.swing.JPanel implements ConfigChangeListe
     private javax.swing.JTextField gidsTextField;
     private javax.swing.JLabel locationLabel;
     private javax.swing.JTextField locationTextField;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JButton saveConfigButton;
     // End of variables declaration//GEN-END:variables
 
     public void changeEventReceived(ConfigChangeEvent evt) {
 	if(evt.getSource() instanceof ConfigList){
 	    ConfigList cl = (ConfigList)evt.getSource();
+	    int selected = configList.getSelectedIndex();
 	    DefaultListModel lm = new DefaultListModel();
 	    for(Config cfg: cl){
 		lm.addElement(cfg);
 	    }
 	    configList.setModel(lm);
+	    configList.setSelectedIndex(selected);
 	}
     }
 
-    public void showConfig(int index){
+    public void showConfig(int index) {
 	Config cfg = panel.getConfigList().get(index);
 	locationTextField.setText(cfg.getLocation());
 	descriptionTextField.setText(cfg.getDescription());
@@ -199,26 +218,26 @@ public class ConfigPanel extends javax.swing.JPanel implements ConfigChangeListe
 	actorsTextField.setText(intTabToString(cfg.getActorIDTab()));
 	gidTextField.setText(String.valueOf(cfg.getGid()));
 	switch (cfg.getDeviceType()) {
-            case Switch:
-            case PercentSwitch:
+	    case Switch:
+	    case PercentSwitch:
 		gidsLabel.setEnabled(false);
 		gidsTextField.setEnabled(false);
 		actorsLabel.setEnabled(true);
 		actorsTextField.setEnabled(true);
 		gidLabel.setEnabled(true);
 		gidTextField.setEnabled(true);
-                break;
-            case Anemometer:
-            case SmokeDetector:
+		break;
+	    case Anemometer:
+	    case SmokeDetector:
 		gidsLabel.setEnabled(false);
 		gidsTextField.setEnabled(false);
 		actorsLabel.setEnabled(false);
 		actorsTextField.setEnabled(false);
 		gidLabel.setEnabled(false);
 		gidTextField.setEnabled(false);
-                break;
-            case DoorOpener:
-            case Light:
+		break;
+	    case DoorOpener:
+	    case Light:
 	    case Shutter:
 	    case Sunblind:
 	    case Webcam:
@@ -229,8 +248,8 @@ public class ConfigPanel extends javax.swing.JPanel implements ConfigChangeListe
 		actorsTextField.setEnabled(false);
 		gidLabel.setEnabled(false);
 		gidTextField.setEnabled(false);
-                break;
-        }
+		break;
+	}
     }
 
     private String intTabToString(int[] tab){

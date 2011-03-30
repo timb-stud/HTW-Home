@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package de.htwhome.gui.panel;
 
+import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -20,8 +16,15 @@ public class ConfigListSelectionListener implements ListSelectionListener{
     }
 
     public void valueChanged(ListSelectionEvent e) {
-	int index = e.getFirstIndex();
-	configPanel.showConfig(index);
+	Object obj = e.getSource();
+	if(obj instanceof JList){
+	    JList list = (JList)obj;
+	    int index = list.getSelectedIndex();
+	    if(index >= 0){
+		configPanel.showConfig(index);
+	    }
+	}
+
     }
 
 }

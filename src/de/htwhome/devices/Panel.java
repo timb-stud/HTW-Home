@@ -3,7 +3,6 @@ package de.htwhome.devices;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import de.htwhome.gui.panel.ConfigChangeEvent;
 import de.htwhome.gui.panel.ConfigChangeListener;
 import de.htwhome.transmission.Message;
 import de.htwhome.transmission.MessageType;
@@ -102,7 +101,8 @@ public class Panel extends AbstractDevice<Boolean> {
         }
     }
 
-    public void getAllConfigs() {
+    public void requireConfigs() {
+	configList.clear();
         Message msg = new Message();
         msg.setMsgType(MessageType.configRequest);
         msg.setSenderId(this.id);

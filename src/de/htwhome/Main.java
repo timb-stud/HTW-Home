@@ -1,10 +1,12 @@
 package de.htwhome;
 
+import de.htwhome.gui.AnemometerFrame;
 import de.htwhome.gui.LightFrame;
 import de.htwhome.gui.PercentSwitchFrame;
 import de.htwhome.gui.ShutterFrame;
 import de.htwhome.gui.SunBlindFrame;
 import de.htwhome.gui.SwitchFrame;
+import de.htwhome.gui.ThermometerFrame;
 import java.io.IOException;
 import java.net.SocketException;
 
@@ -16,8 +18,8 @@ public class Main {
 
     public static void main(String[] args) throws SocketException, IOException {
         //Intervall-Sensoren
-//        new AnemometerFrame(11301, 0.0, "Garten", "Windmesser", 20000).setVisible(true);
-//        new ThermometerFrame(11501, 0.0, "Garten", "Thermometer", 20000).setVisible(true);
+        new AnemometerFrame(11301, 0.0, "Garten", "Windmesser", 20000).setVisible(true);
+        new ThermometerFrame(11501, 0.0, "Garten", "Thermometer", 20000).setVisible(true);
 //        new SmokeDetectorFrame(30, false, "Wohnzimmerdecke", "rauch hilfee").setVisible(true);
 //        new DoorOpenerFrame(id, false, "Wohnzimmer", "SESAM ÖFFNE DICH!", gidTab);
         //ACK Sensoren

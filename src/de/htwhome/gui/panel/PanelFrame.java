@@ -43,7 +43,7 @@ public class PanelFrame extends javax.swing.JFrame {
 	    addTab(doorPanel, "button_door_open.png");
 	    addTab(cfgPanel, "button_einstellungen.png");
 	    addTab(emergencyPanel, "button_emergency.png");
-	    panel.getAllConfigs();
+	    panel.requireConfigs();
 	} catch (SocketException ex) {
 	    Logger.getLogger(PanelFrame.class.getName()).log(Level.SEVERE, null, ex);
 	}

@@ -62,7 +62,7 @@ public class HomePanel extends javax.swing.JPanel implements ConfigChangeListene
         lightStatusLabel.setFont(new java.awt.Font("Tahoma", 1, 14));
         lightStatusLabel.setText("Brennende Lampen: ");
 
-        resetStatusButton.setText("Status zurücksetzen");
+        resetStatusButton.setText("Warnungen zurücksetzen");
         resetStatusButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetStatusButtonActionPerformed(evt);

@@ -36,7 +36,8 @@
                           <Component id="gidTextField" alignment="0" pref="229" max="32767" attributes="1"/>
                       </Group>
                   </Group>
-                  <Component id="saveConfigButton" pref="317" max="32767" attributes="0"/>
+                  <Component id="refreshButton" alignment="0" pref="317" max="32767" attributes="0"/>
+                  <Component id="saveConfigButton" alignment="0" pref="317" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="configScrollPane" min="-2" pref="239" max="-2" attributes="0"/>
@@ -74,8 +75,10 @@
                           <Component id="gidTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="gidLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="108" max="32767" attributes="0"/>
+                      <EmptySpace pref="46" max="32767" attributes="0"/>
                       <Component id="saveConfigButton" min="-2" pref="44" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="refreshButton" min="-2" pref="44" max="-2" attributes="0"/>
                   </Group>
                   <Component id="configScrollPane" alignment="0" pref="324" max="32767" attributes="0"/>
               </Group>
@@ -145,6 +148,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveConfigButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="refreshButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Aktualisieren"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refreshButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

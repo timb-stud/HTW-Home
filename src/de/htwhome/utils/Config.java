@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package de.htwhome.utils;
 
 import de.htwhome.devices.ConfigList;
@@ -143,7 +138,7 @@ public class Config<T> { //TODO wenn nicht gebraucht loeschen
 
     @Override
     public String toString() {
-	return "Config{" + "id=" + id + "status=" + status + "location=" + location + "deviceType=" + deviceType + "description=" + description + "gidTab=" + gidTab + "actorIDTab=" + actorIDTab + "actorStatusTab=" + actorStatusTab + "actorAckTab=" + actorAckTab + "gid=" + gid + "configList=" + configList + '}';
+	return id + " | " + status + " | " + location + " | " + description + " | " + deviceType;
     }
 
 }
