@@ -11,7 +11,6 @@ import de.htwhome.devices.AlarmListener;
 import de.htwhome.devices.DeviceType;
 import de.htwhome.devices.Panel;
 import de.htwhome.utils.Config;
-import java.awt.event.ActionEvent;
 import java.util.Date;
 
 /**
@@ -20,11 +19,13 @@ import java.util.Date;
  */
 public class HomePanel extends javax.swing.JPanel implements ConfigChangeListener, AlarmListener {
     Panel panel;
+    PanelFrame panelFrame;
     ClockThread clockThread;
 
     /** Creates new form HomePanel */
-    public HomePanel(Panel panel) {
+    public HomePanel(Panel panel, PanelFrame panelFrame) {
 	this.panel = panel;
+	this.panelFrame = panelFrame;
 	clockThread = new ClockThread(this);
         initComponents();
 	clockThread.start();
@@ -173,13 +174,18 @@ public class HomePanel extends javax.swing.JPanel implements ConfigChangeListene
 
     public void alarmEventReceived(AlarmEvent evt) {
 	Object obj = evt.getSource();
-	if(obj instanceof Panel){
-	    Panel p = (Panel)obj;
-	    if(p.isWeatheralarm()){
-		statusLabel.setText("WETTERALARM");
-	    }else{
-		if(p.isFirealarm()){
-		    statusLabel.setText("FEUERALARM");
+	if (obj instanceof Panel) {
+	    Panel p = (Panel) obj;
+	    if (p.isRingalarm()) {
+		System.out.println("RINGRING");
+		panelFrame.changeTab(2);
+	    } else {
+		if (p.isWeatheralarm()) {
+		    statusLabel.setText("WETTERALARM");
+		} else {
+		    if (p.isFirealarm()) {
+			statusLabel.setText("FEUERALARM");
+		    }
 		}
 	    }
 	}

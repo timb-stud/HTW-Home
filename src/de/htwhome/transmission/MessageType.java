@@ -8,5 +8,5 @@ public enum MessageType {
 
     statusChange, statusRequest, statusResponse,
     configChange, configRequest, configResponse,
-    weatherAlarm, fireAlarm;
+    weatherAlarm, fireAlarm, doorRing;
 }

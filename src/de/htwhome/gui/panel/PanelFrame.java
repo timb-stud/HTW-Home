@@ -34,7 +34,7 @@ public class PanelFrame extends javax.swing.JFrame {
 	    panel.addConfigChangeListener(lightPanel);
 	    DoorPanel doorPanel = new DoorPanel(panel);
 	    EmergencyPanel emergencyPanel = new EmergencyPanel(panel);
-	    HomePanel homePanel = new HomePanel(panel);
+	    HomePanel homePanel = new HomePanel(panel, this);
 	    panel.addConfigChangeListener(homePanel);
 	    panel.addAlarmListener(homePanel);
 	    tabbedPane.setTabPlacement(JTabbedPane.BOTTOM);
@@ -64,6 +64,10 @@ public class PanelFrame extends javax.swing.JFrame {
 	    System.err.println("Couldn't find file: " + path);
 	    return null;
 	}
+    }
+
+    public void changeTab(int index){
+	tabbedPane.setSelectedIndex(index);
     }
 
     /** This method is called from within the constructor to

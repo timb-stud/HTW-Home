@@ -23,6 +23,7 @@ public class Panel extends AbstractDevice<Boolean> {
     public static final Type cfgType = new TypeToken<Config<Boolean>>() {}.getType();
     private boolean firealarm = false;
     private boolean weatheralarm = false;
+    private boolean ringalarm = false;
 
     protected final CopyOnWriteArrayList<AlarmListener> listeners = new CopyOnWriteArrayList<AlarmListener>();
 
@@ -84,6 +85,9 @@ public class Panel extends AbstractDevice<Boolean> {
                 case configResponse:
                     updateConfig(msg.getContent(), msg.getSenderDevice());
                     break;
+		case doorRing:
+		    setRingalarm(true);
+		    break;
                 case fireAlarm:
 		    setFirealarm(true);
                     break;
@@ -146,6 +150,9 @@ public class Panel extends AbstractDevice<Boolean> {
             case Anemometer:
                 updateConfig(jsonCfg, Anemometer.deviceType, Anemometer.cfgType, new Config<Double>());
                 break;
+	    case DoorBell:
+		updateConfig(jsonCfg, DoorBell.deviceType, DoorBell.cfgType, new Config<Boolean>());
+                break;
 	    case DoorOpener:
 		updateConfig(jsonCfg, DoorOpener.deviceType, DoorOpener.cfgType, new Config<Boolean>());
                 break;
@@ -199,6 +206,9 @@ public class Panel extends AbstractDevice<Boolean> {
             case Anemometer:
                 json = gson.toJson(cfg, Anemometer.cfgType);
                 break;
+	    case DoorBell:
+		json = gson.toJson(cfg, DoorBell.cfgType);
+		break;
 	    case DoorOpener:
 		json = gson.toJson(cfg, DoorOpener.cfgType);
 		break;
@@ -289,6 +299,15 @@ public class Panel extends AbstractDevice<Boolean> {
 
     public void setWeatheralarm(boolean weatheralarm) {
 	this.weatheralarm = weatheralarm;
+	fireAlarmChangeEvent();
+    }
+
+    public boolean isRingalarm() {
+	return ringalarm;
+    }
+
+    public void setRingalarm(boolean ringalarm) {
+	this.ringalarm = ringalarm;
 	fireAlarmChangeEvent();
     }
 
