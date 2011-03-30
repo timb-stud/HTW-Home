@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 public class ThermometerFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     public Thermometer t;
-    DecimalFormat df;
+    private DecimalFormat df;
     private BufferedImage image;
 
     public ThermometerFrame(int id, Double status, String location, String description, int gid) throws SocketException, IOException {
@@ -24,7 +24,7 @@ public class ThermometerFrame extends javax.swing.JFrame implements StatusChange
         t.addStatusChangeListener(this);
         t.startNotifier(5000);
         setLabels();
-        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/Pics/logo.png"));
         this.setIconImage(image);
     }
 

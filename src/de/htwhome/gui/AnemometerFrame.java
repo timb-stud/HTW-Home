@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 public class AnemometerFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     public Anemometer a;
-    DecimalFormat df;
+    private DecimalFormat df;
     private BufferedImage image;
 
     public AnemometerFrame(int id, Double status, String location, String description, int gid) throws SocketException, IOException {
@@ -24,7 +24,7 @@ public class AnemometerFrame extends javax.swing.JFrame implements StatusChangeL
         a.addStatusChangeListener(this);
         a.startNotifier(5000);
         setLabels();
-        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/Pics/logo.png"));
         this.setIconImage(image);
     }
 

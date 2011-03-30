@@ -19,7 +19,7 @@ public class DoorOpenerFrame extends javax.swing.JFrame implements StatusChangeL
         initComponents();
         d = new DoorOpener(id, status, location, description, gidTab);
         d.addStatusChangeListener(this);
-        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/Pics/logo.png"));
         this.setIconImage(image);
         setLabels();
     }
@@ -83,9 +83,9 @@ public class DoorOpenerFrame extends javax.swing.JFrame implements StatusChangeL
     public void changeEventReceived(StatusChangeEvent evt) {
         setLabels();
         if (d.getStatus()) {
-            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/tueroffen.jpg")));
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/Pics/tueroffen.jpg")));
         } else {
-            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/tuerzu.jpg")));
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/Pics/tuerzu.jpg")));
         }
     }
 

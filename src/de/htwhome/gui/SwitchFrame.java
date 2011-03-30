@@ -32,7 +32,7 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
             Logger.getLogger(SwitchFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         jButton1.setText("Click me!");
-        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+        image = ImageIO.read(getClass().getResource("/de/htwhome/gui/Pics/logo.png"));
         this.setIconImage(image);
     }
 
@@ -101,9 +101,9 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
     public void changeEventReceived(StatusChangeEvent evt) {
         setLabels();
         if (s.getStatusLED()) {
-            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/gruen.png")));
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/Pics/gruen.png")));
         } else {
-            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/rot.png")));
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/Pics/rot.png")));
         }
     }
 

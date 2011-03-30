@@ -22,7 +22,7 @@ public class LightFrame extends javax.swing.JFrame implements StatusChangeListen
         try {
             light = new Light(id, status, location, description, gidTab);
             light.addStatusChangeListener(this);
-            image = ImageIO.read(getClass().getResource("/de/htwhome/gui/logo.png"));
+            image = ImageIO.read(getClass().getResource("/de/htwhome/gui/Pics/logo.png"));
             setLabels();
             this.setIconImage(image);
         } catch (SocketException ex) {
@@ -86,9 +86,9 @@ public class LightFrame extends javax.swing.JFrame implements StatusChangeListen
     public void changeEventReceived(StatusChangeEvent evt) {
         setLabels();
         if ((Boolean) evt.getStatus()) {
-            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/sparlampeon.png")));
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/Pics/sparlampeon.png")));
         } else {
-            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/sparlampeoff.png")));
+            jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/htwhome/gui/Pics/sparlampeoff.png")));
         }
     }
 
