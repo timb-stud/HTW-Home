@@ -40,7 +40,8 @@ public class Main {
 //        Boolean[] alStatusLicht2 = new Boolean[alLicht2.length];
 //        new SwitchFrame(11103, false, "Wohnzimmer", "Licht vorne", alLicht2, alStatusLicht2, 21101).setVisible(true);
         //Aktoren
-        // new DoorOpenerFrame(12501, false, "Eingangstür", "Türöffner", gid).setVisible(true);
+        int[] gid = {12345};
+        new DoorOpenerFrame(12501, false, "Eingangstür", "Türöffner", gid).setVisible(true);
 //        int[] gidLight = {21100, 21101};
 //        new LightFrame(12101, false, "Wohnzimmer", "Licht vorne", gidLight).setVisible(true);
 //
