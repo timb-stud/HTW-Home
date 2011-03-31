@@ -5,6 +5,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
+ * Sorgt dafür das beim auswählen eines elementes in der Config Liste das Element links angzeigt wird.
  *
  * @author Tim Bartsch
  */

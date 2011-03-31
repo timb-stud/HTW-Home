@@ -1,11 +1,10 @@
 package de.htwhome.gui.panel;
 
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Aktualisiert die Uhrzeit im Homepanel alle 10 Sekunden.
  * @author Tim Bartsch
  */
 public class ClockThread extends Thread{

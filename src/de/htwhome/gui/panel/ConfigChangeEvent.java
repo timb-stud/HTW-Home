@@ -4,7 +4,8 @@ import de.htwhome.utils.Config;
 import java.util.EventObject;
 
 /**
- *
+ * Wird geworfen wenn eine Config geändert wurde.
+ * 
  * @author Tim Bartsch
  */
 public class ConfigChangeEvent extends EventObject {

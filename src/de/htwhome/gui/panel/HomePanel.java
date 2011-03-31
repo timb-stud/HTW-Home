@@ -153,6 +153,9 @@ public class HomePanel extends javax.swing.JPanel implements ConfigChangeListene
 	}
     }
 
+    /*
+     * Aktualisiert die Uhrzeit auf dem Panel
+     */
     public void updateClock(){
 	Date d = new Date();
 	int h = d.getHours();

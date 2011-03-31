@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * DoorPanel.java
  *
  * Created on 30.03.2011, 13:24:57

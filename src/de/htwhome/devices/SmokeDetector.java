@@ -10,8 +10,6 @@ import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
 import java.lang.reflect.Type;
 import java.net.SocketException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

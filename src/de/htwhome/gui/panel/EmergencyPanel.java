@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * EmergencyPanel.java
  *
  * Created on 30.03.2011, 14:51:02
