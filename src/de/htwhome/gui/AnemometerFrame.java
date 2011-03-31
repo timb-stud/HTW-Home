@@ -21,10 +21,10 @@ public class AnemometerFrame extends javax.swing.JFrame implements StatusChangeL
     /*
      * Konstruktor: Dieser hat die selben Parameter wie der Anomometer Konstruktor
      */
-    public AnemometerFrame(int id, Double status, String location, String description, int gid) throws SocketException, IOException {
+    public AnemometerFrame(int id, Double status, String location, String description) throws SocketException, IOException {
         initComponents();
         df = new DecimalFormat("#.##");
-        a = new Anemometer(id, status, location, description, gid);
+        a = new Anemometer(id, status, location, description);
         a.addStatusChangeListener(this);
         a.startNotifier(5000);
         setLabels();

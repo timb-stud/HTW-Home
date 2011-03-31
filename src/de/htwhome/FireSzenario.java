@@ -16,8 +16,8 @@ public class FireSzenario {
 
     public static void main(String[] args) throws SocketException, IOException {
         //Rauchmelder
-        new AnemometerFrame(11301, 0.0, "Garten", "Windmesser", 20000).setVisible(true);
-        new ThermometerFrame(11501, 0.0, "Garten", "Thermometer", 20000).setVisible(true);
+        new AnemometerFrame(11301, 0.0, "Garten", "Windmesser").setVisible(true);
+        new ThermometerFrame(11501, 0.0, "Garten", "Thermometer").setVisible(true);
         //Licht
         int[] gidLight = {21100, 21101};
         new LightFrame(12101, false, "Wohnzimmer", "Licht vorne", gidLight).setVisible(true);

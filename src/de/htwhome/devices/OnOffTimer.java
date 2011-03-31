@@ -44,14 +44,15 @@ public class OnOffTimer extends IntervalSensor<Boolean> {
         this.status = status;
         fireChangeEvent();
         Message msg = new Message();
-        msg.setMsgType(MessageType.statusResponse);
+        msg.setMsgType(MessageType.statusChange);
         msg.setSenderId(this.id);
         msg.setContent(String.valueOf(this.status));
         msg.setSenderDevice(deviceType);
+        msg.setReceiverId(22000);
         this.sendMsg(msg);
     }
 
-    private void startNotifier(int intervall) {
+    public void startNotifier(int intervall) {
         TimeScheduler<Boolean> ts = new TimeScheduler<Boolean>(this, TimerOptions.ONOFFTIMER);
         ts.startFromTill(Boolean.TRUE, Boolean.FALSE, 0, intervall);
     }

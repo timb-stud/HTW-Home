@@ -21,10 +21,10 @@ public class ThermometerFrame extends javax.swing.JFrame implements StatusChange
     /*
      * Konstruktor: Dieser hat die selben Parameter wie der Switch Konstruktor
      */
-    public ThermometerFrame(int id, Double status, String location, String description, int gid) throws SocketException, IOException {
+    public ThermometerFrame(int id, Double status, String location, String description) throws SocketException, IOException {
         initComponents();
         df = new DecimalFormat("#.##");
-        t = new Thermometer(id, status, location, description, gid);
+        t = new Thermometer(id, status, location, description);
         t.addStatusChangeListener(this);
         t.startNotifier(5000);
         setLabels();

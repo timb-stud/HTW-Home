@@ -27,7 +27,7 @@ public class Anemometer extends IntervalSensor<Double> {
         super.loadConfig(deviceType);
     }
 
-    public Anemometer(int id, Double status, String location, String description, int gid) throws SocketException {
+    public Anemometer(int id, Double status, String location, String description) throws SocketException {
         super(id, status, location, description);
 	saveConfig(deviceType);
     }
