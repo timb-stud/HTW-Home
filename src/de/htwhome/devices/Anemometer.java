@@ -20,7 +20,7 @@ public class Anemometer extends IntervalSensor<Double> {
 
     public static final DeviceType deviceType = DeviceType.Anemometer;
     public static final Type cfgType = new TypeToken<Config<Double>>() {}.getType();
-    private static final double MAXLEVELWARNING = 9.0; //TODO Wert muss aus Konfig gelesen werden
+    private static final double MAXLEVELWARNING = 9.0;
 
     public Anemometer(int id) {
         this.id = id;

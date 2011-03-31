@@ -18,8 +18,7 @@ import de.htwhome.utils.Config;
 public class Thermometer extends IntervalSensor<Double> {
 
     public static final DeviceType deviceType = DeviceType.Thermometer;
-    public static final Type cfgType = new TypeToken<Config<Double>>() {
-    }.getType();
+    public static final Type cfgType = new TypeToken<Config<Double>>() {}.getType();
 
     public Thermometer(int id) {
         this.id = id;

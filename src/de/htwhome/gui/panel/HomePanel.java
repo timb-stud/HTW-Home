@@ -11,6 +11,7 @@ import de.htwhome.devices.AlarmListener;
 import de.htwhome.devices.DeviceType;
 import de.htwhome.devices.Panel;
 import de.htwhome.utils.Config;
+import java.awt.Toolkit;
 import java.util.Date;
 
 /**
@@ -180,13 +181,15 @@ public class HomePanel extends javax.swing.JPanel implements ConfigChangeListene
 	if (obj instanceof Panel) {
 	    Panel p = (Panel) obj;
 	    if (p.isRingalarm()) {
-		System.out.println("RINGRING");
+		Toolkit.getDefaultToolkit().beep();
 		panelFrame.changeTab(2);
 	    } else {
 		if (p.isWeatheralarm()) {
+		    Toolkit.getDefaultToolkit().beep();
 		    statusLabel.setText("WETTERALARM");
 		} else {
 		    if (p.isFirealarm()) {
+			Toolkit.getDefaultToolkit().beep();
 			statusLabel.setText("FEUERALARM");
 		    }
 		}
