@@ -9,12 +9,16 @@ import javax.imageio.ImageIO;
 /**
  *
  * @author Volkan Gökkaya
+ * Dies ist die Klasse des PercentSwitch Gerätes als Grafische Oberfläche
  */
 public class PercentSwitchFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     public PercentSwitch pswitch;
     private BufferedImage image;
 
+    /*
+     * Konstruktor: Dieser hat die selben Parameter wie der PercentSwitch Konstruktor
+     */
     public PercentSwitchFrame(int id, int status, String location, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException, IOException {
         initComponents();
         pswitch = new PercentSwitch(id, status, location, description, actorListId, actorStatusTab, gid);
@@ -102,13 +106,22 @@ public class PercentSwitchFrame extends javax.swing.JFrame implements StatusChan
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * MousClickEvent: falls Maus auf den Button klickt, so aktualisiert sich der Slider
+     */
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         pswitch.setStatus(jSlider1.getValue());
     }//GEN-LAST:event_jButton1MouseClicked
+    /*
+     * Methode, die beim Eintreffen eines Ereignisses (Event reagieren soll)
+     */
 
     public void changeEventReceived(StatusChangeEvent evt) {
         setLabels();
     }
+    /*
+     * Die Lables werden hier korrekt gesetzt
+     */
 
     private void setLabels() {
         jLabel1.setText((Integer) pswitch.getStatus() + "%");
@@ -116,6 +129,9 @@ public class PercentSwitchFrame extends javax.swing.JFrame implements StatusChan
         jLabel3.setText(pswitch.getLocation());
         jLabel4.setText("ID: " + pswitch.getId());
     }
+    /*
+     * Der Slider wird hier konfiguriert
+     */
 
     private void setSlider() {
         jSlider1.setPaintTicks(true);

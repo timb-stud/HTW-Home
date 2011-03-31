@@ -10,12 +10,16 @@ import javax.imageio.ImageIO;
 /**
  *
  * @author Volkan Gökkaya
+ * Dies ist die Klasse des SmokeDetector Gerätes als Grafische Oberfläche
  */
 public class SmokeDetectorFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     public SmokeDetector sd;
     private BufferedImage image;
 
+    /*
+     * Konstruktor: Dieser hat die selben Parameter wie der Shutter Konstruktor
+     */
     public SmokeDetectorFrame(int id, Boolean status, String location, String description) throws SocketException, IOException {
         initComponents();
         sd = new SmokeDetector(id, status, location, description);
@@ -95,12 +99,18 @@ public class SmokeDetectorFrame extends javax.swing.JFrame implements StatusChan
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * MousClickEvent: falls Maus auf den Button klickt, so wird der SmokeDetecotor aktiv
+     */
     private void jToggleButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MouseClicked
         if (jToggleButton1.isSelected()) {
             setLabels();
         }
     }//GEN-LAST:event_jToggleButton1MouseClicked
 
+    /*
+     * Methode, die beim Eintreffen eines Ereignisses (Event reagieren soll)
+     */
     public void changeEventReceived(StatusChangeEvent evt) {
         if (sd.getStatus()) {
             this.setBackground(Color.green);
@@ -111,6 +121,9 @@ public class SmokeDetectorFrame extends javax.swing.JFrame implements StatusChan
         }
     }
 
+    /*
+     * Die Lables werden hier korrekt gesetzt
+     */
     private void setLabels() {
         jLabel1.setText("Smoke Detector aktiviert....");
         jLabel2.setText(sd.getDescription());

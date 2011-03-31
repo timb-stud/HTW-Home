@@ -16,12 +16,16 @@ import javax.imageio.ImageIO;
 /**
  *
  * @author volkan
+ * Dies ist die Klasse des Switch Gerätes als Grafische Oberfläche
  */
 public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     private Switch s;
     private BufferedImage image;
 
+    /*
+     * Konstruktor: Dieser hat die selben Parameter wie der Switch Konstruktor
+     */
     public SwitchFrame(int id, Boolean status, String location, String description, int[] actorIdTab, Boolean[] actorStatusTab, int gid) throws IOException {
         initComponents();
         try {
@@ -95,6 +99,9 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Methode, die beim Eintreffen eines Ereignisses (Event reagieren soll)
+     */
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         s.setStatus(!s.getStatus());
     }//GEN-LAST:event_jButton1MouseClicked
@@ -107,6 +114,9 @@ public class SwitchFrame extends javax.swing.JFrame implements StatusChangeListe
         }
     }
 
+    /*
+     * Die Lables werden hier korrekt gesetzt
+     */
     private void setLabels() {
         jLabel2.setText(s.getDescription());
         jLabel3.setText(s.getLocation());

@@ -9,12 +9,16 @@ import javax.imageio.ImageIO;
 /**
  *
  * @author Volkan Gökkaya
+ * Dies ist die Klasse des DoorOpeners als Grafische Oberfläche
  */
 public class DoorOpenerFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     public DoorOpener d;
     private BufferedImage image;
 
+    /*
+     * Konstruktor: Dieser hat die selben Parameter wie der DoorOpener Konstruktor
+     */
     public DoorOpenerFrame(int id, boolean status, String location, String description, int[] gidTab) throws SocketException, IOException {
         initComponents();
         d = new DoorOpener(id, status, location, description, gidTab);
@@ -79,6 +83,9 @@ public class DoorOpenerFrame extends javax.swing.JFrame implements StatusChangeL
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Methode, die beim Eintreffen eines Ereignisses (Event reagieren soll)
+     */
     public void changeEventReceived(StatusChangeEvent evt) {
         setLabels();
         if (d.getStatus()) {
@@ -88,6 +95,9 @@ public class DoorOpenerFrame extends javax.swing.JFrame implements StatusChangeL
         }
     }
 
+    /*
+     * Die Lables werden hier korrekt gesetzt
+     */
     private void setLabels() {
         jLabel2.setText(d.getDescription());
         jLabel3.setText(d.getLocation());

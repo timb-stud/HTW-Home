@@ -11,12 +11,16 @@ import javax.imageio.ImageIO;
 /**
  *
  * @author volkan
+ * Dies ist die Klasse des Licht Gerätes als Grafische Oberfläche
  */
 public class LightFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     private Light light;
     private BufferedImage image;
 
+    /*
+     * Konstruktor: Dieser hat die selben Parameter wie der Light Konstruktor
+     */
     public LightFrame(int id, boolean status, String location, String description, int[] gidTab) throws IOException {
         initComponents();
         try {
@@ -83,6 +87,9 @@ public class LightFrame extends javax.swing.JFrame implements StatusChangeListen
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Methode, die beim Eintreffen eines Ereignisses (Event reagieren soll)
+     */
     public void changeEventReceived(StatusChangeEvent evt) {
         setLabels();
         if ((Boolean) evt.getStatus()) {
@@ -92,6 +99,9 @@ public class LightFrame extends javax.swing.JFrame implements StatusChangeListen
         }
     }
 
+    /*
+     * Die Lables werden hier korrekt gesetzt
+     */
     private void setLabels() {
         jLabel2.setText(light.getDescription());
         jLabel3.setText(light.getLocation());

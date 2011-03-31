@@ -9,12 +9,16 @@ import javax.imageio.ImageIO;
 /**
  *
  * @author Volkan Gökkaya
+ * Dies ist die Klasse des Shutter Gerätes als Grafische Oberfläche
  */
 public class ShutterFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     private Shutter shutter;
     private BufferedImage image;
 
+    /*
+     * Konstruktor: Dieser hat die selben Parameter wie der Shutter Konstruktor
+     */
     public ShutterFrame(int id, int status, String location, String description, int[] gidTab) throws SocketException, IOException {
         initComponents();
         shutter = new Shutter(id, status, location, description, gidTab);
@@ -85,11 +89,17 @@ public class ShutterFrame extends javax.swing.JFrame implements StatusChangeList
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Methode, die beim Eintreffen eines Ereignisses (Event reagieren soll)
+     */
     public void changeEventReceived(StatusChangeEvent evt) {
         jProgressBar1.setValue((Integer) evt.getStatus());
         setLabels();
     }
 
+    /*
+     * Die Lables werden hier korrekt gesetzt
+     */
     private void setLabels() {
         jLabel1.setText(shutter.getStatus() + "%");
         jLabel2.setText(shutter.getDescription());
