@@ -65,7 +65,7 @@ public class SmokeDetector extends IntervalSensor<Boolean> {
         this.sendMsg(msg);
     }
 
-    private void startNotifier(int intervall) {
+    public void startNotifier(int intervall) {
         TimeScheduler<Boolean> ts = new TimeScheduler<Boolean>(this, TimerOptions.SMOKEDETECTOR);
         ts.startIntervallRandom(intervall);
     }
