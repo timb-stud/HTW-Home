@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import javax.xml.bind.JAXB;
 
 /**
- *
+ * Oberste Klasse. Beihaltet Funktionen welche alle Benutzen können
  * @author Christian Rech, Tim Bartsch
  */
 public abstract class AbstractDevice<T> {
@@ -30,8 +30,12 @@ public abstract class AbstractDevice<T> {
     protected static int ALLDEVICES = 20000;
     protected final CopyOnWriteArrayList<StatusChangeListener> listeners = new CopyOnWriteArrayList<StatusChangeListener>();
 
+    /*
+     * leerer Standardkonstruktor
+     */
     public AbstractDevice() {
     }
+
 
     public AbstractDevice(int id, T status, String location, String description) throws SocketException {
         this.id = id;
@@ -41,7 +45,11 @@ public abstract class AbstractDevice<T> {
         msgDeamon = new MessageDeamon(this);
         msgDeamon.start();
     }
-    
+
+    /**
+     * Ladet die Konfiguration aus dem übergeben config gile
+     * @param cfg
+     */
     protected void loadAttributesFrom(Config cfg){
         this.id = cfg.getId();
         this.status = (T) cfg.getStatus();
@@ -50,6 +58,9 @@ public abstract class AbstractDevice<T> {
 	fireChangeEvent();
     }
 
+    /*
+     * Schreibt die Attribute in Config-File
+     */
     protected Config writeAttributesTo(Config cfg){
         cfg.setId(id);
         cfg.setStatus(status);
@@ -58,6 +69,10 @@ public abstract class AbstractDevice<T> {
 	return cfg;
     }
 
+    /**
+     * Speichert die aktuelle Konfiguration
+     * @param devType
+     */
      public void saveConfig(DeviceType devType){
         Config cfg = new Config();
         writeAttributesTo(cfg);
@@ -76,6 +91,9 @@ public abstract class AbstractDevice<T> {
         }
     }
 
+     /*
+      * Ladet die Konfiguration
+      */
     public void loadConfig(DeviceType deviceType){
         Config cfg = JAXB.unmarshal(new File(deviceType.toString() + this.id + ".xml"), Config.class);
         loadAttributesFrom(cfg);
@@ -85,6 +103,9 @@ public abstract class AbstractDevice<T> {
 
     public abstract void handleMsg(String jsonMsg, DeviceType devType, Type cfgType);
 
+    /*
+     * Dient zum versenden eine Nachicht
+     */
     public void sendMsg(Message msg) {
         try {
             String json = new Gson().toJson(msg);
@@ -95,15 +116,44 @@ public abstract class AbstractDevice<T> {
         }
     }
 
+    /*
+     * Dient dazu um Observer hinzuzufügen
+     */
     public void addStatusChangeListener(StatusChangeListener l) {
         this.listeners.add(l);
     }
 
+    /*
+     * Entfernt Observer
+     */
     public void removeStatusChangeListener(StatusChangeListener l) {
         this.listeners.remove(l);
     }
 
     protected abstract void fireChangeEvent();
+
+        @Override
+    public String toString() {
+        return "AbstractDevice{" + "id=" + id + "status=" + status + "location=" + location + "description=" + description + "msgReceiver=" + msgDeamon + '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if(obj instanceof AbstractDevice){
+	    AbstractDevice dev = (AbstractDevice)obj;
+	    return this.id == dev.id;
+	}
+	return false;
+    }
+
+    @Override
+    public int hashCode() {
+	int hash = 7;
+	hash = 83 * hash + this.id;
+	return hash;
+    }
+
+ //-----------------( Getter & Setter )------------------------->
 
     public String getDescription() {
         return description;
@@ -137,24 +187,4 @@ public abstract class AbstractDevice<T> {
 
     public abstract void setStatus(T status);
 
-    @Override
-    public String toString() {
-        return "AbstractDevice{" + "id=" + id + "status=" + status + "location=" + location + "description=" + description + "msgReceiver=" + msgDeamon + '}';
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-	if(obj instanceof AbstractDevice){
-	    AbstractDevice dev = (AbstractDevice)obj;
-	    return this.id == dev.id;
-	}
-	return false;
-    }
-
-    @Override
-    public int hashCode() {
-	int hash = 7;
-	hash = 83 * hash + this.id;
-	return hash;
-    }
 }

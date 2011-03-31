@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.net.SocketException;
 
 /**
- *
+ * Beinhaltet Funktionen welche alle Aktoren verwenden können
  * @author Christian Rech, Tim Bartsch
  */
 public abstract class Actor<T> extends AbstractDevice<T>{
@@ -34,6 +34,11 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         this.gidTab = gidTab;
     }
 
+    /**
+     * Prüft ob ID in seiner GruppenID List liegt
+     * @param id
+     * @return
+     */
     private boolean isReceiver(int id) {
 	for (int i = 0; i < this.gidTab.length; i++) {
 	    if (this.gidTab[i] == id) {
