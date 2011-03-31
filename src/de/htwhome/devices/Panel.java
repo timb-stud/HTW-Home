@@ -86,6 +86,7 @@ public class Panel extends AbstractDevice<Boolean> {
                     break;
 		case doorRing:
 		    setRingalarm(true);
+		    setRingalarm(false);
 		    break;
                 case fireAlarm:
 		    setFirealarm(true);
@@ -290,7 +291,9 @@ public class Panel extends AbstractDevice<Boolean> {
 
     public void setFirealarm(boolean firealarm) {
 	this.firealarm = firealarm;
-	fireAlarmChangeEvent();
+	if(this.firealarm){
+	    fireAlarmChangeEvent();
+	}
     }
 
     public boolean isWeatheralarm() {
@@ -299,7 +302,9 @@ public class Panel extends AbstractDevice<Boolean> {
 
     public void setWeatheralarm(boolean weatheralarm) {
 	this.weatheralarm = weatheralarm;
-	fireAlarmChangeEvent();
+	if(this.weatheralarm){
+	    fireAlarmChangeEvent();
+	}
     }
 
     public boolean isRingalarm() {
@@ -308,7 +313,9 @@ public class Panel extends AbstractDevice<Boolean> {
 
     public void setRingalarm(boolean ringalarm) {
 	this.ringalarm = ringalarm;
-	fireAlarmChangeEvent();
+	if(this.ringalarm){
+	    fireAlarmChangeEvent();
+	}
     }
 
 }

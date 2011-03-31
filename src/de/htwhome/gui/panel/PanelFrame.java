@@ -9,9 +9,12 @@ package de.htwhome.gui.panel;
 import de.htwhome.devices.Panel;
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 
@@ -24,8 +27,10 @@ public class PanelFrame extends javax.swing.JFrame {
     Panel panel;
 
     /** Creates new form PanelFrame */
-    public PanelFrame() {
+    public PanelFrame() throws IOException {
         initComponents();
+	BufferedImage image = ImageIO.read(getClass().getResource("/de/htwhome/gui/Pics/logo.png"));
+        this.setIconImage(image);
 	try {
 	    panel = new Panel(1337, false, "Wohnzimmer", "Panel");
 	    ConfigPanel cfgPanel = new ConfigPanel(panel);
@@ -109,7 +114,11 @@ public class PanelFrame extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PanelFrame().setVisible(true);
+		try {
+		    new PanelFrame().setVisible(true);
+		} catch (IOException ex) {
+		    Logger.getLogger(PanelFrame.class.getName()).log(Level.SEVERE, null, ex);
+		}
             }
         });
     }

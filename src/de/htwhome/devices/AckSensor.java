@@ -124,6 +124,7 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
                     break;
                 case configChange:
                     if (msg.getReceiverId() == this.id) {
+			System.out.println("CFG CHANGE");
                         Config cfg = gson.fromJson(msg.getContent(), cfgType);
                         loadAttributesFrom(cfg);
                         saveConfig(devType);
