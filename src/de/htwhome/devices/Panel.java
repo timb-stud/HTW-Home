@@ -192,7 +192,6 @@ public class Panel extends AbstractDevice<Boolean> {
         c = gson.fromJson(jsonCfg, cfgType);
         c.setDeviceType(devType);
         configList.updateConfig(c);
-        System.out.println("CFG LIST:" + configList);
     }
 
     public void changeConfig(Config cfg) {
@@ -202,7 +201,6 @@ public class Panel extends AbstractDevice<Boolean> {
         msg.setSenderId(this.id);
         msg.setReceiverId(cfg.getId());
         String json = "";
-        System.out.println("WHAA" + cfg);
         switch (cfg.getDeviceType()) {
             case Anemometer:
                 json = gson.toJson(cfg, Anemometer.cfgType);
