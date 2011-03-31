@@ -29,7 +29,6 @@ class ServerThread extends Thread {
     public void run() {
 	String msg = new String(pack.getData());
 	msg = msg.trim();
-//	System.out.println("Received: " + msg);
 	this.device.handleMsg(msg);
     }
 }

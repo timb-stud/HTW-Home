@@ -61,7 +61,6 @@ class TimeSchedulerTask<T> extends TimerTask{
 //                status = (T) newTimeSchedulerStatus();
 //                break;
         }
-        System.out.println("Status: " + status);
         device.setStatus(status);
     }
 }

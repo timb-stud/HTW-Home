@@ -42,7 +42,6 @@ public class Anemometer extends IntervalSensor<Double> {
         this.status = status;
         fireChangeEvent();
         if (this.status > MAXLEVELWARNING) {
-            System.out.println("!! ACHTUNG !!");
             Message warning = new Message();
             warning.setMsgType(MessageType.weatherAlarm);
             warning.setSenderId(this.id);

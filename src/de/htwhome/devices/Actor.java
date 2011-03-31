@@ -77,7 +77,6 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		    break;
 		case configChange:
 		    if (this.id == msg.getReceiverId()) {
-			System.out.println("CFG CHANGE");
 			Config cfg = gson.fromJson(msg.getContent(), cfgType);
 			loadAttributesFrom(cfg);
 			saveConfig(devType);

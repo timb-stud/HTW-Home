@@ -149,7 +149,6 @@ public class ConfigPanel extends javax.swing.JPanel implements ConfigChangeListe
     }//GEN-LAST:event_actorsTextFieldActionPerformed
 
     private void saveConfigButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveConfigButtonActionPerformed
-	System.out.println("SAVE");
 	String location = locationTextField.getText();
 	String description = descriptionTextField.getText();
 	String gids = gidsTextField.getText();

@@ -31,7 +31,6 @@ public class MessageDeamon extends Thread{
     public void sendMsg(String msg) throws IOException {
 	DatagramPacket datagrampacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, group, HTWhomeProperties.PORT);
 	sock.send(datagrampacket);
-//	System.out.println("Send: " + new String(datagrampacket.getData()));
     }
     
     @Override

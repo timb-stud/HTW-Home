@@ -51,7 +51,6 @@ public class DoorOpener extends Actor<Boolean> {
             msg.setContent(String.valueOf(this.status));
         }
         this.sendMsg(msg);
-//        System.out.println("Webcam wieder im Standby. Status: " + this.status);
     }
 
     @Override

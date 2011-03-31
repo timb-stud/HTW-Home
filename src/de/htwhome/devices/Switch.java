@@ -48,7 +48,6 @@ public class Switch extends AckSensor<Boolean> {
         msg.setContent(String.valueOf(this.status));
         msg.setSenderDevice(deviceType);
         this.sendMsg(msg);
-        System.out.println("Switch.status: " + this.status);
     }
 
     private void sendStatusResponse() {
