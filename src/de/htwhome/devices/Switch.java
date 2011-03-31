@@ -16,7 +16,8 @@ import java.net.SocketException;
 public class Switch extends AckSensor<Boolean> {
 
     public static final DeviceType deviceType = DeviceType.Switch;
-    public static final Type cfgType = new TypeToken<Config<Boolean>>() {}.getType();
+    public static final Type cfgType = new TypeToken<Config<Boolean>>() {
+    }.getType();
 
     public Switch(int id) {
         this.id = id;
@@ -35,7 +36,7 @@ public class Switch extends AckSensor<Boolean> {
     @Override
     public void setStatus(Boolean status) {
         this.status = status;
-	sendStatusResponse();
+        sendStatusResponse();
         fireChangeEvent();
         Message msg = new Message();
         if (checkRespones()) {
@@ -50,8 +51,8 @@ public class Switch extends AckSensor<Boolean> {
         System.out.println("Switch.status: " + this.status);
     }
 
-    private void sendStatusResponse(){
-	Message msg = new Message();
+    private void sendStatusResponse() {
+        Message msg = new Message();
         msg.setMsgType(MessageType.statusResponse);
         msg.setSenderId(this.id);
         msg.setContent(String.valueOf(this.statusLED));
@@ -71,16 +72,22 @@ public class Switch extends AckSensor<Boolean> {
         this.setActorStatus(b, pos);
     }
 
+    /*
+     * Hier wird die StatusLED gesetzt, also die Quittierung des Schalters
+     */
     public void checkAndSetStatusLed() {
         for (int i = 0; i < actorStatusTab.length; i++) {
             if (actorStatusTab[i] == false) {
-		setStatusLED(false);
+                setStatusLED(false);
                 fireChangeEventLED();
                 return;
             }
         }
         setStatusLED(true);
     }
+    /*
+     * Das Boolean Feld wird an den Stellen, an denen es den Wert null hat, auf false gesetzt
+     */
 
     public static void setNullToFalse(Boolean[] tab) {
         for (int i = 0; i < tab.length; i++) {
@@ -90,6 +97,9 @@ public class Switch extends AckSensor<Boolean> {
         }
     }
 
+    /*
+     * Es wird hier ein Event ausgelöst, sodass die GUI ihre Aktualiserung vornehmen kann
+     */
     @Override
     protected void fireChangeEvent() {
         StatusChangeEvent<Boolean> evt = new StatusChangeEvent<Boolean>(this, this.status);
@@ -98,6 +108,9 @@ public class Switch extends AckSensor<Boolean> {
         }
     }
 
+    /*
+     * Es wird hier ein Event ausgelöst, sodass die GUI ihre Aktualiserung vornehmen kann (nur StatusLED vom Switch)
+     */
     protected void fireChangeEventLED() {
         StatusChangeEvent<Boolean> evt = new StatusChangeEvent<Boolean>(this, this.getStatusLED());
         for (StatusChangeListener l : listeners) {
@@ -111,8 +124,8 @@ public class Switch extends AckSensor<Boolean> {
 
     public void setStatusLED(boolean b) {
         this.statusLED = b;
-	this.status = b;
-	sendStatusResponse();
+        this.status = b;
+        sendStatusResponse();
         fireChangeEvent();
     }
 }
