@@ -9,12 +9,16 @@ import javax.imageio.ImageIO;
 /**
  *
  * @author Volkan Gökkaya
+ * Dies ist die Klasse des SunBlind Gerätes als Grafische Oberfläche
  */
 public class SunBlindFrame extends javax.swing.JFrame implements StatusChangeListener {
 
     public SunBlind sb;
     private BufferedImage image;
 
+    /*
+     * Konstruktor: Dieser hat die selben Parameter wie der SunBlind Konstruktor
+     */
     public SunBlindFrame(int id, int status, String location, String description, int[] gidTab) throws SocketException, IOException {
         initComponents();
         sb = new SunBlind(10, 50, "Wohnzimmer aussen", "Markise", gidTab);
@@ -89,11 +93,17 @@ public class SunBlindFrame extends javax.swing.JFrame implements StatusChangeLis
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Methode, die beim Eintreffen eines Ereignisses (Event reagieren soll)
+     */
     public void changeEventReceived(StatusChangeEvent evt) {
         jProgressBar1.setValue((Integer) evt.getStatus());
         setLabels();
     }
 
+    /*
+     * Die Lables werden hier korrekt gesetzt
+     */
     private void setLabels() {
         jLabel1.setText(sb.getStatus() + "%");
         jLabel2.setText(sb.getDescription());

@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 /**
  *
  * @author Volkan Gökkaya
+ * Dies ist die Klasse des Thermometer Gerätes als Grafische Oberfläche
  */
 public class ThermometerFrame extends javax.swing.JFrame implements StatusChangeListener {
 
@@ -17,6 +18,9 @@ public class ThermometerFrame extends javax.swing.JFrame implements StatusChange
     private DecimalFormat df;
     private BufferedImage image;
 
+    /*
+     * Konstruktor: Dieser hat die selben Parameter wie der Switch Konstruktor
+     */
     public ThermometerFrame(int id, Double status, String location, String description, int gid) throws SocketException, IOException {
         initComponents();
         df = new DecimalFormat("#.##");
@@ -86,11 +90,17 @@ public class ThermometerFrame extends javax.swing.JFrame implements StatusChange
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Methode, die beim Eintreffen eines Ereignisses (Event reagieren soll)
+     */
     public void changeEventReceived(StatusChangeEvent evt) {
         jLabel1.setText(df.format(t.getStatus()) + "");
         setLabels();
     }
 
+    /*
+     * Die Lables werden hier korrekt gesetzt
+     */
     private void setLabels() {
         jLabel1.setText(df.format(t.getStatus()) + "");
         jLabel2.setText(t.getDescription());

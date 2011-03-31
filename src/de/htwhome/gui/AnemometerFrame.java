@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 /**
  *
  * @author Volkan Gökkaya
+ * Dies ist die Klasse des Windmesser Gerätes als Grafische Oberfläche
  */
 public class AnemometerFrame extends javax.swing.JFrame implements StatusChangeListener {
 
@@ -17,6 +18,9 @@ public class AnemometerFrame extends javax.swing.JFrame implements StatusChangeL
     private DecimalFormat df;
     private BufferedImage image;
 
+    /*
+     * Konstruktor: Dieser hat die selben Parameter wie der Anomometer Konstruktor
+     */
     public AnemometerFrame(int id, Double status, String location, String description, int gid) throws SocketException, IOException {
         initComponents();
         df = new DecimalFormat("#.##");
@@ -85,10 +89,16 @@ public class AnemometerFrame extends javax.swing.JFrame implements StatusChangeL
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Methode, die beim Eintreffen eines Ereignisses (Event reagieren soll)
+     */
     public void changeEventReceived(StatusChangeEvent evt) {
         setLabels();
     }
 
+    /*
+     * Die Lables werden hier korrekt gesetzt
+     */
     private void setLabels() {
         jLabel1.setText(df.format(a.getStatus()) + "");
         jLabel2.setText(a.getDescription());
