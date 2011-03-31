@@ -108,7 +108,6 @@ public class Panel extends AbstractDevice<Boolean> {
         Message msg = new Message();
         msg.setMsgType(MessageType.configRequest);
         msg.setSenderId(this.id);
-        msg.setReceiverId(ALLDEVICES);
         sendMsg(msg);
     }
 

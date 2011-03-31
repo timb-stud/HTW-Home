@@ -1,3 +1,4 @@
-Extern Libraries:
+In order to make the system runnable you need to import this extern library:
+
 Google gson:
-code.google.com/p/google-gson/
+	code.google.com/p/google-gson/

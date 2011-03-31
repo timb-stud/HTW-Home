@@ -20,7 +20,7 @@ public class Anemometer extends IntervalSensor<Double> {
 
     public static final DeviceType deviceType = DeviceType.Anemometer;
     public static final Type cfgType = new TypeToken<Config<Double>>() {}.getType();
-    private static final double MAXLEVELWARNING = 9.0; //TODO Wert muss aus Konfig gelesen werden
+    private static final double MAXLEVELWARNING = 9.0;
 
     public Anemometer(int id) {
         this.id = id;
@@ -46,7 +46,6 @@ public class Anemometer extends IntervalSensor<Double> {
             Message warning = new Message();
             warning.setMsgType(MessageType.weatherAlarm);
             warning.setSenderId(this.id);
-            warning.setReceiverId(ALLDEVICES);
             warning.setContent(String.valueOf(this.status));
             warning.setSenderDevice(deviceType);
             this.sendMsg(warning);

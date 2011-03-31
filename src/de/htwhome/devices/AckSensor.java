@@ -108,7 +108,6 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
                     reply = new Message();
                     reply.setMsgType(MessageType.statusResponse);
                     reply.setSenderId(this.id);
-                    reply.setReceiverId(ALLDEVICES);
                     reply.setSenderDevice(devType);
                     reply.setContent(String.valueOf(this.status));
                     sendMsg(reply);
@@ -134,7 +133,6 @@ public abstract class AckSensor<T> extends AbstractDevice<T> {
                     reply = new Message();
                     reply.setMsgType(MessageType.configResponse);
                     reply.setSenderId(this.id);
-                    reply.setReceiverId(ALLDEVICES);
                     reply.setSenderDevice(devType);
                     Config cfg = new Config();
                     writeAttributesTo(cfg);

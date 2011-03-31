@@ -27,7 +27,6 @@ public abstract class AbstractDevice<T> {
     protected String description;
     protected static Gson gson = new Gson();
     private MessageDeamon msgDeamon;
-    protected static int ALLDEVICES = 20000;
     protected final CopyOnWriteArrayList<StatusChangeListener> listeners = new CopyOnWriteArrayList<StatusChangeListener>();
 
     /*

@@ -87,7 +87,6 @@ public abstract class Actor<T> extends AbstractDevice<T>{
 		    Message reply = new Message();
 		    reply.setMsgType(MessageType.configResponse);
 		    reply.setSenderId(this.id);
-		    reply.setReceiverId(ALLDEVICES);
 		    reply.setSenderDevice(devType);
 		    Config cfg = new Config();
 		    writeAttributesTo(cfg);

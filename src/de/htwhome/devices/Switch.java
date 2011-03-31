@@ -16,8 +16,7 @@ import java.net.SocketException;
 public class Switch extends AckSensor<Boolean> {
 
     public static final DeviceType deviceType = DeviceType.Switch;
-    public static final Type cfgType = new TypeToken<Config<Boolean>>() {
-    }.getType();
+    public static final Type cfgType = new TypeToken<Config<Boolean>>() {}.getType();
 
     public Switch(int id) {
         this.id = id;
