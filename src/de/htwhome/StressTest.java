@@ -19,11 +19,11 @@ import java.net.SocketException;
 public class StressTest {
 
     public static void main(String[] args) throws SocketException, IOException{
-        OnOffTimer onoff = new OnOffTimer(3000, Boolean.TRUE, "Test", "Stresstest");
-        onoff.startNotifier(500);
+//        OnOffTimer onoff = new OnOffTimer(3000, Boolean.TRUE, "Test", "Stresstest");
+//        onoff.startNotifier(500);
 
         int[] gidLight = {22000, 21100, 21102};
-        for ( int i = 0; i < 1; i++){
+        for ( int i = 0; i < 60; i++){
             new LightFrame(i, false, "Wohnzimmer", "Licht hinten", gidLight).setVisible(true);
         }
 

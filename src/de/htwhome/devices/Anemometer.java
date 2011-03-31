@@ -56,7 +56,6 @@ public class Anemometer extends IntervalSensor<Double> {
         msg.setContent(String.valueOf(this.status));
         msg.setSenderDevice(deviceType);
         this.sendMsg(msg);
-        System.out.println("Neue Windgeschwindigkeit: " + this.status); //TODO sout entfernen
     }
 
     @Override

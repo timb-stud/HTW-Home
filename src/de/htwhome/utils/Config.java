@@ -5,9 +5,9 @@ import de.htwhome.devices.DeviceType;
 
 /**
  *
- * @author christian
+ * @author Christian Rech
  */
-public class Config<T> { //TODO wenn nicht gebraucht loeschen
+public class Config<T> {
     //Device
     private int id;
     private T status;
@@ -21,7 +21,7 @@ public class Config<T> { //TODO wenn nicht gebraucht loeschen
     //Sensor
     int[] actorIDTab;
     T[] actorStatusTab;
-    boolean[] actorAckTab; //TODO vllt rauswerfen?
+    boolean[] actorAckTab;
     int gid;
 
     //Panel
