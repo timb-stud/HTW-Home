@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 import java.net.SocketException;
 
 /**
- *
+ * Acknolage Sensor Klasse
  * @author Tim Bartsch
  */
 public abstract class AckSensor<T> extends AbstractDevice<T> {

@@ -12,8 +12,8 @@ import de.htwhome.transmission.MessageType;
 import de.htwhome.utils.Config;
 
 /**
- *
- * @author tobiaslana
+ * Implementierung einer Wetterstation
+ * @author Tobias Lana
  * Anemometer (en) = Windmesser (de)
  */
 public class Anemometer extends IntervalSensor<Double> {
