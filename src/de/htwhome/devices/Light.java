@@ -38,7 +38,7 @@ public class Light extends Actor<Boolean> {
         msg.setContent(String.valueOf(this.status));
         msg.setSenderDevice(deviceType);
         this.sendMsg(msg);
-        System.out.println("Light.status:" + this.status);
+//        System.out.println("Light.status:" + this.status);
     }
 
     @Override
