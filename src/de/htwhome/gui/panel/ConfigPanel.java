@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * ConfigPanel.java
  *
  * Created on 29.03.2011, 11:42:23
