@@ -46,7 +46,6 @@ public class Anemometer extends IntervalSensor<Double> {
             Message warning = new Message();
             warning.setMsgType(MessageType.weatherAlarm);
             warning.setSenderId(this.id);
-            warning.setReceiverId(ALLDEVICES);
             warning.setContent(String.valueOf(this.status));
             warning.setSenderDevice(deviceType);
             this.sendMsg(warning);

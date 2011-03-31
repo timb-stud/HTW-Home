@@ -50,7 +50,6 @@ public class SmokeDetector extends IntervalSensor<Boolean> {
             Message warning = new Message();
             warning.setMsgType(MessageType.fireAlarm);
             warning.setSenderId(this.id);
-            warning.setReceiverId(ALLDEVICES);
             warning.setContent(String.valueOf(this.status));
             warning.setSenderDevice(deviceType);
             this.sendMsg(warning);
