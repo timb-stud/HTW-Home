@@ -23,6 +23,7 @@ public class DoorBell extends AbstractDevice<Boolean>{
 
     public DoorBell(int id, Boolean status, String location, String description) throws SocketException{
 	super(id, status, location, description);
+	saveConfig(deviceType);
     }
 
     @Override

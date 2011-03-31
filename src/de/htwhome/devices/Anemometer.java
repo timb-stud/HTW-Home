@@ -19,8 +19,7 @@ import de.htwhome.utils.Config;
 public class Anemometer extends IntervalSensor<Double> {
 
     public static final DeviceType deviceType = DeviceType.Anemometer;
-    public static final Type cfgType = new TypeToken<Config<Double>>() {
-    }.getType();
+    public static final Type cfgType = new TypeToken<Config<Double>>() {}.getType();
     private static final double MAXLEVELWARNING = 9.0; //TODO Wert muss aus Konfig gelesen werden
 
     public Anemometer(int id) {
@@ -30,6 +29,7 @@ public class Anemometer extends IntervalSensor<Double> {
 
     public Anemometer(int id, Double status, String location, String description, int gid) throws SocketException {
         super(id, status, location, description);
+	saveConfig(deviceType);
     }
 
     @Override

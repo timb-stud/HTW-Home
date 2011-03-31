@@ -15,14 +15,14 @@ import de.htwhome.utils.Config;
  */
 public class PercentSwitch extends AckSensor<Integer> {
 
-    public static final Type cfgType = new TypeToken<Config<Integer>>() {
-    }.getType();
+    public static final Type cfgType = new TypeToken<Config<Integer>>() {}.getType();
     public static final DeviceType deviceType = DeviceType.PercentSwitch;
     private static final int MIN_STATUS = 0; //TODO min und max benutzen
     private static final int MAX_STATUS = 100;
 
     public PercentSwitch(int id, int status, String location, String description, int[] actorListId, Integer[] actorStatusTab, int gid) throws SocketException {
         super(id, status, location, description, actorListId, actorStatusTab, gid);
+	saveConfig(deviceType);
     }
 
     public PercentSwitch(int id) {

@@ -28,6 +28,7 @@ public class Thermometer extends IntervalSensor<Double> {
 
     public Thermometer(int id, Double status, String location, String description, int gid) throws SocketException {
         super(id, status, location, description);
+	saveConfig(deviceType);
     }
 
     @Override

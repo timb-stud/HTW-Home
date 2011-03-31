@@ -49,6 +49,7 @@ public class Panel extends AbstractDevice<Boolean> {
 
     public Panel(int id, boolean status, String location, String description) throws SocketException {
         super(id, status, location, description);
+	saveConfig(deviceType);
         this.configList = new ConfigList();
     }
 

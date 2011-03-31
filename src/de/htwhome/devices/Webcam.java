@@ -19,6 +19,7 @@ public class Webcam extends Actor<Boolean> {
 
     public Webcam(int id, boolean status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status, location, description, gidTab);
+	saveConfig(deviceType);
     }
 
     public Webcam(int id) {

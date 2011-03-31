@@ -18,8 +18,7 @@ import java.net.SocketException;
 public class SmokeDetector extends IntervalSensor<Boolean> {
 
     public static final DeviceType deviceType = DeviceType.SmokeDetector;
-    public static final Type cfgType = new TypeToken<Config<Boolean>>() {
-    }.getType();
+    public static final Type cfgType = new TypeToken<Config<Boolean>>() {}.getType();
 
     public SmokeDetector(int id) {
         this.id = id;
@@ -28,6 +27,7 @@ public class SmokeDetector extends IntervalSensor<Boolean> {
 
     public SmokeDetector(int id, Boolean status, String location, String description) throws SocketException {
         super(id, status, location, description);
+	saveConfig(deviceType);
     }
 
     @Override

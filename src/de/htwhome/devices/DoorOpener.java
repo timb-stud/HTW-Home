@@ -18,11 +18,11 @@ import java.util.logging.Logger;
 public class DoorOpener extends Actor<Boolean> {
 
     public static final DeviceType deviceType = DeviceType.DoorOpener;
-    public static final Type cfgType = new TypeToken<Config<Boolean>>() {
-    }.getType();
+    public static final Type cfgType = new TypeToken<Config<Boolean>>() {}.getType();
 
     public DoorOpener(int id, boolean status, String location, String description, int[] gidTab) throws SocketException {
         super(id, status, location, description, gidTab);
+	saveConfig(deviceType);
     }
 
     public DoorOpener(int id) {
