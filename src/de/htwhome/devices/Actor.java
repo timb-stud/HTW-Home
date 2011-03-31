@@ -34,6 +34,18 @@ public abstract class Actor<T> extends AbstractDevice<T>{
         this.gidTab = gidTab;
     }
 
+    @Override
+    protected void loadAttributesFrom(Config cfg) {
+	super.loadAttributesFrom(cfg);
+	this.gidTab = cfg.getGidTab();
+    }
+
+    @Override
+    protected Config writeAttributesTo(Config cfg) {
+	cfg.setGidTab(gidTab);
+	return super.writeAttributesTo(cfg);
+    }
+
     /**
      * Prüft ob ID in seiner GruppenID List liegt
      * @param id
