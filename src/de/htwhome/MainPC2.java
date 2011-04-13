@@ -1,12 +1,9 @@
 package de.htwhome;
 
-import de.htwhome.gui.AnemometerFrame;
 import de.htwhome.gui.LightFrame;
 import de.htwhome.gui.PercentSwitchFrame;
 import de.htwhome.gui.ShutterFrame;
-import de.htwhome.gui.SunBlindFrame;
 import de.htwhome.gui.SwitchFrame;
-import de.htwhome.gui.ThermometerFrame;
 import java.io.IOException;
 import java.net.SocketException;
 
@@ -26,8 +23,8 @@ public class MainPC2 {
         int[] alLicht2 = {12101};
         Boolean[] alStatusLicht2 = new Boolean[alLicht2.length];
         new SwitchFrame(11103, false, "Wohnzimmer", "Lichtschalter vorne", alLicht2, alStatusLicht2, 21101).setVisible(true);
-        int[] gidLight = {21100, 21101};
-        
+
+        int[] gidLight = {21000, 21100, 21101};
         new LightFrame(12101, false, "Wohnzimmer", "Licht vorne", gidLight).setVisible(true);
 //        Schalter Rollladen vorne 
         int[] alPercentSwitch2 = {12301};
